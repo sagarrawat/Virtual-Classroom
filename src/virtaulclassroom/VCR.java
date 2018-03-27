@@ -5,19 +5,40 @@
  */
 package virtaulclassroom;
 
+import factory.View;
+import factory.ViewFactory;
+import javax.swing.JPanel;
+import ui.Login;
+
 /**
  *
  * @author Mukesh-PC
  */
-public class VCR extends javax.swing.JFrame {
+public class VCR extends javax.swing.JFrame implements IChangeView{
     
     public VCR() {
         initComponents();
+        setComponents();
     }
 
     private void setComponents(){
         this.setTitle("VCR");
+        JPanel login = ViewFactory.getView(this, View.Login);
+        requestView(login);
+        this.setSize(600, 400);
     }
+    
+    public boolean requestView(JPanel panel){
+        boolean busy = false;        
+        if(!busy){     
+            getContentPane().remove(1);
+            getContentPane().add(panel, java.awt.BorderLayout.CENTER);
+            this.revalidate();
+            this.repaint();
+        }       
+        return busy;
+    }
+    
     /**
      * This method is called from within the constructor to initialize the form.
      * WARNING: Do NOT modify this code. The content of this method is always
@@ -28,7 +49,8 @@ public class VCR extends javax.swing.JFrame {
     private void initComponents() {
 
         statusBar1 = new virtaulclassroom.StatusBar();
-        login1 = new ui.Login();
+        jPanel1 = new javax.swing.JPanel();
+        jLabel1 = new javax.swing.JLabel();
         jMenuBar1 = new javax.swing.JMenuBar();
         jMenu1 = new javax.swing.JMenu();
         jMenu2 = new javax.swing.JMenu();
@@ -37,7 +59,11 @@ public class VCR extends javax.swing.JFrame {
 
         setDefaultCloseOperation(javax.swing.WindowConstants.EXIT_ON_CLOSE);
         getContentPane().add(statusBar1, java.awt.BorderLayout.PAGE_END);
-        getContentPane().add(login1, java.awt.BorderLayout.CENTER);
+
+        jLabel1.setText("view");
+        jPanel1.add(jLabel1);
+
+        getContentPane().add(jPanel1, java.awt.BorderLayout.CENTER);
 
         jMenu1.setText("File");
         jMenuBar1.add(jMenu1);
@@ -92,12 +118,13 @@ public class VCR extends javax.swing.JFrame {
     }
 
     // Variables declaration - do not modify//GEN-BEGIN:variables
+    private javax.swing.JLabel jLabel1;
     private javax.swing.JMenu jMenu1;
     private javax.swing.JMenu jMenu2;
     private javax.swing.JMenu jMenu3;
     private javax.swing.JMenu jMenu4;
     private javax.swing.JMenuBar jMenuBar1;
-    private ui.Login login1;
+    private javax.swing.JPanel jPanel1;
     private virtaulclassroom.StatusBar statusBar1;
     // End of variables declaration//GEN-END:variables
 }
