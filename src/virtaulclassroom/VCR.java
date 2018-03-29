@@ -23,7 +23,7 @@ public class VCR extends javax.swing.JFrame implements IChangeView{
 
     private void setComponents(){
         this.setTitle("VCR");
-        JPanel login = ViewFactory.getView(this, View.Login);
+        JPanel login = ViewFactory.getView(this, View.LectureRoom);
         requestView(login);
     }
     

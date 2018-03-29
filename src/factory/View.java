@@ -12,5 +12,6 @@ package factory;
 public enum View {
     Home,
     Login,
-    Register
+    Register,
+    LectureRoom
 }
