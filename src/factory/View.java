@@ -11,5 +11,6 @@ package factory;
  */
 public enum View {
     Home,
-    Login
+    Login,
+    Register
 }

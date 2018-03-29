@@ -8,6 +8,7 @@ package dal;
 import entity.User;
 import java.sql.Connection;
 import java.sql.DriverManager;
+import java.sql.SQLException;
 import java.util.logging.Level;
 import java.util.logging.Logger;
 
@@ -26,6 +27,9 @@ public abstract class Database {
             Class.forName(driver);
             this.connection = DriverManager.getConnection(conString, user, password);
         } 
+        catch (SQLException se){
+            se.printStackTrace();
+        }
         catch (Exception ex) {
            ex.printStackTrace();
         }

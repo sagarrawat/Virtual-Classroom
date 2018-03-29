@@ -25,6 +25,8 @@ public class ViewFactory {
                 return new ui.Home();
             case Login :
                 return new ui.Login(parent);
+            case Register :
+                return new ui.Register();
         }
         return null;
     }

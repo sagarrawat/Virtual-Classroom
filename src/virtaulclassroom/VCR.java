@@ -8,7 +8,6 @@ package virtaulclassroom;
 import factory.View;
 import factory.ViewFactory;
 import javax.swing.JPanel;
-import ui.Login;
 
 /**
  *
@@ -19,18 +18,19 @@ public class VCR extends javax.swing.JFrame implements IChangeView{
     public VCR() {
         initComponents();
         setComponents();
+        setExtendedState(java.awt.Frame.MAXIMIZED_BOTH);
     }
 
     private void setComponents(){
         this.setTitle("VCR");
         JPanel login = ViewFactory.getView(this, View.Login);
         requestView(login);
-        this.setSize(600, 400);
     }
     
+    @Override
     public boolean requestView(JPanel panel){
         boolean busy = false;        
-        if(!busy){     
+        if(!busy){
             getContentPane().remove(1);
             getContentPane().add(panel, java.awt.BorderLayout.CENTER);
             this.revalidate();

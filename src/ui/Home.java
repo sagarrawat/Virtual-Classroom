@@ -5,9 +5,6 @@
  */
 package ui;
 
-import javax.swing.JFrame;
-import virtaulclassroom.VCR;
-import factory.*;
 import virtaulclassroom.IChangeView;
 
 /**
@@ -46,21 +43,26 @@ public class Home extends javax.swing.JPanel {
         jPanel4 = new javax.swing.JPanel();
         jLabel3 = new javax.swing.JLabel();
         jLabel4 = new javax.swing.JLabel();
+        jLabel1 = new javax.swing.JLabel();
         jPanel5 = new javax.swing.JPanel();
         jLabel5 = new javax.swing.JLabel();
         jLabel6 = new javax.swing.JLabel();
+        jLabel2 = new javax.swing.JLabel();
         jPanel6 = new javax.swing.JPanel();
         jLabel7 = new javax.swing.JLabel();
         jLabel8 = new javax.swing.JLabel();
+        jLabel17 = new javax.swing.JLabel();
         jPanel7 = new javax.swing.JPanel();
         jLabel9 = new javax.swing.JLabel();
         jLabel10 = new javax.swing.JLabel();
+        jLabel18 = new javax.swing.JLabel();
         jPanel8 = new javax.swing.JPanel();
         jLabel11 = new javax.swing.JLabel();
         jLabel12 = new javax.swing.JLabel();
         jPanel9 = new javax.swing.JPanel();
         jLabel14 = new javax.swing.JLabel();
         jLabel16 = new javax.swing.JLabel();
+        jLabel19 = new javax.swing.JLabel();
 
         jPanel1.setBackground(new java.awt.Color(45, 118, 232));
 
@@ -122,9 +124,12 @@ public class Home extends javax.swing.JPanel {
 
         jLabel3.setFont(new java.awt.Font("Tahoma", 1, 12)); // NOI18N
         jLabel3.setForeground(new java.awt.Color(45, 118, 232));
-        jLabel3.setText("Home");
-        jPanel4.add(jLabel3, new org.netbeans.lib.awtextra.AbsoluteConstraints(50, 76, -1, -1));
+        jLabel3.setText(" Home");
+        jPanel4.add(jLabel3, new org.netbeans.lib.awtextra.AbsoluteConstraints(80, 80, 50, -1));
         jPanel4.add(jLabel4, new org.netbeans.lib.awtextra.AbsoluteConstraints(46, 22, -1, -1));
+
+        jLabel1.setIcon(new javax.swing.ImageIcon(getClass().getResource("/Resources/icons/home_48px.png"))); // NOI18N
+        jPanel4.add(jLabel1, new org.netbeans.lib.awtextra.AbsoluteConstraints(80, 30, -1, -1));
 
         jPanel3.add(jPanel4);
 
@@ -149,9 +154,12 @@ public class Home extends javax.swing.JPanel {
 
         jLabel5.setFont(new java.awt.Font("Tahoma", 1, 12)); // NOI18N
         jLabel5.setForeground(new java.awt.Color(45, 118, 232));
-        jLabel5.setText("Home");
-        jPanel5.add(jLabel5, new org.netbeans.lib.awtextra.AbsoluteConstraints(50, 76, -1, -1));
+        jLabel5.setText("Classroom");
+        jPanel5.add(jLabel5, new org.netbeans.lib.awtextra.AbsoluteConstraints(60, 80, -1, -1));
         jPanel5.add(jLabel6, new org.netbeans.lib.awtextra.AbsoluteConstraints(46, 22, -1, -1));
+
+        jLabel2.setIcon(new javax.swing.ImageIcon(getClass().getResource("/Resources/icons/classroom_48px.png"))); // NOI18N
+        jPanel5.add(jLabel2, new org.netbeans.lib.awtextra.AbsoluteConstraints(70, 30, 60, -1));
 
         jPanel3.add(jPanel5);
 
@@ -176,9 +184,15 @@ public class Home extends javax.swing.JPanel {
 
         jLabel7.setFont(new java.awt.Font("Tahoma", 1, 12)); // NOI18N
         jLabel7.setForeground(new java.awt.Color(45, 118, 232));
-        jLabel7.setText("Home");
-        jPanel6.add(jLabel7, new org.netbeans.lib.awtextra.AbsoluteConstraints(50, 76, -1, -1));
+        jLabel7.setIcon(new javax.swing.ImageIcon(getClass().getResource("/Resources/icons/talk-48 (1).png"))); // NOI18N
+        jLabel7.setToolTipText("");
+        jPanel6.add(jLabel7, new org.netbeans.lib.awtextra.AbsoluteConstraints(80, 30, -1, -1));
         jPanel6.add(jLabel8, new org.netbeans.lib.awtextra.AbsoluteConstraints(46, 22, -1, -1));
+
+        jLabel17.setFont(new java.awt.Font("Tahoma", 1, 12)); // NOI18N
+        jLabel17.setForeground(new java.awt.Color(45, 118, 232));
+        jLabel17.setText("Discussion/Queries");
+        jPanel6.add(jLabel17, new org.netbeans.lib.awtextra.AbsoluteConstraints(30, 80, -1, -1));
 
         jPanel3.add(jPanel6);
 
@@ -203,9 +217,15 @@ public class Home extends javax.swing.JPanel {
 
         jLabel9.setFont(new java.awt.Font("Tahoma", 1, 12)); // NOI18N
         jLabel9.setForeground(new java.awt.Color(45, 118, 232));
-        jLabel9.setText("Home");
-        jPanel7.add(jLabel9, new org.netbeans.lib.awtextra.AbsoluteConstraints(50, 76, -1, -1));
+        jLabel9.setIcon(new javax.swing.ImageIcon(getClass().getResource("/Resources/icons/download_52px.png"))); // NOI18N
+        jLabel9.setToolTipText("");
+        jPanel7.add(jLabel9, new org.netbeans.lib.awtextra.AbsoluteConstraints(70, 30, -1, -1));
         jPanel7.add(jLabel10, new org.netbeans.lib.awtextra.AbsoluteConstraints(46, 22, -1, -1));
+
+        jLabel18.setFont(new java.awt.Font("Tahoma", 1, 12)); // NOI18N
+        jLabel18.setForeground(new java.awt.Color(45, 118, 232));
+        jLabel18.setText("Resources");
+        jPanel7.add(jLabel18, new org.netbeans.lib.awtextra.AbsoluteConstraints(60, 90, -1, -1));
 
         jPanel3.add(jPanel7);
 
@@ -257,9 +277,14 @@ public class Home extends javax.swing.JPanel {
 
         jLabel14.setFont(new java.awt.Font("Tahoma", 1, 12)); // NOI18N
         jLabel14.setForeground(new java.awt.Color(45, 118, 232));
-        jLabel14.setText("Home");
-        jPanel9.add(jLabel14, new org.netbeans.lib.awtextra.AbsoluteConstraints(50, 76, -1, -1));
+        jLabel14.setIcon(new javax.swing.ImageIcon(getClass().getResource("/Resources/icons/settings_48px.png"))); // NOI18N
+        jPanel9.add(jLabel14, new org.netbeans.lib.awtextra.AbsoluteConstraints(70, 30, -1, -1));
         jPanel9.add(jLabel16, new org.netbeans.lib.awtextra.AbsoluteConstraints(46, 22, -1, -1));
+
+        jLabel19.setFont(new java.awt.Font("Tahoma", 1, 12)); // NOI18N
+        jLabel19.setForeground(new java.awt.Color(45, 118, 232));
+        jLabel19.setText("Setting");
+        jPanel9.add(jLabel19, new org.netbeans.lib.awtextra.AbsoluteConstraints(70, 90, -1, -1));
 
         jPanel3.add(jPanel9);
 
@@ -394,6 +419,7 @@ public class Home extends javax.swing.JPanel {
 
 
     // Variables declaration - do not modify//GEN-BEGIN:variables
+    private javax.swing.JLabel jLabel1;
     private javax.swing.JLabel jLabel10;
     private javax.swing.JLabel jLabel11;
     private javax.swing.JLabel jLabel12;
@@ -401,6 +427,10 @@ public class Home extends javax.swing.JPanel {
     private javax.swing.JLabel jLabel14;
     private javax.swing.JLabel jLabel15;
     private javax.swing.JLabel jLabel16;
+    private javax.swing.JLabel jLabel17;
+    private javax.swing.JLabel jLabel18;
+    private javax.swing.JLabel jLabel19;
+    private javax.swing.JLabel jLabel2;
     private javax.swing.JLabel jLabel3;
     private javax.swing.JLabel jLabel4;
     private javax.swing.JLabel jLabel5;
