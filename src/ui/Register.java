@@ -5,6 +5,7 @@
  */
 package ui;
 
+import dal.Database;
 import factory.View;
 import factory.ViewFactory;
 import javax.swing.JPanel;
@@ -19,10 +20,19 @@ public class Register extends javax.swing.JPanel{
     /**
      * Creates new form Register
      */
+    
+    IChangeView parent;
+    Database db;
+    
     public Register() {
         initComponents();
     }
-
+    
+    public Register (IChangeView frame){
+        this();
+        parent = frame;
+    }
+    
     /**
      * This method is called from within the constructor to initialize the form.
      * WARNING: Do NOT modify this code. The content of this method is always
@@ -187,7 +197,7 @@ public class Register extends javax.swing.JPanel{
     }// </editor-fold>//GEN-END:initComponents
 
     private void jLabel6MouseClicked(java.awt.event.MouseEvent evt) {//GEN-FIRST:event_jLabel6MouseClicked
-
+         parent.requestView(ViewFactory.getView(parent, View.Login));
     }//GEN-LAST:event_jLabel6MouseClicked
 
     private void jRadioButton1MouseClicked(java.awt.event.MouseEvent evt) {//GEN-FIRST:event_jRadioButton1MouseClicked

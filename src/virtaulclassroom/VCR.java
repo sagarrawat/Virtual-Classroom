@@ -25,10 +25,10 @@ public class VCR extends javax.swing.JFrame implements IChangeView{
     private void setComponents(){
         this.setTitle("VCR");
         VPlayer vp = new VPlayer();
-        JPanel login = ViewFactory.getView(this, View.Login);
-        requestView(vp);
+        JPanel login = ViewFactory.getView(this, View.Assignment);
+        requestView(login);
         //vp.playMedia("https://www.youtube.com/watch?v=Qvd43XKY-f0");
-        vp.playMedia("/home/mukesh/NetBeansProjects/Virtual-Classroom/src/assets/Kitty.mp4");
+       // vp.playMedia("/home/sagar/NetBeansProjects/Virtual-Classroom/src/assets/Kitty.mp4");
     }
     
     @Override

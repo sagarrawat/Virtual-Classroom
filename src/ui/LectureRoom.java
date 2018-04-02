@@ -5,6 +5,11 @@
  */
 package ui;
 
+import dal.Database;
+import factory.View;
+import factory.ViewFactory;
+import virtaulclassroom.IChangeView;
+
 
 /**
  *
@@ -15,10 +20,18 @@ public class LectureRoom extends javax.swing.JPanel {
     /**
      * Creates new form ClassRoom
      */
+     
+    IChangeView parent;
+    Database db;
     
     
     public LectureRoom() {
         initComponents();
+    }
+    
+    public LectureRoom(IChangeView frame){
+        this();
+        parent = frame;
     }
 
     /**
@@ -47,8 +60,8 @@ public class LectureRoom extends javax.swing.JPanel {
         jLabel9 = new javax.swing.JLabel();
         jLabel11 = new javax.swing.JLabel();
         jPanel3 = new javax.swing.JPanel();
-        subjectName1 = new javax.swing.JLabel();
         subjectName3 = new javax.swing.JLabel();
+        subjectName1 = new javax.swing.JLabel();
         jInternalFrame1 = new javax.swing.JInternalFrame();
         jLabel1 = new javax.swing.JLabel();
         jLabel8 = new javax.swing.JLabel();
@@ -66,7 +79,7 @@ public class LectureRoom extends javax.swing.JPanel {
 
         setBackground(java.awt.Color.white);
 
-        jPanel2.setBackground(new java.awt.Color(37, 46, 56));
+        jPanel2.setBackground(new java.awt.Color(33, 137, 212));
         jPanel2.setLayout(new org.netbeans.lib.awtextra.AbsoluteLayout());
 
         jLabel2.setBackground(new java.awt.Color(237, 230, 230));
@@ -75,7 +88,7 @@ public class LectureRoom extends javax.swing.JPanel {
         jLabel2.setText("Lecture 2: Database Vs FileSystem");
         jLabel2.setBorder(javax.swing.BorderFactory.createEtchedBorder());
         jLabel2.setOpaque(true);
-        jPanel2.add(jLabel2, new org.netbeans.lib.awtextra.AbsoluteConstraints(0, 140, 280, 50));
+        jPanel2.add(jLabel2, new org.netbeans.lib.awtextra.AbsoluteConstraints(0, 110, 280, 50));
 
         jLabel3.setBackground(new java.awt.Color(237, 230, 230));
         jLabel3.setFont(new java.awt.Font("Lucida Grande", 1, 12)); // NOI18N
@@ -83,7 +96,7 @@ public class LectureRoom extends javax.swing.JPanel {
         jLabel3.setText("<html>Lecture 1 : Introduction to DBMS</html>");
         jLabel3.setBorder(javax.swing.BorderFactory.createEtchedBorder());
         jLabel3.setOpaque(true);
-        jPanel2.add(jLabel3, new org.netbeans.lib.awtextra.AbsoluteConstraints(0, 90, 280, 50));
+        jPanel2.add(jLabel3, new org.netbeans.lib.awtextra.AbsoluteConstraints(0, 60, 280, 50));
 
         jLabel5.setBackground(new java.awt.Color(237, 230, 230));
         jLabel5.setFont(new java.awt.Font("Lucida Grande", 1, 12)); // NOI18N
@@ -91,7 +104,7 @@ public class LectureRoom extends javax.swing.JPanel {
         jLabel5.setText("Lecture 5: Data Models ");
         jLabel5.setBorder(javax.swing.BorderFactory.createEtchedBorder());
         jLabel5.setOpaque(true);
-        jPanel2.add(jLabel5, new org.netbeans.lib.awtextra.AbsoluteConstraints(0, 290, 280, 50));
+        jPanel2.add(jLabel5, new org.netbeans.lib.awtextra.AbsoluteConstraints(0, 260, 280, 50));
 
         jLabel6.setBackground(new java.awt.Color(237, 230, 230));
         jLabel6.setFont(new java.awt.Font("Lucida Grande", 1, 12)); // NOI18N
@@ -99,7 +112,7 @@ public class LectureRoom extends javax.swing.JPanel {
         jLabel6.setText("Lecture 3: Types of Database");
         jLabel6.setBorder(javax.swing.BorderFactory.createEtchedBorder());
         jLabel6.setOpaque(true);
-        jPanel2.add(jLabel6, new org.netbeans.lib.awtextra.AbsoluteConstraints(0, 190, 280, 50));
+        jPanel2.add(jLabel6, new org.netbeans.lib.awtextra.AbsoluteConstraints(0, 160, 280, 50));
 
         jLabel7.setBackground(new java.awt.Color(237, 230, 230));
         jLabel7.setFont(new java.awt.Font("Lucida Grande", 1, 12)); // NOI18N
@@ -108,7 +121,7 @@ public class LectureRoom extends javax.swing.JPanel {
         jLabel7.setAlignmentX(0.5F);
         jLabel7.setBorder(javax.swing.BorderFactory.createEtchedBorder());
         jLabel7.setOpaque(true);
-        jPanel2.add(jLabel7, new org.netbeans.lib.awtextra.AbsoluteConstraints(0, 240, 280, 50));
+        jPanel2.add(jLabel7, new org.netbeans.lib.awtextra.AbsoluteConstraints(0, 210, 280, 50));
 
         jLabel10.setBackground(new java.awt.Color(237, 230, 230));
         jLabel10.setFont(new java.awt.Font("Lucida Grande", 1, 12)); // NOI18N
@@ -116,7 +129,7 @@ public class LectureRoom extends javax.swing.JPanel {
         jLabel10.setText("Lecture 6: Relation, Keys and Attributes");
         jLabel10.setBorder(javax.swing.BorderFactory.createEtchedBorder());
         jLabel10.setOpaque(true);
-        jPanel2.add(jLabel10, new org.netbeans.lib.awtextra.AbsoluteConstraints(0, 340, 280, 50));
+        jPanel2.add(jLabel10, new org.netbeans.lib.awtextra.AbsoluteConstraints(0, 310, 280, 50));
 
         jLabel13.setBackground(new java.awt.Color(237, 230, 230));
         jLabel13.setFont(new java.awt.Font("Lucida Grande", 1, 12)); // NOI18N
@@ -124,7 +137,7 @@ public class LectureRoom extends javax.swing.JPanel {
         jLabel13.setText("Lecture 5: Data Models ");
         jLabel13.setBorder(javax.swing.BorderFactory.createEtchedBorder());
         jLabel13.setOpaque(true);
-        jPanel2.add(jLabel13, new org.netbeans.lib.awtextra.AbsoluteConstraints(0, 440, 280, 50));
+        jPanel2.add(jLabel13, new org.netbeans.lib.awtextra.AbsoluteConstraints(0, 410, 280, 50));
 
         jLabel14.setBackground(new java.awt.Color(237, 230, 230));
         jLabel14.setFont(new java.awt.Font("Lucida Grande", 1, 12)); // NOI18N
@@ -133,19 +146,19 @@ public class LectureRoom extends javax.swing.JPanel {
         jLabel14.setAlignmentX(0.5F);
         jLabel14.setBorder(javax.swing.BorderFactory.createEtchedBorder());
         jLabel14.setOpaque(true);
-        jPanel2.add(jLabel14, new org.netbeans.lib.awtextra.AbsoluteConstraints(0, 390, 280, 50));
+        jPanel2.add(jLabel14, new org.netbeans.lib.awtextra.AbsoluteConstraints(0, 360, 280, 50));
 
-        subjectName2.setBackground(new java.awt.Color(37, 46, 56));
+        subjectName2.setBackground(new java.awt.Color(33, 137, 212));
         subjectName2.setFont(new java.awt.Font("Lucida Grande", 1, 14)); // NOI18N
         subjectName2.setForeground(java.awt.Color.white);
         subjectName2.setText("Database Management System");
         subjectName2.setAlignmentX(0.5F);
         subjectName2.setBorder(javax.swing.BorderFactory.createEtchedBorder());
         subjectName2.setOpaque(true);
-        jPanel2.add(subjectName2, new org.netbeans.lib.awtextra.AbsoluteConstraints(0, 0, 280, 90));
+        jPanel2.add(subjectName2, new org.netbeans.lib.awtextra.AbsoluteConstraints(0, 0, 280, 60));
 
         jScrollBar1.setVisibleAmount(70);
-        jPanel2.add(jScrollBar1, new org.netbeans.lib.awtextra.AbsoluteConstraints(280, 90, 20, 400));
+        jPanel2.add(jScrollBar1, new org.netbeans.lib.awtextra.AbsoluteConstraints(280, 60, 20, 400));
 
         playVideoPanel.setBackground(new java.awt.Color(5, 0, 0));
 
@@ -160,7 +173,7 @@ public class LectureRoom extends javax.swing.JPanel {
             .addGap(0, 0, Short.MAX_VALUE)
         );
 
-        jPanel1.setBackground(new java.awt.Color(37, 46, 56));
+        jPanel1.setBackground(new java.awt.Color(33, 137, 212));
 
         jLabel4.setFont(new java.awt.Font("Lucida Grande", 1, 18)); // NOI18N
         jLabel4.setForeground(java.awt.Color.white);
@@ -169,10 +182,15 @@ public class LectureRoom extends javax.swing.JPanel {
         jLabel9.setFont(new java.awt.Font("Lucida Grande", 1, 18)); // NOI18N
         jLabel9.setForeground(java.awt.Color.white);
         jLabel9.setText("Go Back");
+        jLabel9.addMouseListener(new java.awt.event.MouseAdapter() {
+            public void mouseClicked(java.awt.event.MouseEvent evt) {
+                jLabel9MouseClicked(evt);
+            }
+        });
 
         jLabel11.setFont(new java.awt.Font("Lucida Grande", 1, 18)); // NOI18N
         jLabel11.setForeground(java.awt.Color.white);
-        jLabel11.setText("Past Lectures");
+        jLabel11.setText("Virtual Classroom");
 
         javax.swing.GroupLayout jPanel1Layout = new javax.swing.GroupLayout(jPanel1);
         jPanel1.setLayout(jPanel1Layout);
@@ -183,9 +201,9 @@ public class LectureRoom extends javax.swing.JPanel {
                 .addComponent(jLabel4)
                 .addPreferredGap(javax.swing.LayoutStyle.ComponentPlacement.RELATED)
                 .addComponent(jLabel9)
-                .addGap(506, 506, 506)
+                .addGap(451, 451, 451)
                 .addComponent(jLabel11)
-                .addContainerGap(553, Short.MAX_VALUE))
+                .addContainerGap(572, Short.MAX_VALUE))
         );
         jPanel1Layout.setVerticalGroup(
             jPanel1Layout.createParallelGroup(javax.swing.GroupLayout.Alignment.LEADING)
@@ -199,7 +217,18 @@ public class LectureRoom extends javax.swing.JPanel {
                 .addContainerGap(21, Short.MAX_VALUE))
         );
 
-        jPanel3.setBackground(new java.awt.Color(37, 46, 56));
+        jPanel3.setBackground(new java.awt.Color(33, 137, 212));
+        jPanel3.setLayout(new org.netbeans.lib.awtextra.AbsoluteLayout());
+
+        subjectName3.setBackground(new java.awt.Color(33, 137, 212));
+        subjectName3.setFont(new java.awt.Font("Lucida Grande", 1, 14)); // NOI18N
+        subjectName3.setForeground(java.awt.Color.white);
+        subjectName3.setHorizontalAlignment(javax.swing.SwingConstants.CENTER);
+        subjectName3.setText("Lecutre Video");
+        subjectName3.setAlignmentX(0.5F);
+        subjectName3.setBorder(javax.swing.BorderFactory.createEtchedBorder());
+        subjectName3.setOpaque(true);
+        jPanel3.add(subjectName3, new org.netbeans.lib.awtextra.AbsoluteConstraints(0, 0, 370, 50));
 
         subjectName1.setBackground(new java.awt.Color(237, 230, 230));
         subjectName1.setFont(new java.awt.Font("Lucida Grande", 1, 14)); // NOI18N
@@ -209,30 +238,7 @@ public class LectureRoom extends javax.swing.JPanel {
         subjectName1.setAlignmentX(0.5F);
         subjectName1.setBorder(javax.swing.BorderFactory.createEtchedBorder());
         subjectName1.setOpaque(true);
-
-        subjectName3.setBackground(new java.awt.Color(37, 46, 56));
-        subjectName3.setFont(new java.awt.Font("Lucida Grande", 1, 14)); // NOI18N
-        subjectName3.setForeground(java.awt.Color.white);
-        subjectName3.setHorizontalAlignment(javax.swing.SwingConstants.CENTER);
-        subjectName3.setText("Lecutre Video");
-        subjectName3.setAlignmentX(0.5F);
-        subjectName3.setBorder(javax.swing.BorderFactory.createEtchedBorder());
-        subjectName3.setOpaque(true);
-
-        javax.swing.GroupLayout jPanel3Layout = new javax.swing.GroupLayout(jPanel3);
-        jPanel3.setLayout(jPanel3Layout);
-        jPanel3Layout.setHorizontalGroup(
-            jPanel3Layout.createParallelGroup(javax.swing.GroupLayout.Alignment.LEADING)
-            .addGroup(jPanel3Layout.createSequentialGroup()
-                .addComponent(subjectName3, javax.swing.GroupLayout.PREFERRED_SIZE, 380, javax.swing.GroupLayout.PREFERRED_SIZE)
-                .addGap(0, 0, 0)
-                .addComponent(subjectName1, javax.swing.GroupLayout.PREFERRED_SIZE, 380, javax.swing.GroupLayout.PREFERRED_SIZE))
-        );
-        jPanel3Layout.setVerticalGroup(
-            jPanel3Layout.createParallelGroup(javax.swing.GroupLayout.Alignment.LEADING)
-            .addComponent(subjectName3, javax.swing.GroupLayout.PREFERRED_SIZE, 50, javax.swing.GroupLayout.PREFERRED_SIZE)
-            .addComponent(subjectName1, javax.swing.GroupLayout.PREFERRED_SIZE, 50, javax.swing.GroupLayout.PREFERRED_SIZE)
-        );
+        jPanel3.add(subjectName1, new org.netbeans.lib.awtextra.AbsoluteConstraints(370, 0, 370, 50));
 
         jInternalFrame1.setIconifiable(true);
         jInternalFrame1.setMaximizable(true);
@@ -292,7 +298,7 @@ public class LectureRoom extends javax.swing.JPanel {
 
         jButton1.setBackground(new java.awt.Color(29, 152, 152));
         jButton1.setFont(new java.awt.Font("Lucida Grande", 1, 14)); // NOI18N
-        jButton1.setText("Ask Question");
+        jButton1.setText("submit");
 
         javax.swing.GroupLayout jInternalFrame1Layout = new javax.swing.GroupLayout(jInternalFrame1.getContentPane());
         jInternalFrame1.getContentPane().setLayout(jInternalFrame1Layout);
@@ -354,7 +360,7 @@ public class LectureRoom extends javax.swing.JPanel {
                 .addGap(27, 27, 27)
                 .addComponent(jLabel1, javax.swing.GroupLayout.PREFERRED_SIZE, 37, javax.swing.GroupLayout.PREFERRED_SIZE)
                 .addPreferredGap(javax.swing.LayoutStyle.ComponentPlacement.RELATED)
-                .addComponent(jScrollPane1, javax.swing.GroupLayout.DEFAULT_SIZE, 159, Short.MAX_VALUE)
+                .addComponent(jScrollPane1)
                 .addPreferredGap(javax.swing.LayoutStyle.ComponentPlacement.UNRELATED)
                 .addComponent(jButton1)
                 .addContainerGap())
@@ -364,17 +370,17 @@ public class LectureRoom extends javax.swing.JPanel {
         this.setLayout(layout);
         layout.setHorizontalGroup(
             layout.createParallelGroup(javax.swing.GroupLayout.Alignment.LEADING)
-            .addComponent(jPanel1, javax.swing.GroupLayout.PREFERRED_SIZE, javax.swing.GroupLayout.DEFAULT_SIZE, javax.swing.GroupLayout.PREFERRED_SIZE)
             .addGroup(layout.createSequentialGroup()
                 .addGap(10, 10, 10)
                 .addComponent(jPanel2, javax.swing.GroupLayout.PREFERRED_SIZE, javax.swing.GroupLayout.DEFAULT_SIZE, javax.swing.GroupLayout.PREFERRED_SIZE)
                 .addGap(10, 10, 10)
-                .addGroup(layout.createParallelGroup(javax.swing.GroupLayout.Alignment.LEADING)
-                    .addComponent(jPanel3, javax.swing.GroupLayout.PREFERRED_SIZE, javax.swing.GroupLayout.DEFAULT_SIZE, javax.swing.GroupLayout.PREFERRED_SIZE)
-                    .addComponent(playVideoPanel, javax.swing.GroupLayout.DEFAULT_SIZE, javax.swing.GroupLayout.DEFAULT_SIZE, Short.MAX_VALUE))
-                .addGap(10, 10, 10)
+                .addGroup(layout.createParallelGroup(javax.swing.GroupLayout.Alignment.LEADING, false)
+                    .addComponent(playVideoPanel, javax.swing.GroupLayout.DEFAULT_SIZE, javax.swing.GroupLayout.DEFAULT_SIZE, Short.MAX_VALUE)
+                    .addComponent(jPanel3, javax.swing.GroupLayout.PREFERRED_SIZE, 739, Short.MAX_VALUE))
+                .addGap(18, 18, 18)
                 .addComponent(jInternalFrame1, javax.swing.GroupLayout.PREFERRED_SIZE, javax.swing.GroupLayout.DEFAULT_SIZE, javax.swing.GroupLayout.PREFERRED_SIZE)
-                .addGap(10, 10, 10))
+                .addContainerGap(javax.swing.GroupLayout.DEFAULT_SIZE, Short.MAX_VALUE))
+            .addComponent(jPanel1, javax.swing.GroupLayout.DEFAULT_SIZE, javax.swing.GroupLayout.DEFAULT_SIZE, Short.MAX_VALUE)
         );
         layout.setVerticalGroup(
             layout.createParallelGroup(javax.swing.GroupLayout.Alignment.LEADING)
@@ -382,17 +388,20 @@ public class LectureRoom extends javax.swing.JPanel {
                 .addGap(20, 20, 20)
                 .addComponent(jPanel1, javax.swing.GroupLayout.PREFERRED_SIZE, javax.swing.GroupLayout.DEFAULT_SIZE, javax.swing.GroupLayout.PREFERRED_SIZE)
                 .addGap(30, 30, 30)
-                .addGroup(layout.createParallelGroup(javax.swing.GroupLayout.Alignment.LEADING)
-                    .addComponent(jPanel2, javax.swing.GroupLayout.PREFERRED_SIZE, javax.swing.GroupLayout.DEFAULT_SIZE, javax.swing.GroupLayout.PREFERRED_SIZE)
+                .addGroup(layout.createParallelGroup(javax.swing.GroupLayout.Alignment.TRAILING)
+                    .addComponent(jPanel2, javax.swing.GroupLayout.DEFAULT_SIZE, javax.swing.GroupLayout.DEFAULT_SIZE, Short.MAX_VALUE)
                     .addGroup(layout.createSequentialGroup()
                         .addComponent(jPanel3, javax.swing.GroupLayout.PREFERRED_SIZE, javax.swing.GroupLayout.DEFAULT_SIZE, javax.swing.GroupLayout.PREFERRED_SIZE)
-                        .addGap(0, 0, 0)
-                        .addComponent(playVideoPanel, javax.swing.GroupLayout.DEFAULT_SIZE, javax.swing.GroupLayout.DEFAULT_SIZE, Short.MAX_VALUE)
-                        .addGap(9, 9, 9))
-                    .addComponent(jInternalFrame1, javax.swing.GroupLayout.PREFERRED_SIZE, javax.swing.GroupLayout.DEFAULT_SIZE, javax.swing.GroupLayout.PREFERRED_SIZE))
-                .addGap(207, 207, 207))
+                        .addPreferredGap(javax.swing.LayoutStyle.ComponentPlacement.RELATED)
+                        .addComponent(playVideoPanel, javax.swing.GroupLayout.DEFAULT_SIZE, javax.swing.GroupLayout.DEFAULT_SIZE, Short.MAX_VALUE))
+                    .addComponent(jInternalFrame1))
+                .addGap(284, 284, 284))
         );
     }// </editor-fold>//GEN-END:initComponents
+
+    private void jLabel9MouseClicked(java.awt.event.MouseEvent evt) {//GEN-FIRST:event_jLabel9MouseClicked
+        parent.requestView (ViewFactory.getView (parent ,View.Home));
+    }//GEN-LAST:event_jLabel9MouseClicked
 
     
     public void playLecure (){

@@ -13,5 +13,7 @@ public enum View {
     Home,
     Login,
     Register,
-    LectureRoom
+    LectureRoom,
+    Setting,
+    Assignment
 }

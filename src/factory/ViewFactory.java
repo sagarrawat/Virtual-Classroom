@@ -22,13 +22,17 @@ public class ViewFactory {
     public static JPanel getView(IChangeView parent, View view){
         switch(view){
             case Home :
-                return new ui.Home();
+                return new ui.Home(parent);
             case Login :
                 return new ui.Login(parent);
             case Register :
-                return new ui.Register();
+                return new ui.Register(parent);
             case LectureRoom:
-                return new ui.LectureRoom();
+                return new ui.LectureRoom(parent);
+            case Setting :
+                return new ui.Setting(parent);
+            case Assignment :
+                return new ui.Assignment(parent);
         }
         return null;
     }
