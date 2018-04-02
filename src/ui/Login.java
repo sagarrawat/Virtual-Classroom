@@ -89,6 +89,11 @@ public class Login extends javax.swing.JPanel {
         jButton1.setForeground(new java.awt.Color(33, 137, 212));
         jButton1.setText("login");
         jButton1.setBorder(javax.swing.BorderFactory.createEmptyBorder(1, 1, 1, 1));
+        jButton1.addActionListener(new java.awt.event.ActionListener() {
+            public void actionPerformed(java.awt.event.ActionEvent evt) {
+                jButton1ActionPerformed(evt);
+            }
+        });
 
         jCheckBox1.setFont(new java.awt.Font("Lucida Grande", 1, 14)); // NOI18N
         jCheckBox1.setForeground(java.awt.Color.white);
@@ -171,8 +176,14 @@ public class Login extends javax.swing.JPanel {
     }// </editor-fold>//GEN-END:initComponents
 
     private void jLabel5MouseClicked(java.awt.event.MouseEvent evt) {//GEN-FIRST:event_jLabel5MouseClicked
-        new ui.Register().setVisible(true);
+        
+        parent.requestView(ViewFactory.getView(parent, View.Register));
     }//GEN-LAST:event_jLabel5MouseClicked
+
+    private void jButton1ActionPerformed(java.awt.event.ActionEvent evt) {//GEN-FIRST:event_jButton1ActionPerformed
+        // TODO add your handling code here:
+         parent.requestView(ViewFactory.getView(parent, View.LectureRoom));
+    }//GEN-LAST:event_jButton1ActionPerformed
 
 
     // Variables declaration - do not modify//GEN-BEGIN:variables

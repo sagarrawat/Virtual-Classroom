@@ -8,6 +8,7 @@ package virtaulclassroom;
 import factory.View;
 import factory.ViewFactory;
 import javax.swing.JPanel;
+import ui.partial.VPlayer;
 
 /**
  *
@@ -23,8 +24,11 @@ public class VCR extends javax.swing.JFrame implements IChangeView{
 
     private void setComponents(){
         this.setTitle("VCR");
-        JPanel login = ViewFactory.getView(this, View.LectureRoom);
-        requestView(login);
+        VPlayer vp = new VPlayer();
+        JPanel login = ViewFactory.getView(this, View.Login);
+        requestView(vp);
+        //vp.playMedia("https://www.youtube.com/watch?v=Qvd43XKY-f0");
+        vp.playMedia("/home/mukesh/NetBeansProjects/Virtual-Classroom/src/assets/Kitty.mp4");
     }
     
     @Override
