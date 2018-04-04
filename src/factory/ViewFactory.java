@@ -33,6 +33,8 @@ public class ViewFactory {
                 return new ui.Setting(parent);
             case Assignment :
                 return new ui.Assignment(parent);
+            case Resources:
+                return new ui.RExplorer();
         }
         return null;
     }

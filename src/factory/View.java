@@ -15,5 +15,6 @@ public enum View {
     Register,
     LectureRoom,
     Setting,
-    Assignment
+    Assignment,
+    Resources
 }

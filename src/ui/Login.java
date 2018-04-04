@@ -12,6 +12,7 @@ import factory.View;
 import factory.ViewFactory;
 import javax.swing.JOptionPane;
 import javax.swing.JPanel;
+import ui.partial.VPlayer;
 import virtaulclassroom.IChangeView;
 
 /**
@@ -182,7 +183,9 @@ public class Login extends javax.swing.JPanel {
 
     private void jButton1ActionPerformed(java.awt.event.ActionEvent evt) {//GEN-FIRST:event_jButton1ActionPerformed
         // TODO add your handling code here:
-         parent.requestView(ViewFactory.getView(parent, View.LectureRoom));
+        //VPlayer vp = new VPlayer();
+         parent.requestView(ViewFactory.getView(parent, View.Home));
+        //vp.playMedia("/home/mukesh/NetBeansProjects/Virtual-Classroom/src/assets/Kitty.mp4");
     }//GEN-LAST:event_jButton1ActionPerformed
 
 

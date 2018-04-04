@@ -9,6 +9,7 @@ import factory.View;
 import factory.ViewFactory;
 import java.awt.Color;
 import javax.swing.BorderFactory;
+import ui.partial.VPlayer;
 import virtaulclassroom.IChangeView;
 
 /**
@@ -188,6 +189,11 @@ public class Home extends javax.swing.JPanel {
         jPanel3.add(jPanel7);
 
         jPanel8.setBackground(java.awt.SystemColor.controlHighlight);
+        jPanel8.addMouseListener(new java.awt.event.MouseAdapter() {
+            public void mouseClicked(java.awt.event.MouseEvent evt) {
+                jPanel8MouseClicked(evt);
+            }
+        });
         jPanel8.setLayout(new org.netbeans.lib.awtextra.AbsoluteLayout());
         jPanel8.add(jLabel12, new org.netbeans.lib.awtextra.AbsoluteConstraints(46, 22, -1, -1));
 
@@ -268,11 +274,18 @@ public class Home extends javax.swing.JPanel {
 
     private void jPanel6MousePressed(java.awt.event.MouseEvent evt) {//GEN-FIRST:event_jPanel6MousePressed
         // TODO add your handling code here:
+        VPlayer vp = new VPlayer();
+        parent.requestView(vp);
     }//GEN-LAST:event_jPanel6MousePressed
 
     private void jPanel6MouseExited(java.awt.event.MouseEvent evt) {//GEN-FIRST:event_jPanel6MouseExited
         // TODO add your handling code here:
     }//GEN-LAST:event_jPanel6MouseExited
+
+    private void jPanel8MouseClicked(java.awt.event.MouseEvent evt) {//GEN-FIRST:event_jPanel8MouseClicked
+        // TODO add your handling code here:
+         parent.requestView(ViewFactory.getView(parent, View.Resources));
+    }//GEN-LAST:event_jPanel8MouseClicked
 
 
     // Variables declaration - do not modify//GEN-BEGIN:variables
