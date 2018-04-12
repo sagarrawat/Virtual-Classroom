@@ -54,7 +54,6 @@ public class Login extends javax.swing.JPanel {
         jButton1 = new javax.swing.JButton();
         jCheckBox1 = new javax.swing.JCheckBox();
         jLabel5 = new javax.swing.JLabel();
-        jLabel6 = new javax.swing.JLabel();
         jLabel7 = new javax.swing.JLabel();
         jLabel1 = new javax.swing.JLabel();
 
@@ -67,7 +66,7 @@ public class Login extends javax.swing.JPanel {
         jLabel2.setFont(new java.awt.Font("Lucida Grande", 1, 36)); // NOI18N
         jLabel2.setForeground(java.awt.Color.white);
         jLabel2.setText("Login");
-        LoginHeader.add(jLabel2, new org.netbeans.lib.awtextra.AbsoluteConstraints(360, 40, 180, 50));
+        LoginHeader.add(jLabel2, new org.netbeans.lib.awtextra.AbsoluteConstraints(360, 40, 130, 50));
 
         add(LoginHeader, new org.netbeans.lib.awtextra.AbsoluteConstraints(0, 0, 800, 107));
 
@@ -110,11 +109,6 @@ public class Login extends javax.swing.JPanel {
             }
         });
 
-        jLabel6.setBackground(java.awt.Color.white);
-        jLabel6.setFont(new java.awt.Font("Lucida Grande", 1, 14)); // NOI18N
-        jLabel6.setForeground(java.awt.Color.white);
-        jLabel6.setText("Forgot Account?");
-
         javax.swing.GroupLayout LoginBodyLayout = new javax.swing.GroupLayout(LoginBody);
         LoginBody.setLayout(LoginBodyLayout);
         LoginBodyLayout.setHorizontalGroup(
@@ -138,7 +132,6 @@ public class Login extends javax.swing.JPanel {
                     .addGroup(LoginBodyLayout.createSequentialGroup()
                         .addGap(86, 86, 86)
                         .addGroup(LoginBodyLayout.createParallelGroup(javax.swing.GroupLayout.Alignment.TRAILING)
-                            .addComponent(jLabel6, javax.swing.GroupLayout.PREFERRED_SIZE, 261, javax.swing.GroupLayout.PREFERRED_SIZE)
                             .addComponent(jLabel5, javax.swing.GroupLayout.PREFERRED_SIZE, 261, javax.swing.GroupLayout.PREFERRED_SIZE)
                             .addComponent(jButton1, javax.swing.GroupLayout.PREFERRED_SIZE, 78, javax.swing.GroupLayout.PREFERRED_SIZE))))
                 .addContainerGap(54, Short.MAX_VALUE))
@@ -158,11 +151,9 @@ public class Login extends javax.swing.JPanel {
                 .addComponent(jCheckBox1)
                 .addGap(15, 15, 15)
                 .addComponent(jButton1, javax.swing.GroupLayout.PREFERRED_SIZE, 35, javax.swing.GroupLayout.PREFERRED_SIZE)
-                .addGap(18, 18, 18)
-                .addComponent(jLabel6)
-                .addGap(26, 26, 26)
+                .addGap(30, 30, 30)
                 .addComponent(jLabel5)
-                .addContainerGap(75, Short.MAX_VALUE))
+                .addContainerGap(103, Short.MAX_VALUE))
         );
 
         add(LoginBody, new org.netbeans.lib.awtextra.AbsoluteConstraints(280, 133, 520, 400));
@@ -199,7 +190,6 @@ public class Login extends javax.swing.JPanel {
     private javax.swing.JLabel jLabel3;
     private javax.swing.JLabel jLabel4;
     private javax.swing.JLabel jLabel5;
-    private javax.swing.JLabel jLabel6;
     private javax.swing.JLabel jLabel7;
     private javax.swing.JPasswordField jPasswordField1;
     private javax.swing.JTextField jTextField1;

@@ -16,5 +16,7 @@ public enum View {
     LectureRoom,
     Setting,
     Assignment,
-    Resources
+    Resources,
+    LiveSessionRoom,
+    Master
 }

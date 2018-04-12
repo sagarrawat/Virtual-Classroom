@@ -26,7 +26,7 @@ public class VCR extends javax.swing.JFrame implements IChangeView{
 
     private void setComponents(){
         this.setTitle("VCR");
-        VPlayer vp = new VPlayer();
+        //VPlayer vp = new VPlayer();
         //RExplorer re = new RExplorer();
         
         JPanel login = ViewFactory.getView(this, View.Login);
@@ -66,7 +66,10 @@ public class VCR extends javax.swing.JFrame implements IChangeView{
         jMenu4 = new javax.swing.JMenu();
 
         setDefaultCloseOperation(javax.swing.WindowConstants.EXIT_ON_CLOSE);
+        setBackground(new java.awt.Color(33, 137, 212));
         getContentPane().add(statusBar1, java.awt.BorderLayout.PAGE_END);
+
+        jPanel1.setBackground(new java.awt.Color(33, 137, 212));
 
         jLabel1.setText("view");
         jPanel1.add(jLabel1);

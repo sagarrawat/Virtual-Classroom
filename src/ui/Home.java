@@ -117,11 +117,16 @@ public class Home extends javax.swing.JPanel {
         jPanel3.setLayout(new java.awt.GridLayout(2, 3, 25, 25));
 
         jPanel4.setBackground(java.awt.SystemColor.controlHighlight);
+        jPanel4.addMouseListener(new java.awt.event.MouseAdapter() {
+            public void mouseClicked(java.awt.event.MouseEvent evt) {
+                jPanel4MouseClicked(evt);
+            }
+        });
         jPanel4.setLayout(new org.netbeans.lib.awtextra.AbsoluteLayout());
 
         jLabel3.setFont(new java.awt.Font("Tahoma", 1, 12)); // NOI18N
         jLabel3.setForeground(new java.awt.Color(45, 118, 232));
-        jLabel3.setText(" Home");
+        jLabel3.setText("Master");
         jPanel4.add(jLabel3, new org.netbeans.lib.awtextra.AbsoluteConstraints(80, 80, 50, -1));
         jPanel4.add(jLabel4, new org.netbeans.lib.awtextra.AbsoluteConstraints(46, 22, -1, -1));
 
@@ -175,6 +180,11 @@ public class Home extends javax.swing.JPanel {
         jPanel3.add(jPanel6);
 
         jPanel7.setBackground(java.awt.SystemColor.controlHighlight);
+        jPanel7.addMouseListener(new java.awt.event.MouseAdapter() {
+            public void mouseClicked(java.awt.event.MouseEvent evt) {
+                jPanel7MouseClicked(evt);
+            }
+        });
         jPanel7.setLayout(new org.netbeans.lib.awtextra.AbsoluteLayout());
         jPanel7.add(jLabel10, new org.netbeans.lib.awtextra.AbsoluteConstraints(46, 22, -1, -1));
 
@@ -237,8 +247,8 @@ public class Home extends javax.swing.JPanel {
             jPanel2Layout.createParallelGroup(javax.swing.GroupLayout.Alignment.LEADING)
             .addGroup(jPanel2Layout.createSequentialGroup()
                 .addGap(84, 84, 84)
-                .addComponent(jPanel3, javax.swing.GroupLayout.DEFAULT_SIZE, 661, Short.MAX_VALUE)
-                .addGap(79, 79, 79))
+                .addComponent(jPanel3, javax.swing.GroupLayout.DEFAULT_SIZE, 667, Short.MAX_VALUE)
+                .addGap(73, 73, 73))
         );
         jPanel2Layout.setVerticalGroup(
             jPanel2Layout.createParallelGroup(javax.swing.GroupLayout.Alignment.LEADING)
@@ -274,8 +284,12 @@ public class Home extends javax.swing.JPanel {
 
     private void jPanel6MousePressed(java.awt.event.MouseEvent evt) {//GEN-FIRST:event_jPanel6MousePressed
         // TODO add your handling code here:
-        VPlayer vp = new VPlayer();
-        parent.requestView(vp);
+        //VPlayer vp = new VPlayer();
+        //parent.requestView(vp);
+        //vp.playMedia("/home/sagar/NetBeansProjects/Virtual-Classroom/src/assets/Kitty.mp4");
+        
+        parent.requestView(ViewFactory.getView (parent , View.LiveSessionRoom));
+        
     }//GEN-LAST:event_jPanel6MousePressed
 
     private void jPanel6MouseExited(java.awt.event.MouseEvent evt) {//GEN-FIRST:event_jPanel6MouseExited
@@ -286,6 +300,14 @@ public class Home extends javax.swing.JPanel {
         // TODO add your handling code here:
          parent.requestView(ViewFactory.getView(parent, View.Resources));
     }//GEN-LAST:event_jPanel8MouseClicked
+
+    private void jPanel4MouseClicked(java.awt.event.MouseEvent evt) {//GEN-FIRST:event_jPanel4MouseClicked
+         parent.requestView(ViewFactory.getView (parent , View.Master));
+    }//GEN-LAST:event_jPanel4MouseClicked
+
+    private void jPanel7MouseClicked(java.awt.event.MouseEvent evt) {//GEN-FIRST:event_jPanel7MouseClicked
+        parent.requestView(ViewFactory.getView (parent , View.Assignment));
+    }//GEN-LAST:event_jPanel7MouseClicked
 
 
     // Variables declaration - do not modify//GEN-BEGIN:variables
