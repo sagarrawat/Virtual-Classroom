@@ -8,14 +8,13 @@ package ui;
 import dal.Database;
 import factory.View;
 import factory.ViewFactory;
+import java.awt.BorderLayout;
 import java.awt.Color;
-import java.io.File;
-
-import javax.swing.JFileChooser;
 import javax.swing.JPanel;
 import org.icepdf.ri.common.ComponentKeyBinding;
 import org.icepdf.ri.common.SwingController;
 import org.icepdf.ri.common.SwingViewBuilder;
+import ui.partial.UploadAssignment;
 import virtaulclassroom.IChangeView;
 
 /**
@@ -31,13 +30,10 @@ public class Assignment extends javax.swing.JPanel {
     IChangeView parent;
     Database db;
     
-    javax.swing.JFileChooser fileChooser;
-    
     public Assignment() {
         
         initComponents();
-        
-        fileChooser = new javax.swing.JFileChooser();
+        setPanel ();
         jScrollPane1.getViewport().setBackground(new Color(33,137,212));
     }
     
@@ -46,6 +42,11 @@ public class Assignment extends javax.swing.JPanel {
         this.parent = parent;
     }
     
+    private void setPanel (){
+        jPanel1.add (new UploadAssignment(this) , BorderLayout.NORTH);
+        jPanel1.revalidate();
+        jPanel1.repaint();
+    }
 
     /**
      * This method is called from within the constructor to initialize the form.
@@ -58,17 +59,8 @@ public class Assignment extends javax.swing.JPanel {
 
         jScrollPane2 = new javax.swing.JScrollPane();
         AssignmentBody = new javax.swing.JPanel();
-        jButton2 = new javax.swing.JButton();
-        jLabel15 = new javax.swing.JLabel();
-        filePathTextField = new javax.swing.JTextField();
-        chooseFileButton = new javax.swing.JButton();
         jScrollPane1 = new javax.swing.JScrollPane();
-        jLabel16 = new javax.swing.JLabel();
-        filePathTextField1 = new javax.swing.JTextField();
-        filePathTextField2 = new javax.swing.JTextField();
-        jLabel17 = new javax.swing.JLabel();
-        filePathTextField3 = new javax.swing.JTextField();
-        jLabel18 = new javax.swing.JLabel();
+        jPanel1 = new javax.swing.JPanel();
         jPanel4 = new javax.swing.JPanel();
         jLabel7 = new javax.swing.JLabel();
         jLabel12 = new javax.swing.JLabel();
@@ -83,106 +75,32 @@ public class Assignment extends javax.swing.JPanel {
 
         AssignmentBody.setBackground(new java.awt.Color(33, 137, 212));
 
-        jButton2.setFont(new java.awt.Font("Lucida Grande", 1, 14)); // NOI18N
-        jButton2.setForeground(new java.awt.Color(33, 137, 212));
-        jButton2.setText("Upload");
-        jButton2.setBorder(javax.swing.BorderFactory.createEmptyBorder(1, 1, 1, 1));
-
-        jLabel15.setFont(new java.awt.Font("Lucida Grande", 1, 18)); // NOI18N
-        jLabel15.setForeground(java.awt.Color.white);
-        jLabel15.setText("Upload Assignment");
-
-        filePathTextField.setFont(new java.awt.Font("Lucida Grande", 1, 14)); // NOI18N
-
-        chooseFileButton.setFont(new java.awt.Font("Lucida Grande", 1, 12)); // NOI18N
-        chooseFileButton.setForeground(new java.awt.Color(33, 137, 212));
-        chooseFileButton.setText("Choose File");
-        chooseFileButton.setBorder(javax.swing.BorderFactory.createEmptyBorder(1, 1, 1, 1));
-        chooseFileButton.addActionListener(new java.awt.event.ActionListener() {
-            public void actionPerformed(java.awt.event.ActionEvent evt) {
-                chooseFileButtonActionPerformed(evt);
-            }
-        });
-
         jScrollPane1.setBorder(null);
         jScrollPane1.setViewportBorder(null);
 
-        jLabel16.setFont(new java.awt.Font("Lucida Grande", 1, 14)); // NOI18N
-        jLabel16.setForeground(java.awt.Color.white);
-        jLabel16.setText("Subject");
-
-        filePathTextField1.setFont(new java.awt.Font("Lucida Grande", 1, 14)); // NOI18N
-
-        filePathTextField2.setFont(new java.awt.Font("Lucida Grande", 1, 14)); // NOI18N
-
-        jLabel17.setFont(new java.awt.Font("Lucida Grande", 1, 14)); // NOI18N
-        jLabel17.setForeground(java.awt.Color.white);
-        jLabel17.setText("Course");
-
-        filePathTextField3.setFont(new java.awt.Font("Lucida Grande", 1, 14)); // NOI18N
-
-        jLabel18.setFont(new java.awt.Font("Lucida Grande", 1, 14)); // NOI18N
-        jLabel18.setForeground(java.awt.Color.white);
-        jLabel18.setText("Submission Date");
+        jPanel1.setBackground(new java.awt.Color(33, 137, 212));
+        jPanel1.setLayout(new java.awt.BorderLayout());
 
         javax.swing.GroupLayout AssignmentBodyLayout = new javax.swing.GroupLayout(AssignmentBody);
         AssignmentBody.setLayout(AssignmentBodyLayout);
         AssignmentBodyLayout.setHorizontalGroup(
             AssignmentBodyLayout.createParallelGroup(javax.swing.GroupLayout.Alignment.LEADING)
-            .addGroup(AssignmentBodyLayout.createSequentialGroup()
-                .addGroup(AssignmentBodyLayout.createParallelGroup(javax.swing.GroupLayout.Alignment.LEADING)
-                    .addGroup(AssignmentBodyLayout.createSequentialGroup()
-                        .addGap(37, 37, 37)
-                        .addComponent(jLabel15)
-                        .addGap(37, 37, 37)
-                        .addGroup(AssignmentBodyLayout.createParallelGroup(javax.swing.GroupLayout.Alignment.LEADING, false)
-                            .addGroup(AssignmentBodyLayout.createSequentialGroup()
-                                .addComponent(jLabel17)
-                                .addGap(140, 140, 140)
-                                .addGroup(AssignmentBodyLayout.createParallelGroup(javax.swing.GroupLayout.Alignment.LEADING)
-                                    .addComponent(filePathTextField1, javax.swing.GroupLayout.PREFERRED_SIZE, 202, javax.swing.GroupLayout.PREFERRED_SIZE)
-                                    .addComponent(filePathTextField2, javax.swing.GroupLayout.PREFERRED_SIZE, 202, javax.swing.GroupLayout.PREFERRED_SIZE)
-                                    .addComponent(filePathTextField3, javax.swing.GroupLayout.PREFERRED_SIZE, 202, javax.swing.GroupLayout.PREFERRED_SIZE)))
-                            .addComponent(filePathTextField))
-                        .addGap(61, 61, 61)
-                        .addComponent(chooseFileButton, javax.swing.GroupLayout.PREFERRED_SIZE, 98, javax.swing.GroupLayout.PREFERRED_SIZE))
-                    .addGroup(AssignmentBodyLayout.createSequentialGroup()
-                        .addGap(257, 257, 257)
-                        .addGroup(AssignmentBodyLayout.createParallelGroup(javax.swing.GroupLayout.Alignment.LEADING)
-                            .addComponent(jLabel18)
-                            .addComponent(jLabel16)
-                            .addComponent(jButton2, javax.swing.GroupLayout.PREFERRED_SIZE, 105, javax.swing.GroupLayout.PREFERRED_SIZE))))
-                .addContainerGap(423, Short.MAX_VALUE))
             .addGroup(javax.swing.GroupLayout.Alignment.TRAILING, AssignmentBodyLayout.createSequentialGroup()
                 .addGap(140, 140, 140)
-                .addComponent(jScrollPane1)
+                .addComponent(jScrollPane1, javax.swing.GroupLayout.DEFAULT_SIZE, 871, Short.MAX_VALUE)
                 .addGap(227, 227, 227))
+            .addGroup(AssignmentBodyLayout.createSequentialGroup()
+                .addContainerGap()
+                .addComponent(jPanel1, javax.swing.GroupLayout.PREFERRED_SIZE, 1054, javax.swing.GroupLayout.PREFERRED_SIZE)
+                .addContainerGap(javax.swing.GroupLayout.DEFAULT_SIZE, Short.MAX_VALUE))
         );
         AssignmentBodyLayout.setVerticalGroup(
             AssignmentBodyLayout.createParallelGroup(javax.swing.GroupLayout.Alignment.LEADING)
             .addGroup(AssignmentBodyLayout.createSequentialGroup()
-                .addGap(24, 24, 24)
-                .addGroup(AssignmentBodyLayout.createParallelGroup(javax.swing.GroupLayout.Alignment.BASELINE)
-                    .addComponent(jLabel15, javax.swing.GroupLayout.PREFERRED_SIZE, 39, javax.swing.GroupLayout.PREFERRED_SIZE)
-                    .addComponent(filePathTextField, javax.swing.GroupLayout.PREFERRED_SIZE, 39, javax.swing.GroupLayout.PREFERRED_SIZE)
-                    .addComponent(chooseFileButton, javax.swing.GroupLayout.PREFERRED_SIZE, 37, javax.swing.GroupLayout.PREFERRED_SIZE))
-                .addGap(18, 18, 18)
-                .addGroup(AssignmentBodyLayout.createParallelGroup(javax.swing.GroupLayout.Alignment.BASELINE)
-                    .addComponent(jLabel17, javax.swing.GroupLayout.PREFERRED_SIZE, 39, javax.swing.GroupLayout.PREFERRED_SIZE)
-                    .addComponent(filePathTextField2, javax.swing.GroupLayout.PREFERRED_SIZE, javax.swing.GroupLayout.DEFAULT_SIZE, javax.swing.GroupLayout.PREFERRED_SIZE))
-                .addGap(3, 3, 3)
-                .addGroup(AssignmentBodyLayout.createParallelGroup(javax.swing.GroupLayout.Alignment.BASELINE)
-                    .addComponent(jLabel16, javax.swing.GroupLayout.PREFERRED_SIZE, 39, javax.swing.GroupLayout.PREFERRED_SIZE)
-                    .addComponent(filePathTextField1, javax.swing.GroupLayout.PREFERRED_SIZE, javax.swing.GroupLayout.DEFAULT_SIZE, javax.swing.GroupLayout.PREFERRED_SIZE))
-                .addPreferredGap(javax.swing.LayoutStyle.ComponentPlacement.RELATED)
-                .addGroup(AssignmentBodyLayout.createParallelGroup(javax.swing.GroupLayout.Alignment.BASELINE)
-                    .addComponent(jLabel18, javax.swing.GroupLayout.PREFERRED_SIZE, 39, javax.swing.GroupLayout.PREFERRED_SIZE)
-                    .addComponent(filePathTextField3, javax.swing.GroupLayout.PREFERRED_SIZE, javax.swing.GroupLayout.DEFAULT_SIZE, javax.swing.GroupLayout.PREFERRED_SIZE))
-                .addGap(18, 18, 18)
-                .addComponent(jButton2, javax.swing.GroupLayout.PREFERRED_SIZE, 37, javax.swing.GroupLayout.PREFERRED_SIZE)
-                .addGap(16, 16, 16)
-                .addComponent(jScrollPane1, javax.swing.GroupLayout.PREFERRED_SIZE, 1123, javax.swing.GroupLayout.PREFERRED_SIZE)
-                .addContainerGap(javax.swing.GroupLayout.DEFAULT_SIZE, Short.MAX_VALUE))
+                .addComponent(jPanel1, javax.swing.GroupLayout.PREFERRED_SIZE, 301, javax.swing.GroupLayout.PREFERRED_SIZE)
+                .addPreferredGap(javax.swing.LayoutStyle.ComponentPlacement.RELATED, 28, Short.MAX_VALUE)
+                .addComponent(jScrollPane1, javax.swing.GroupLayout.PREFERRED_SIZE, 1037, javax.swing.GroupLayout.PREFERRED_SIZE)
+                .addGap(52, 52, 52))
         );
 
         jScrollPane2.setViewportView(AssignmentBody);
@@ -236,23 +154,9 @@ public class Assignment extends javax.swing.JPanel {
                 .addGap(25, 25, 25)
                 .addComponent(jPanel4, javax.swing.GroupLayout.PREFERRED_SIZE, javax.swing.GroupLayout.DEFAULT_SIZE, javax.swing.GroupLayout.PREFERRED_SIZE)
                 .addPreferredGap(javax.swing.LayoutStyle.ComponentPlacement.UNRELATED)
-                .addComponent(jScrollPane2, javax.swing.GroupLayout.DEFAULT_SIZE, 1418, Short.MAX_VALUE))
+                .addComponent(jScrollPane2))
         );
     }// </editor-fold>//GEN-END:initComponents
-
-    private void chooseFileButtonActionPerformed(java.awt.event.ActionEvent evt) {//GEN-FIRST:event_chooseFileButtonActionPerformed
-    
-        if (fileChooser.showOpenDialog(this) == JFileChooser.APPROVE_OPTION ){
-            File file = fileChooser.getSelectedFile();
-            filePathTextField.setText( file.getAbsolutePath());
-            
-        }
-        
-        try {
-            openpdf(filePathTextField.getText());
-        } catch (Exception ex) {
-        }
-    }//GEN-LAST:event_chooseFileButtonActionPerformed
 
     private void jLabel7MouseClicked(java.awt.event.MouseEvent evt) {//GEN-FIRST:event_jLabel7MouseClicked
         parent.requestView(ViewFactory.getView (parent, View.Home));
@@ -261,25 +165,16 @@ public class Assignment extends javax.swing.JPanel {
 
     // Variables declaration - do not modify//GEN-BEGIN:variables
     private javax.swing.JPanel AssignmentBody;
-    private javax.swing.JButton chooseFileButton;
-    private javax.swing.JTextField filePathTextField;
-    private javax.swing.JTextField filePathTextField1;
-    private javax.swing.JTextField filePathTextField2;
-    private javax.swing.JTextField filePathTextField3;
-    private javax.swing.JButton jButton2;
     private javax.swing.JLabel jLabel12;
-    private javax.swing.JLabel jLabel15;
-    private javax.swing.JLabel jLabel16;
-    private javax.swing.JLabel jLabel17;
-    private javax.swing.JLabel jLabel18;
     private javax.swing.JLabel jLabel7;
+    private javax.swing.JPanel jPanel1;
     private javax.swing.JPanel jPanel4;
     private javax.swing.JScrollPane jScrollPane1;
     private javax.swing.JScrollPane jScrollPane2;
     // End of variables declaration//GEN-END:variables
 
  
-    void openpdf(String file) throws Exception{
+    public void openpdf(String file) throws Exception{
    
         SwingController control = new SwingController();
         SwingViewBuilder builder = new SwingViewBuilder( control );

@@ -8,6 +8,11 @@ package ui;
 import dal.Database;
 import factory.View;
 import factory.ViewFactory;
+import java.awt.HeadlessException;
+import java.sql.PreparedStatement;
+import java.sql.SQLException;
+import java.util.Arrays;
+import javax.swing.JOptionPane;
 import virtaulclassroom.IChangeView;
 
 /**
@@ -44,9 +49,9 @@ public class Setting extends javax.swing.JPanel {
 
         LoginBody = new javax.swing.JPanel();
         jLabel4 = new javax.swing.JLabel();
-        jPasswordField1 = new javax.swing.JPasswordField();
-        jButton1 = new javax.swing.JButton();
-        jPasswordField2 = new javax.swing.JPasswordField();
+        cpasswordField = new javax.swing.JPasswordField();
+        submitButton = new javax.swing.JButton();
+        passwordField = new javax.swing.JPasswordField();
         jLabel8 = new javax.swing.JLabel();
         jPasswordField3 = new javax.swing.JPasswordField();
         jLabel9 = new javax.swing.JLabel();
@@ -54,7 +59,7 @@ public class Setting extends javax.swing.JPanel {
         jLabel1 = new javax.swing.JLabel();
         jLabel11 = new javax.swing.JLabel();
         jLabel10 = new javax.swing.JLabel();
-        jButton2 = new javax.swing.JButton();
+        logoutButton = new javax.swing.JButton();
 
         setBackground(new java.awt.Color(33, 137, 212));
 
@@ -64,19 +69,19 @@ public class Setting extends javax.swing.JPanel {
         jLabel4.setForeground(java.awt.Color.white);
         jLabel4.setText("Confirm Password");
 
-        jPasswordField1.setFont(new java.awt.Font("Lucida Grande", 0, 14)); // NOI18N
+        cpasswordField.setFont(new java.awt.Font("Lucida Grande", 0, 14)); // NOI18N
 
-        jButton1.setFont(new java.awt.Font("Lucida Grande", 1, 14)); // NOI18N
-        jButton1.setForeground(new java.awt.Color(33, 137, 212));
-        jButton1.setText("sumbit");
-        jButton1.setBorder(javax.swing.BorderFactory.createEmptyBorder(1, 1, 1, 1));
-        jButton1.addActionListener(new java.awt.event.ActionListener() {
+        submitButton.setFont(new java.awt.Font("Lucida Grande", 1, 14)); // NOI18N
+        submitButton.setForeground(new java.awt.Color(33, 137, 212));
+        submitButton.setText("sumbit");
+        submitButton.setBorder(javax.swing.BorderFactory.createEmptyBorder(1, 1, 1, 1));
+        submitButton.addActionListener(new java.awt.event.ActionListener() {
             public void actionPerformed(java.awt.event.ActionEvent evt) {
-                jButton1ActionPerformed(evt);
+                submitButtonActionPerformed(evt);
             }
         });
 
-        jPasswordField2.setFont(new java.awt.Font("Lucida Grande", 0, 14)); // NOI18N
+        passwordField.setFont(new java.awt.Font("Lucida Grande", 0, 14)); // NOI18N
 
         jLabel8.setFont(new java.awt.Font("Lucida Grande", 1, 18)); // NOI18N
         jLabel8.setForeground(java.awt.Color.white);
@@ -100,12 +105,12 @@ public class Setting extends javax.swing.JPanel {
                     .addComponent(jLabel4))
                 .addGap(35, 35, 35)
                 .addGroup(LoginBodyLayout.createParallelGroup(javax.swing.GroupLayout.Alignment.LEADING)
-                    .addComponent(jPasswordField1, javax.swing.GroupLayout.PREFERRED_SIZE, 346, javax.swing.GroupLayout.PREFERRED_SIZE)
-                    .addComponent(jPasswordField2, javax.swing.GroupLayout.PREFERRED_SIZE, 346, javax.swing.GroupLayout.PREFERRED_SIZE)
+                    .addComponent(cpasswordField, javax.swing.GroupLayout.PREFERRED_SIZE, 346, javax.swing.GroupLayout.PREFERRED_SIZE)
+                    .addComponent(passwordField, javax.swing.GroupLayout.PREFERRED_SIZE, 346, javax.swing.GroupLayout.PREFERRED_SIZE)
                     .addComponent(jPasswordField3, javax.swing.GroupLayout.PREFERRED_SIZE, 346, javax.swing.GroupLayout.PREFERRED_SIZE)
                     .addGroup(LoginBodyLayout.createSequentialGroup()
                         .addGap(91, 91, 91)
-                        .addComponent(jButton1, javax.swing.GroupLayout.PREFERRED_SIZE, 78, javax.swing.GroupLayout.PREFERRED_SIZE)))
+                        .addComponent(submitButton, javax.swing.GroupLayout.PREFERRED_SIZE, 78, javax.swing.GroupLayout.PREFERRED_SIZE)))
                 .addContainerGap(javax.swing.GroupLayout.DEFAULT_SIZE, Short.MAX_VALUE))
         );
         LoginBodyLayout.setVerticalGroup(
@@ -118,13 +123,13 @@ public class Setting extends javax.swing.JPanel {
                 .addGap(18, 18, 18)
                 .addGroup(LoginBodyLayout.createParallelGroup(javax.swing.GroupLayout.Alignment.BASELINE)
                     .addComponent(jLabel8)
-                    .addComponent(jPasswordField2, javax.swing.GroupLayout.PREFERRED_SIZE, 30, javax.swing.GroupLayout.PREFERRED_SIZE))
+                    .addComponent(passwordField, javax.swing.GroupLayout.PREFERRED_SIZE, 30, javax.swing.GroupLayout.PREFERRED_SIZE))
                 .addGap(18, 18, 18)
                 .addGroup(LoginBodyLayout.createParallelGroup(javax.swing.GroupLayout.Alignment.BASELINE)
                     .addComponent(jLabel4)
-                    .addComponent(jPasswordField1, javax.swing.GroupLayout.PREFERRED_SIZE, 30, javax.swing.GroupLayout.PREFERRED_SIZE))
+                    .addComponent(cpasswordField, javax.swing.GroupLayout.PREFERRED_SIZE, 30, javax.swing.GroupLayout.PREFERRED_SIZE))
                 .addGap(42, 42, 42)
-                .addComponent(jButton1, javax.swing.GroupLayout.PREFERRED_SIZE, 35, javax.swing.GroupLayout.PREFERRED_SIZE)
+                .addComponent(submitButton, javax.swing.GroupLayout.PREFERRED_SIZE, 35, javax.swing.GroupLayout.PREFERRED_SIZE)
                 .addContainerGap(121, Short.MAX_VALUE))
         );
 
@@ -168,14 +173,14 @@ public class Setting extends javax.swing.JPanel {
         jLabel10.setForeground(java.awt.Color.white);
         jLabel10.setText("Change Your Password");
 
-        jButton2.setBackground(new java.awt.Color(248, 73, 73));
-        jButton2.setFont(new java.awt.Font("Lucida Grande", 1, 14)); // NOI18N
-        jButton2.setForeground(java.awt.Color.white);
-        jButton2.setText("logout");
-        jButton2.setBorder(javax.swing.BorderFactory.createEmptyBorder(1, 1, 1, 1));
-        jButton2.addActionListener(new java.awt.event.ActionListener() {
+        logoutButton.setBackground(new java.awt.Color(248, 73, 73));
+        logoutButton.setFont(new java.awt.Font("Lucida Grande", 1, 14)); // NOI18N
+        logoutButton.setForeground(java.awt.Color.white);
+        logoutButton.setText("logout");
+        logoutButton.setBorder(javax.swing.BorderFactory.createEmptyBorder(1, 1, 1, 1));
+        logoutButton.addActionListener(new java.awt.event.ActionListener() {
             public void actionPerformed(java.awt.event.ActionEvent evt) {
-                jButton2ActionPerformed(evt);
+                logoutButtonActionPerformed(evt);
             }
         });
 
@@ -193,7 +198,7 @@ public class Setting extends javax.swing.JPanel {
                 .addContainerGap(javax.swing.GroupLayout.DEFAULT_SIZE, Short.MAX_VALUE))
             .addGroup(javax.swing.GroupLayout.Alignment.TRAILING, layout.createSequentialGroup()
                 .addContainerGap(javax.swing.GroupLayout.DEFAULT_SIZE, Short.MAX_VALUE)
-                .addComponent(jButton2, javax.swing.GroupLayout.PREFERRED_SIZE, 78, javax.swing.GroupLayout.PREFERRED_SIZE)
+                .addComponent(logoutButton, javax.swing.GroupLayout.PREFERRED_SIZE, 78, javax.swing.GroupLayout.PREFERRED_SIZE)
                 .addGap(36, 36, 36))
         );
         layout.setVerticalGroup(
@@ -202,7 +207,7 @@ public class Setting extends javax.swing.JPanel {
                 .addGap(26, 26, 26)
                 .addComponent(jPanel2, javax.swing.GroupLayout.PREFERRED_SIZE, javax.swing.GroupLayout.DEFAULT_SIZE, javax.swing.GroupLayout.PREFERRED_SIZE)
                 .addGap(18, 18, 18)
-                .addComponent(jButton2, javax.swing.GroupLayout.PREFERRED_SIZE, 35, javax.swing.GroupLayout.PREFERRED_SIZE)
+                .addComponent(logoutButton, javax.swing.GroupLayout.PREFERRED_SIZE, 35, javax.swing.GroupLayout.PREFERRED_SIZE)
                 .addGap(1, 1, 1)
                 .addComponent(jLabel10)
                 .addGap(18, 18, 18)
@@ -211,23 +216,33 @@ public class Setting extends javax.swing.JPanel {
         );
     }// </editor-fold>//GEN-END:initComponents
 
-    private void jButton1ActionPerformed(java.awt.event.ActionEvent evt) {//GEN-FIRST:event_jButton1ActionPerformed
-        parent.requestView(ViewFactory.getView(parent, View.LectureRoom));
-    }//GEN-LAST:event_jButton1ActionPerformed
+    private void submitButtonActionPerformed(java.awt.event.ActionEvent evt) {//GEN-FIRST:event_submitButtonActionPerformed
+        String password = Arrays.toString(passwordField.getPassword());
+        
+        try{
+            String sql = "";
+            PreparedStatement ps = db.connection.prepareStatement(sql);
+           /* ps.setString (1, password);
+              ps.executeUpdate();
+            */
+            
+            JOptionPane.showMessageDialog(this, "successfull");
+        
+        }catch (SQLException | HeadlessException e){}
+    }//GEN-LAST:event_submitButtonActionPerformed
 
     private void jLabel1MouseClicked(java.awt.event.MouseEvent evt) {//GEN-FIRST:event_jLabel1MouseClicked
         parent.requestView(ViewFactory.getView (parent, View.Home));
     }//GEN-LAST:event_jLabel1MouseClicked
 
-    private void jButton2ActionPerformed(java.awt.event.ActionEvent evt) {//GEN-FIRST:event_jButton2ActionPerformed
+    private void logoutButtonActionPerformed(java.awt.event.ActionEvent evt) {//GEN-FIRST:event_logoutButtonActionPerformed
         // TODO add your handling code here:
-    }//GEN-LAST:event_jButton2ActionPerformed
+    }//GEN-LAST:event_logoutButtonActionPerformed
 
 
     // Variables declaration - do not modify//GEN-BEGIN:variables
     private javax.swing.JPanel LoginBody;
-    private javax.swing.JButton jButton1;
-    private javax.swing.JButton jButton2;
+    private javax.swing.JPasswordField cpasswordField;
     private javax.swing.JLabel jLabel1;
     private javax.swing.JLabel jLabel10;
     private javax.swing.JLabel jLabel11;
@@ -235,8 +250,9 @@ public class Setting extends javax.swing.JPanel {
     private javax.swing.JLabel jLabel8;
     private javax.swing.JLabel jLabel9;
     private javax.swing.JPanel jPanel2;
-    private javax.swing.JPasswordField jPasswordField1;
-    private javax.swing.JPasswordField jPasswordField2;
     private javax.swing.JPasswordField jPasswordField3;
+    private javax.swing.JButton logoutButton;
+    private javax.swing.JPasswordField passwordField;
+    private javax.swing.JButton submitButton;
     // End of variables declaration//GEN-END:variables
 }

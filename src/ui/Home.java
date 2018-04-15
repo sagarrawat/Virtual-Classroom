@@ -7,9 +7,6 @@ package ui;
 
 import factory.View;
 import factory.ViewFactory;
-import java.awt.Color;
-import javax.swing.BorderFactory;
-import ui.partial.VPlayer;
 import virtaulclassroom.IChangeView;
 
 /**
