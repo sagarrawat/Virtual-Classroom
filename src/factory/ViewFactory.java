@@ -27,8 +27,6 @@ public class ViewFactory {
                 return new ui.Login(parent);
             case Register :
                 return new ui.Register(parent);
-            case LectureRoom:
-                return new ui.LectureRoom(parent);
             case Setting :
                 return new ui.Setting(parent);
             case Assignment :

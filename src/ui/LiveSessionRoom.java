@@ -8,8 +8,6 @@ package ui;
 import dal.Database;
 import factory.View;
 import factory.ViewFactory;
-import java.awt.BorderLayout;
-import javax.swing.JPanel;
 import ui.partial.Chat;
 import ui.partial.VPlayer;
 import virtaulclassroom.IChangeView;

@@ -22,7 +22,7 @@ public class VCR extends javax.swing.JFrame implements IChangeView{
         initComponents();
         setComponents();
         setExtendedState(java.awt.Frame.MAXIMIZED_BOTH);
-    }
+    } 
 
     private void setComponents(){
         this.setTitle("VCR");

@@ -6,9 +6,13 @@
 package dal;
 
 import entity.User;
+import entity.UserType;
+import java.awt.HeadlessException;
+import static java.awt.image.ImageObserver.WIDTH;
 import java.sql.PreparedStatement;
 import java.sql.ResultSet;
 import java.sql.SQLException;
+import javax.swing.JOptionPane;
 
 /**
  *
@@ -31,7 +35,7 @@ public class DerbyDatabase extends Database {
             ResultSet result = statement.executeQuery();
             if(result.next()){
                 user = new User();
-                user.id = "0";
+                user.id = 0;
                 user.name = result.getString("uname");
             }
         } 
@@ -40,5 +44,7 @@ public class DerbyDatabase extends Database {
         }
         return user;
     }
+    
+    
     
 }

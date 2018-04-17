@@ -5,6 +5,8 @@
  */
 package ui.partial;
 
+import utility.ChatThread;
+
 /**
  *
  * @author sagar
@@ -20,7 +22,8 @@ public class Chat extends javax.swing.JPanel {
     
     public Chat() {
         initComponents();
-        new utility.ChatThread(jTextPane1 , user);
+        ChatThread chatThread = new utility.ChatThread(jTextPane1 , user);
+        
     }
 
     /**

@@ -10,6 +10,6 @@ package entity;
  * @author mukesh
  */
 public class User {
-    public String id;
-    public String name;      
+    public int id;
+    public String name;
 }

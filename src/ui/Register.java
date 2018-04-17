@@ -225,43 +225,13 @@ public class Register extends javax.swing.JPanel{
     private void registerButtonActionPerformed(java.awt.event.ActionEvent evt) {//GEN-FIRST:event_registerButtonActionPerformed
         
         if (facultyRadioButton.isSelected())
-            this.registerUser(UserType.FACULTY);
+            db.registerUser(UserType.FACULTY);
         
         else
-            this.registerUser(UserType.STUDENT);
+            db.registerUser(UserType.STUDENT);
         
     }//GEN-LAST:event_registerButtonActionPerformed
 
-    private void registerUser (UserType type){
-        
-        String name = nameField.getText();
-        String id = idField.getText();
-        String password = Arrays.toString(passwordField.getPassword());
-        String phone = phoneField.getText();
-        String course = courseComboBox.getSelectedItem().toString();
-        
-        if (type == UserType.STUDENT)
-            try{
-                String sql = "insert into user values (? , ? , ? , ? , ?)";
-                PreparedStatement ps = db.connection.prepareStatement(sql);
-                ps.setString (1, id);
-                ps.setString (2, name);
-                ps.setString (3, password);
-                ps.setString (4, phone);
-                ps.setString (5, course);
-
-                ps.executeUpdate();
-
-                JOptionPane.showMessageDialog(this, "You are Successfully Registered to VCR", "Successfull", WIDTH);
-
-            }catch (SQLException | HeadlessException e){
-                e.printStackTrace();
-            }
-        
-        else if (type == UserType.FACULTY){
-        }
-    }
-    
 
     // Variables declaration - do not modify//GEN-BEGIN:variables
     private javax.swing.JPanel LoginBody;

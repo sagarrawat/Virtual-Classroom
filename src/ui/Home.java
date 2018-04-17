@@ -276,14 +276,10 @@ public class Home extends javax.swing.JPanel {
     }//GEN-LAST:event_jPanel9MouseClicked
 
     private void jPanel5MouseClicked(java.awt.event.MouseEvent evt) {//GEN-FIRST:event_jPanel5MouseClicked
-        parent.requestView(ViewFactory.getView(parent, View.LectureRoom));
+        parent.requestView(ViewFactory.getView(parent, View.LiveSessionRoom));
     }//GEN-LAST:event_jPanel5MouseClicked
 
     private void jPanel6MousePressed(java.awt.event.MouseEvent evt) {//GEN-FIRST:event_jPanel6MousePressed
-        // TODO add your handling code here:
-        //VPlayer vp = new VPlayer();
-        //parent.requestView(vp);
-        //vp.playMedia("/home/sagar/NetBeansProjects/Virtual-Classroom/src/assets/Kitty.mp4");
         
         parent.requestView(ViewFactory.getView (parent , View.LiveSessionRoom));
         

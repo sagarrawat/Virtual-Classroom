@@ -8,8 +8,6 @@ package ui;
 import dal.Database;
 import factory.View;
 import factory.ViewFactory;
-import java.sql.PreparedStatement;
-import java.sql.ResultSet;
 import java.util.Arrays;
 import virtaulclassroom.IChangeView;
 
@@ -183,34 +181,13 @@ public class Login extends javax.swing.JPanel {
         String username = usernameField.getText();
         String password = Arrays.toString(passwordField.getPassword());
         
-        if (authenticUser(username , password))
+        if (db.authenticUser(username , password))
             parent.requestView(ViewFactory.getView(parent, View.Home));
         else
             invalidUserLabel.setText ("Please Enter correct Details");
          
     }//GEN-LAST:event_jButton1ActionPerformed
 
-    private boolean authenticUser (String username , String password){
-        if (1<2)
-            return true;
-        try{
-            String sql = "select (1) from users where username = ? and password = ?";
-            PreparedStatement ps = db.connection.prepareStatement(sql);
-            ps.setString (1, username);
-            ps.setString (2, password);
-            ResultSet rs = ps.executeQuery(sql);
-            
-            if (rs.next())
-                return true;
-            else 
-                return false;
-        
-        }catch (Exception e){
-            return false;
-        }
-              
-    }
-    
     
     // Variables declaration - do not modify//GEN-BEGIN:variables
     private javax.swing.JPanel LoginBody;

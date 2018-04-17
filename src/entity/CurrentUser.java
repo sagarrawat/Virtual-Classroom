@@ -12,9 +12,17 @@ package entity;
 public class CurrentUser {
     
     private User user;
+    private static CurrentUser currentUser;
     
     private CurrentUser(){
         
+    }
+    
+    public static CurrentUser getCurrentUser (){
+        if (currentUser == null)
+            return new CurrentUser();
+        else 
+            return currentUser;
     }
     
     public User getUser (){
