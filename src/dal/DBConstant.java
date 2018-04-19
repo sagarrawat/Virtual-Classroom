@@ -10,8 +10,8 @@ package dal;
  * @author mukesh
  */
 public class DBConstant {
-    public static final String SQL_DRIVER = "org.apache.derby.jdbc.ClientDriver";
-    public static final String SQL_CON = "jdbc:derby://localhost:1527/VCR";
-    public static final String USER = "vcr";
-    public static final String PASSWORD = "vcr@123";
+    public static final String SQL_DRIVER = "com.mysql.jdbc.Driver";
+    public static final String SQL_CON = "jdbc:mysql://localhost:3306/vcrdb";
+    public static final String USER = "root";
+    public static final String PASSWORD = "root@123";
 }

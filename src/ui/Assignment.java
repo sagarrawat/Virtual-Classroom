@@ -47,17 +47,15 @@ public class Assignment extends javax.swing.JPanel {
     }
     
     private void setPanel (){
+        
         User user = CurrentUser.getCurrentUser().getUser();
         
-        if (user.getType() == UserType.FACULTY) {
+        if (user.getType() == UserType.FACULTY) 
             jPanel1.add (new UploadAssignment(this) , BorderLayout.NORTH);
-        }
-        else if (user.getType() == UserType.STUDENT) {
+        
+        else if (user.getType() == UserType.STUDENT) 
             jPanel1.add (new ViewAssignment(this) , BorderLayout.NORTH);
-        }
-        System.out.println (user.getUsername() + " and "+ user.getType());
-        jPanel1.revalidate();
-        jPanel1.repaint();
+        
     }
 
     /**
