@@ -5,8 +5,11 @@
  */
 package ui;
 
+import entity.CurrentUser;
+import entity.User;
 import factory.View;
 import factory.ViewFactory;
+import java.awt.Color;
 import virtaulclassroom.IChangeView;
 
 /**
@@ -26,8 +29,35 @@ public class Home extends javax.swing.JPanel {
     public Home(IChangeView parent){
         this();
         this.parent = parent;
+        setHome();
     }
 
+    
+    private void setHome (){
+        
+        CurrentUser currentUser = CurrentUser.getCurrentUser();
+        User user = currentUser.getUser();
+        
+        if (null != user.getType())switch (user.getType()) {
+            
+            case ADMIN:
+                menuLabel1.setText("master");
+                break;
+                
+            case FACULTY:
+                menuLabel1.setText("faculty home");
+                menuLabel2.setText("something room");
+                menuLabel3.setText("Live Session");
+                break;
+                
+            case STUDENT:
+                menuLabel1.setText("Home");
+                menuLabel2.setText("something room");
+                menuLabel3.setText("Live Session");
+                break;
+        }
+    }
+    
     /**
      * This method is called from within the constructor to initialize the form.
      * WARNING: Do NOT modify this code. The content of this method is always
@@ -44,29 +74,29 @@ public class Home extends javax.swing.JPanel {
         jPanel2 = new javax.swing.JPanel();
         jPanel3 = new javax.swing.JPanel();
         jPanel4 = new javax.swing.JPanel();
-        jLabel3 = new javax.swing.JLabel();
+        menuLabel1 = new javax.swing.JLabel();
         jLabel4 = new javax.swing.JLabel();
         jLabel21 = new javax.swing.JLabel();
         jPanel5 = new javax.swing.JPanel();
-        jLabel5 = new javax.swing.JLabel();
+        menuLabel2 = new javax.swing.JLabel();
         jLabel6 = new javax.swing.JLabel();
         jLabel20 = new javax.swing.JLabel();
         jPanel6 = new javax.swing.JPanel();
         jLabel7 = new javax.swing.JLabel();
         jLabel8 = new javax.swing.JLabel();
-        jLabel17 = new javax.swing.JLabel();
+        menuLabel3 = new javax.swing.JLabel();
         jPanel7 = new javax.swing.JPanel();
         jLabel10 = new javax.swing.JLabel();
-        jLabel11 = new javax.swing.JLabel();
+        menuLabel4 = new javax.swing.JLabel();
         jLabel2 = new javax.swing.JLabel();
         jPanel8 = new javax.swing.JPanel();
         jLabel12 = new javax.swing.JLabel();
         jLabel9 = new javax.swing.JLabel();
-        jLabel18 = new javax.swing.JLabel();
+        menuLabel5 = new javax.swing.JLabel();
         jPanel9 = new javax.swing.JPanel();
         jLabel14 = new javax.swing.JLabel();
         jLabel16 = new javax.swing.JLabel();
-        jLabel19 = new javax.swing.JLabel();
+        menuLabel6 = new javax.swing.JLabel();
 
         jPanel1.setBackground(new java.awt.Color(45, 118, 232));
 
@@ -118,13 +148,19 @@ public class Home extends javax.swing.JPanel {
             public void mouseClicked(java.awt.event.MouseEvent evt) {
                 jPanel4MouseClicked(evt);
             }
+            public void mouseExited(java.awt.event.MouseEvent evt) {
+                jPanel4MouseExited(evt);
+            }
+            public void mouseEntered(java.awt.event.MouseEvent evt) {
+                jPanel4MouseEntered(evt);
+            }
         });
         jPanel4.setLayout(new org.netbeans.lib.awtextra.AbsoluteLayout());
 
-        jLabel3.setFont(new java.awt.Font("Tahoma", 1, 12)); // NOI18N
-        jLabel3.setForeground(new java.awt.Color(45, 118, 232));
-        jLabel3.setText("Master");
-        jPanel4.add(jLabel3, new org.netbeans.lib.awtextra.AbsoluteConstraints(80, 80, 50, -1));
+        menuLabel1.setFont(new java.awt.Font("Tahoma", 1, 12)); // NOI18N
+        menuLabel1.setForeground(new java.awt.Color(45, 118, 232));
+        menuLabel1.setText("Master");
+        jPanel4.add(menuLabel1, new org.netbeans.lib.awtextra.AbsoluteConstraints(80, 80, 50, -1));
         jPanel4.add(jLabel4, new org.netbeans.lib.awtextra.AbsoluteConstraints(46, 22, -1, -1));
 
         jLabel21.setIcon(new javax.swing.ImageIcon(getClass().getResource("/Resources/icons/home_48px.png"))); // NOI18N
@@ -140,10 +176,10 @@ public class Home extends javax.swing.JPanel {
         });
         jPanel5.setLayout(new org.netbeans.lib.awtextra.AbsoluteLayout());
 
-        jLabel5.setFont(new java.awt.Font("Tahoma", 1, 12)); // NOI18N
-        jLabel5.setForeground(new java.awt.Color(45, 118, 232));
-        jLabel5.setText("Classroom");
-        jPanel5.add(jLabel5, new org.netbeans.lib.awtextra.AbsoluteConstraints(60, 80, -1, -1));
+        menuLabel2.setFont(new java.awt.Font("Tahoma", 1, 12)); // NOI18N
+        menuLabel2.setForeground(new java.awt.Color(45, 118, 232));
+        menuLabel2.setText("Classroom");
+        jPanel5.add(menuLabel2, new org.netbeans.lib.awtextra.AbsoluteConstraints(60, 80, -1, -1));
         jPanel5.add(jLabel6, new org.netbeans.lib.awtextra.AbsoluteConstraints(46, 22, -1, -1));
 
         jLabel20.setIcon(new javax.swing.ImageIcon(getClass().getResource("/Resources/icons/classroom_48px.png"))); // NOI18N
@@ -169,10 +205,10 @@ public class Home extends javax.swing.JPanel {
         jPanel6.add(jLabel7, new org.netbeans.lib.awtextra.AbsoluteConstraints(80, 30, -1, -1));
         jPanel6.add(jLabel8, new org.netbeans.lib.awtextra.AbsoluteConstraints(46, 22, -1, -1));
 
-        jLabel17.setFont(new java.awt.Font("Tahoma", 1, 12)); // NOI18N
-        jLabel17.setForeground(new java.awt.Color(45, 118, 232));
-        jLabel17.setText("Discussion/Queries");
-        jPanel6.add(jLabel17, new org.netbeans.lib.awtextra.AbsoluteConstraints(30, 80, -1, -1));
+        menuLabel3.setFont(new java.awt.Font("Tahoma", 1, 12)); // NOI18N
+        menuLabel3.setForeground(new java.awt.Color(45, 118, 232));
+        menuLabel3.setText("Discussion/Queries");
+        jPanel6.add(menuLabel3, new org.netbeans.lib.awtextra.AbsoluteConstraints(30, 80, -1, -1));
 
         jPanel3.add(jPanel6);
 
@@ -185,10 +221,10 @@ public class Home extends javax.swing.JPanel {
         jPanel7.setLayout(new org.netbeans.lib.awtextra.AbsoluteLayout());
         jPanel7.add(jLabel10, new org.netbeans.lib.awtextra.AbsoluteConstraints(46, 22, -1, -1));
 
-        jLabel11.setFont(new java.awt.Font("Tahoma", 1, 12)); // NOI18N
-        jLabel11.setForeground(new java.awt.Color(45, 118, 232));
-        jLabel11.setText("Assingment");
-        jPanel7.add(jLabel11, new org.netbeans.lib.awtextra.AbsoluteConstraints(60, 80, -1, -1));
+        menuLabel4.setFont(new java.awt.Font("Tahoma", 1, 12)); // NOI18N
+        menuLabel4.setForeground(new java.awt.Color(45, 118, 232));
+        menuLabel4.setText("Assingment");
+        jPanel7.add(menuLabel4, new org.netbeans.lib.awtextra.AbsoluteConstraints(60, 80, -1, -1));
 
         jLabel2.setIcon(new javax.swing.ImageIcon(getClass().getResource("/Resources/icons/classroom_48px.png"))); // NOI18N
         jPanel7.add(jLabel2, new org.netbeans.lib.awtextra.AbsoluteConstraints(70, 30, 60, -1));
@@ -210,10 +246,10 @@ public class Home extends javax.swing.JPanel {
         jLabel9.setToolTipText("");
         jPanel8.add(jLabel9, new org.netbeans.lib.awtextra.AbsoluteConstraints(70, 30, -1, -1));
 
-        jLabel18.setFont(new java.awt.Font("Tahoma", 1, 12)); // NOI18N
-        jLabel18.setForeground(new java.awt.Color(45, 118, 232));
-        jLabel18.setText("Resources");
-        jPanel8.add(jLabel18, new org.netbeans.lib.awtextra.AbsoluteConstraints(60, 90, -1, -1));
+        menuLabel5.setFont(new java.awt.Font("Tahoma", 1, 12)); // NOI18N
+        menuLabel5.setForeground(new java.awt.Color(45, 118, 232));
+        menuLabel5.setText("Resources");
+        jPanel8.add(menuLabel5, new org.netbeans.lib.awtextra.AbsoluteConstraints(60, 90, -1, -1));
 
         jPanel3.add(jPanel8);
 
@@ -231,10 +267,10 @@ public class Home extends javax.swing.JPanel {
         jPanel9.add(jLabel14, new org.netbeans.lib.awtextra.AbsoluteConstraints(70, 30, -1, -1));
         jPanel9.add(jLabel16, new org.netbeans.lib.awtextra.AbsoluteConstraints(46, 22, -1, -1));
 
-        jLabel19.setFont(new java.awt.Font("Tahoma", 1, 12)); // NOI18N
-        jLabel19.setForeground(new java.awt.Color(45, 118, 232));
-        jLabel19.setText("Setting");
-        jPanel9.add(jLabel19, new org.netbeans.lib.awtextra.AbsoluteConstraints(70, 90, -1, -1));
+        menuLabel6.setFont(new java.awt.Font("Tahoma", 1, 12)); // NOI18N
+        menuLabel6.setForeground(new java.awt.Color(45, 118, 232));
+        menuLabel6.setText("Setting");
+        jPanel9.add(menuLabel6, new org.netbeans.lib.awtextra.AbsoluteConstraints(70, 90, -1, -1));
 
         jPanel3.add(jPanel9);
 
@@ -286,11 +322,10 @@ public class Home extends javax.swing.JPanel {
     }//GEN-LAST:event_jPanel6MousePressed
 
     private void jPanel6MouseExited(java.awt.event.MouseEvent evt) {//GEN-FIRST:event_jPanel6MouseExited
-        // TODO add your handling code here:
+
     }//GEN-LAST:event_jPanel6MouseExited
 
     private void jPanel8MouseClicked(java.awt.event.MouseEvent evt) {//GEN-FIRST:event_jPanel8MouseClicked
-        // TODO add your handling code here:
          parent.requestView(ViewFactory.getView(parent, View.Resources));
     }//GEN-LAST:event_jPanel8MouseClicked
 
@@ -302,25 +337,27 @@ public class Home extends javax.swing.JPanel {
         parent.requestView(ViewFactory.getView (parent , View.Assignment));
     }//GEN-LAST:event_jPanel7MouseClicked
 
+    private void jPanel4MouseEntered(java.awt.event.MouseEvent evt) {//GEN-FIRST:event_jPanel4MouseEntered
+        jPanel4.setBackground(Color.WHITE);
+    }//GEN-LAST:event_jPanel4MouseEntered
+
+    private void jPanel4MouseExited(java.awt.event.MouseEvent evt) {//GEN-FIRST:event_jPanel4MouseExited
+        jPanel4.setBackground(Color.getColor("#e3e3e3"));
+    }//GEN-LAST:event_jPanel4MouseExited
+
 
     // Variables declaration - do not modify//GEN-BEGIN:variables
     private javax.swing.JLabel jLabel1;
     private javax.swing.JLabel jLabel10;
-    private javax.swing.JLabel jLabel11;
     private javax.swing.JLabel jLabel12;
     private javax.swing.JLabel jLabel13;
     private javax.swing.JLabel jLabel14;
     private javax.swing.JLabel jLabel15;
     private javax.swing.JLabel jLabel16;
-    private javax.swing.JLabel jLabel17;
-    private javax.swing.JLabel jLabel18;
-    private javax.swing.JLabel jLabel19;
     private javax.swing.JLabel jLabel2;
     private javax.swing.JLabel jLabel20;
     private javax.swing.JLabel jLabel21;
-    private javax.swing.JLabel jLabel3;
     private javax.swing.JLabel jLabel4;
-    private javax.swing.JLabel jLabel5;
     private javax.swing.JLabel jLabel6;
     private javax.swing.JLabel jLabel7;
     private javax.swing.JLabel jLabel8;
@@ -334,5 +371,11 @@ public class Home extends javax.swing.JPanel {
     private javax.swing.JPanel jPanel7;
     private javax.swing.JPanel jPanel8;
     private javax.swing.JPanel jPanel9;
+    private javax.swing.JLabel menuLabel1;
+    private javax.swing.JLabel menuLabel2;
+    private javax.swing.JLabel menuLabel3;
+    private javax.swing.JLabel menuLabel4;
+    private javax.swing.JLabel menuLabel5;
+    private javax.swing.JLabel menuLabel6;
     // End of variables declaration//GEN-END:variables
 }

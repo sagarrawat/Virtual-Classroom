@@ -6,13 +6,7 @@
 package dal;
 
 import entity.User;
-import entity.UserType;
-import java.awt.HeadlessException;
-import static java.awt.image.ImageObserver.WIDTH;
-import java.sql.PreparedStatement;
-import java.sql.ResultSet;
 import java.sql.SQLException;
-import javax.swing.JOptionPane;
 
 /**
  *
@@ -29,14 +23,14 @@ public class DerbyDatabase extends Database {
         User user = null;
         try {
             String query = "SELECT uname FROM USERINFO WHERE uname = ? AND password = ?";
-            PreparedStatement statement = connection.prepareStatement(query);
-            statement.setString(1, username);
-            statement.setString(2, password);
-            ResultSet result = statement.executeQuery();
-            if(result.next()){
-                user = new User();
-                user.id = 0;
-                user.name = result.getString("uname");
+            
+            ps= connection.prepareStatement(query);
+            ps.setString(1, username);
+            ps.setString(2, password);
+            rs = ps.executeQuery();
+            
+            if(rs.next()){
+                user = new User(rs.getString("username") , null );      // User (username , UserType)
             }
         } 
         catch (SQLException ex) {

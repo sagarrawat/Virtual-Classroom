@@ -11,25 +11,28 @@ package entity;
  */
 public class CurrentUser {
     
-    private User user;
+    private static User user;
     private static CurrentUser currentUser;
     
-    private CurrentUser(){
-        
+    private CurrentUser (){
+    
+    }
+    
+    
+    public static void setCurrentUser (User user){
+        if (user != null)
+            CurrentUser.user = user;
     }
     
     public static CurrentUser getCurrentUser (){
-        if (currentUser == null)
+        if (currentUser == null && user != null)
             return new CurrentUser();
         else 
             return currentUser;
     }
     
     public User getUser (){
-        return new User();
+        return user;
     }
     
-    public void setUser (User user){
-        this.user = user;
-    }
 }

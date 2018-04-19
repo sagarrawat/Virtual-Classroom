@@ -6,14 +6,9 @@
 package ui;
 
 import dal.Database;
-import entity.UserType;
 import factory.View;
 import factory.ViewFactory;
-import java.awt.HeadlessException;
-import java.sql.PreparedStatement;
-import java.sql.SQLException;
 import java.util.Arrays;
-import javax.swing.JOptionPane;
 import virtaulclassroom.IChangeView;
 
 /**
@@ -225,10 +220,25 @@ public class Register extends javax.swing.JPanel{
     private void registerButtonActionPerformed(java.awt.event.ActionEvent evt) {//GEN-FIRST:event_registerButtonActionPerformed
         
         if (facultyRadioButton.isSelected())
-            db.registerUser(UserType.FACULTY);
+            db.registerFaculty(new String[] {
+                
+                idField.getText(),                              // id no. of faculty
+                nameField.getText(),                            // name of faculty
+                Arrays.toString(passwordField.getPassword()),   // password of faculty
+                phoneField.getText(),                           // phone no. of faculty
+                
+            });
         
         else
-            db.registerUser(UserType.STUDENT);
+            db.registerStudent(new String[] {
+                
+                idField.getText(),                              // roll no. of student
+                nameField.getText(),                            // name of student
+                Arrays.toString(passwordField.getPassword()),   // password of student
+                phoneField.getText(),                           // phone no. of student
+                courseComboBox.getSelectedItem().toString()     // course selected by student
+                
+            });
         
     }//GEN-LAST:event_registerButtonActionPerformed
 

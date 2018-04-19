@@ -6,6 +6,9 @@
 package ui;
 
 import dal.Database;
+import entity.CurrentUser;
+import entity.User;
+import entity.UserType;
 import factory.View;
 import factory.ViewFactory;
 import java.awt.BorderLayout;
@@ -15,6 +18,7 @@ import org.icepdf.ri.common.ComponentKeyBinding;
 import org.icepdf.ri.common.SwingController;
 import org.icepdf.ri.common.SwingViewBuilder;
 import ui.partial.UploadAssignment;
+import ui.partial.ViewAssignment;
 import virtaulclassroom.IChangeView;
 
 /**
@@ -43,7 +47,15 @@ public class Assignment extends javax.swing.JPanel {
     }
     
     private void setPanel (){
-        jPanel1.add (new UploadAssignment(this) , BorderLayout.NORTH);
+        User user = CurrentUser.getCurrentUser().getUser();
+        
+        if (user.getType() == UserType.FACULTY) {
+            jPanel1.add (new UploadAssignment(this) , BorderLayout.NORTH);
+        }
+        else if (user.getType() == UserType.STUDENT) {
+            jPanel1.add (new ViewAssignment(this) , BorderLayout.NORTH);
+        }
+        System.out.println (user.getUsername() + " and "+ user.getType());
         jPanel1.revalidate();
         jPanel1.repaint();
     }

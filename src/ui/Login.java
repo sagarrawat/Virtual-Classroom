@@ -6,9 +6,9 @@
 package ui;
 
 import dal.Database;
+import dal.DerbyDatabase;
 import factory.View;
 import factory.ViewFactory;
-import java.util.Arrays;
 import virtaulclassroom.IChangeView;
 
 /**
@@ -24,7 +24,7 @@ public class Login extends javax.swing.JPanel {
      */
     public Login() {
         initComponents();
-      //  db = new DerbyDatabase();
+        db = new DerbyDatabase();
     }
 
     public Login(IChangeView frame){
@@ -47,7 +47,7 @@ public class Login extends javax.swing.JPanel {
         jLabel4 = new javax.swing.JLabel();
         usernameField = new javax.swing.JTextField();
         passwordField = new javax.swing.JPasswordField();
-        jButton1 = new javax.swing.JButton();
+        loginButton = new javax.swing.JButton();
         jCheckBox1 = new javax.swing.JCheckBox();
         signupLabel = new javax.swing.JLabel();
         invalidUserLabel = new javax.swing.JLabel();
@@ -82,13 +82,13 @@ public class Login extends javax.swing.JPanel {
 
         passwordField.setFont(new java.awt.Font("Lucida Grande", 0, 14)); // NOI18N
 
-        jButton1.setFont(new java.awt.Font("Lucida Grande", 1, 14)); // NOI18N
-        jButton1.setForeground(new java.awt.Color(33, 137, 212));
-        jButton1.setText("login");
-        jButton1.setBorder(javax.swing.BorderFactory.createEmptyBorder(1, 1, 1, 1));
-        jButton1.addActionListener(new java.awt.event.ActionListener() {
+        loginButton.setFont(new java.awt.Font("Lucida Grande", 1, 14)); // NOI18N
+        loginButton.setForeground(new java.awt.Color(33, 137, 212));
+        loginButton.setText("login");
+        loginButton.setBorder(javax.swing.BorderFactory.createEmptyBorder(1, 1, 1, 1));
+        loginButton.addActionListener(new java.awt.event.ActionListener() {
             public void actionPerformed(java.awt.event.ActionEvent evt) {
-                jButton1ActionPerformed(evt);
+                loginButtonActionPerformed(evt);
             }
         });
 
@@ -107,7 +107,8 @@ public class Login extends javax.swing.JPanel {
         });
 
         invalidUserLabel.setFont(new java.awt.Font("Lucida Grande", 1, 14)); // NOI18N
-        invalidUserLabel.setForeground(new java.awt.Color(254, 60, 50));
+        invalidUserLabel.setForeground(new java.awt.Color(164, 45, 40));
+        invalidUserLabel.setText("warning label, warnings will appear here");
 
         javax.swing.GroupLayout LoginBodyLayout = new javax.swing.GroupLayout(LoginBody);
         LoginBody.setLayout(LoginBodyLayout);
@@ -135,7 +136,7 @@ public class Login extends javax.swing.JPanel {
                             .addGap(86, 86, 86)
                             .addGroup(LoginBodyLayout.createParallelGroup(javax.swing.GroupLayout.Alignment.TRAILING)
                                 .addComponent(signupLabel, javax.swing.GroupLayout.PREFERRED_SIZE, 261, javax.swing.GroupLayout.PREFERRED_SIZE)
-                                .addComponent(jButton1, javax.swing.GroupLayout.PREFERRED_SIZE, 78, javax.swing.GroupLayout.PREFERRED_SIZE)))))
+                                .addComponent(loginButton, javax.swing.GroupLayout.PREFERRED_SIZE, 78, javax.swing.GroupLayout.PREFERRED_SIZE)))))
                 .addContainerGap(54, Short.MAX_VALUE))
         );
         LoginBodyLayout.setVerticalGroup(
@@ -154,7 +155,7 @@ public class Login extends javax.swing.JPanel {
                 .addGap(29, 29, 29)
                 .addComponent(jCheckBox1)
                 .addGap(15, 15, 15)
-                .addComponent(jButton1, javax.swing.GroupLayout.PREFERRED_SIZE, 35, javax.swing.GroupLayout.PREFERRED_SIZE)
+                .addComponent(loginButton, javax.swing.GroupLayout.PREFERRED_SIZE, 35, javax.swing.GroupLayout.PREFERRED_SIZE)
                 .addGap(30, 30, 30)
                 .addComponent(signupLabel)
                 .addContainerGap(103, Short.MAX_VALUE))
@@ -174,32 +175,36 @@ public class Login extends javax.swing.JPanel {
     private void signupLabelMouseClicked(java.awt.event.MouseEvent evt) {//GEN-FIRST:event_signupLabelMouseClicked
         
         parent.requestView(ViewFactory.getView(parent, View.Register));
+        
     }//GEN-LAST:event_signupLabelMouseClicked
 
-    private void jButton1ActionPerformed(java.awt.event.ActionEvent evt) {//GEN-FIRST:event_jButton1ActionPerformed
+    private void loginButtonActionPerformed(java.awt.event.ActionEvent evt) {//GEN-FIRST:event_loginButtonActionPerformed
         
         String username = usernameField.getText();
-        String password = Arrays.toString(passwordField.getPassword());
+        String password = String.valueOf(passwordField.getPassword());
+        
+        System.out.println (password);
         
         if (db.authenticUser(username , password))
             parent.requestView(ViewFactory.getView(parent, View.Home));
+        
         else
             invalidUserLabel.setText ("Please Enter correct Details");
-         
-    }//GEN-LAST:event_jButton1ActionPerformed
+        
+    }//GEN-LAST:event_loginButtonActionPerformed
 
     
     // Variables declaration - do not modify//GEN-BEGIN:variables
     private javax.swing.JPanel LoginBody;
     private javax.swing.JPanel LoginHeader;
     private javax.swing.JLabel invalidUserLabel;
-    private javax.swing.JButton jButton1;
     private javax.swing.JCheckBox jCheckBox1;
     private javax.swing.JLabel jLabel1;
     private javax.swing.JLabel jLabel2;
     private javax.swing.JLabel jLabel3;
     private javax.swing.JLabel jLabel4;
     private javax.swing.JLabel jLabel7;
+    private javax.swing.JButton loginButton;
     private javax.swing.JPasswordField passwordField;
     private javax.swing.JLabel signupLabel;
     private javax.swing.JTextField usernameField;
