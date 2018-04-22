@@ -6,15 +6,22 @@
 package ui;
 
 import com.sun.xml.internal.ws.api.streaming.XMLStreamReaderFactory;
+import java.awt.BorderLayout;
 import java.awt.Component;
+import java.awt.event.MouseAdapter;
+import java.awt.event.MouseEvent;
 import java.io.File;
 import javax.swing.JList;
 import javax.swing.JScrollPane;
 import javax.swing.ListCellRenderer;
+import javax.swing.event.ListSelectionEvent;
+import javax.swing.event.ListSelectionListener;
 import javax.swing.tree.DefaultMutableTreeNode;
 import utility.FileBrowser;
 import utility.FileBrowser.FileNode;
 import utility.FileRenderer;
+import utility.MediaFileFilter;
+import virtaulclassroom.Player;
 
 /**
  *
@@ -27,7 +34,7 @@ public class RExplorer extends javax.swing.JPanel {
      */
     public RExplorer() {
         initComponents();
-        String resourseFolder = "/media/mukesh/D064958664956FC8/desktop/";
+        String resourseFolder = "/home/mukesh/Downloads";
         jTree1.setModel(new FileBrowser(resourseFolder).getModel());
     }
 
@@ -42,8 +49,8 @@ public class RExplorer extends javax.swing.JPanel {
 
         jScrollPane1 = new javax.swing.JScrollPane();
         jTree1 = new javax.swing.JTree();
+        jPanel1 = new javax.swing.JPanel();
         jScrollPane2 = new javax.swing.JScrollPane();
-        jList1 = new javax.swing.JList<>();
 
         jTree1.setBackground(new java.awt.Color(33, 137, 212));
         jTree1.setFont(new java.awt.Font("Lucida Grande", 1, 18)); // NOI18N
@@ -80,8 +87,14 @@ public class RExplorer extends javax.swing.JPanel {
         });
         jScrollPane1.setViewportView(jTree1);
 
-        jList1.setBackground(new java.awt.Color(33, 137, 212));
-        jScrollPane2.setViewportView(jList1);
+        jPanel1.setLayout(new java.awt.BorderLayout());
+
+        jScrollPane2.addMouseListener(new java.awt.event.MouseAdapter() {
+            public void mouseClicked(java.awt.event.MouseEvent evt) {
+                jScrollPane2MouseClicked(evt);
+            }
+        });
+        jPanel1.add(jScrollPane2, java.awt.BorderLayout.CENTER);
 
         javax.swing.GroupLayout layout = new javax.swing.GroupLayout(this);
         this.setLayout(layout);
@@ -90,12 +103,12 @@ public class RExplorer extends javax.swing.JPanel {
             .addGroup(layout.createSequentialGroup()
                 .addComponent(jScrollPane1, javax.swing.GroupLayout.PREFERRED_SIZE, 241, javax.swing.GroupLayout.PREFERRED_SIZE)
                 .addPreferredGap(javax.swing.LayoutStyle.ComponentPlacement.RELATED)
-                .addComponent(jScrollPane2, javax.swing.GroupLayout.DEFAULT_SIZE, 477, Short.MAX_VALUE))
+                .addComponent(jPanel1, javax.swing.GroupLayout.DEFAULT_SIZE, javax.swing.GroupLayout.DEFAULT_SIZE, Short.MAX_VALUE))
         );
         layout.setVerticalGroup(
             layout.createParallelGroup(javax.swing.GroupLayout.Alignment.LEADING)
             .addComponent(jScrollPane1, javax.swing.GroupLayout.DEFAULT_SIZE, 487, Short.MAX_VALUE)
-            .addComponent(jScrollPane2)
+            .addComponent(jPanel1, javax.swing.GroupLayout.DEFAULT_SIZE, javax.swing.GroupLayout.DEFAULT_SIZE, Short.MAX_VALUE)
         );
     }// </editor-fold>//GEN-END:initComponents
 
@@ -105,12 +118,44 @@ public class RExplorer extends javax.swing.JPanel {
         if (node == null) {
             return;
         }
-        //System.out.println(dir.getAbsolutePath());
+        Object nodeInfo = node.getUserObject();
+        FileNode dir = (FileNode)nodeInfo;
+        String path = dir.getAbsolutePath();
+        File f = new File(path);
+        Component components = getList(f.listFiles(new MediaFileFilter()));
+        jScrollPane2.setViewportView(components);
     }//GEN-LAST:event_jTree1ValueChanged
 
+    private void jScrollPane2MouseClicked(java.awt.event.MouseEvent evt) {//GEN-FIRST:event_jScrollPane2MouseClicked
+        // TODO add your handling code here:
+    }//GEN-LAST:event_jScrollPane2MouseClicked
+
+    
+        public Component getList(File[] all) {
+        // put File objects in the list..
+        JList fileList = new JList(all);
+
+        
+        fileList.addMouseListener(new MouseAdapter() {
+            public void mouseClicked(MouseEvent evt) {
+                JList list = (JList)evt.getSource();
+                if (evt.getClickCount() == 2) {
+                    File file = (File) fileList.getSelectedValue();
+                    String uri = file.getAbsolutePath();
+                    Player player = new Player(uri);
+                    player.setVisible(true);
+                } 
+            }
+        });
+        // ..then use a renderer
+        fileList.setCellRenderer(new FileRenderer(true));
+        fileList.setLayoutOrientation(javax.swing.JList.HORIZONTAL_WRAP);
+        fileList.setVisibleRowCount(-1);   
+        return fileList;
+    }
     
     // Variables declaration - do not modify//GEN-BEGIN:variables
-    private javax.swing.JList<String> jList1;
+    private javax.swing.JPanel jPanel1;
     private javax.swing.JScrollPane jScrollPane1;
     private javax.swing.JScrollPane jScrollPane2;
     private javax.swing.JTree jTree1;

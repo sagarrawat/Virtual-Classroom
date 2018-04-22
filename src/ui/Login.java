@@ -182,7 +182,8 @@ public class Login extends javax.swing.JPanel {
         
         String username = usernameField.getText();
         String password = String.valueOf(passwordField.getPassword());
-                
+        boolean exist = db.userExist(username);
+        System.out.println(exist?"worked":"nevermind");
         if (db.authenticUser(username , password))
             parent.requestView(ViewFactory.getView(parent, View.Home));
         

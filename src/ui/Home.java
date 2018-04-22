@@ -8,7 +8,6 @@ package ui;
 import entity.CurrentUser;
 import entity.User;
 import factory.View;
-import factory.ViewFactory;
 import java.awt.Color;
 import javax.swing.JPanel;
 import ui.partial.HomeMenuItem;
