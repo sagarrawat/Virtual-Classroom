@@ -6,6 +6,8 @@
 package ui;
 
 import com.sun.xml.internal.ws.api.streaming.XMLStreamReaderFactory;
+import dal.Database;
+import dal.DerbyDatabase;
 import java.awt.BorderLayout;
 import java.awt.Component;
 import java.awt.event.MouseAdapter;
@@ -21,6 +23,7 @@ import utility.FileBrowser;
 import utility.FileBrowser.FileNode;
 import utility.FileRenderer;
 import utility.MediaFileFilter;
+import virtaulclassroom.IChangeView;
 import virtaulclassroom.Player;
 
 /**
@@ -32,12 +35,24 @@ public class RExplorer extends javax.swing.JPanel {
     /**
      * Creates new form RExplorer
      */
+    
+    private IChangeView parent;
+    private Database db;
+    
+    
     public RExplorer() {
         initComponents();
-        String resourseFolder = "/home/mukesh/Downloads";
+        String user = System.getProperty("user.name");
+        String resourseFolder = "/home/"+user+"/vcr";
         jTree1.setModel(new FileBrowser(resourseFolder).getModel());
     }
-
+    
+    public RExplorer (IChangeView parent){
+        this();
+        db = new DerbyDatabase();
+        this.parent = parent;
+    }
+    
     /**
      * This method is called from within the constructor to initialize the form.
      * WARNING: Do NOT modify this code. The content of this method is always
@@ -54,6 +69,7 @@ public class RExplorer extends javax.swing.JPanel {
 
         jTree1.setBackground(new java.awt.Color(33, 137, 212));
         jTree1.setFont(new java.awt.Font("Lucida Grande", 1, 18)); // NOI18N
+        jTree1.setForeground(new java.awt.Color(254, 254, 254));
         javax.swing.tree.DefaultMutableTreeNode treeNode1 = new javax.swing.tree.DefaultMutableTreeNode("Subject");
         javax.swing.tree.DefaultMutableTreeNode treeNode2 = new javax.swing.tree.DefaultMutableTreeNode("DS");
         javax.swing.tree.DefaultMutableTreeNode treeNode3 = new javax.swing.tree.DefaultMutableTreeNode("Lecture");
@@ -103,7 +119,7 @@ public class RExplorer extends javax.swing.JPanel {
             .addGroup(layout.createSequentialGroup()
                 .addComponent(jScrollPane1, javax.swing.GroupLayout.PREFERRED_SIZE, 241, javax.swing.GroupLayout.PREFERRED_SIZE)
                 .addPreferredGap(javax.swing.LayoutStyle.ComponentPlacement.RELATED)
-                .addComponent(jPanel1, javax.swing.GroupLayout.DEFAULT_SIZE, javax.swing.GroupLayout.DEFAULT_SIZE, Short.MAX_VALUE))
+                .addComponent(jPanel1, javax.swing.GroupLayout.DEFAULT_SIZE, 650, Short.MAX_VALUE))
         );
         layout.setVerticalGroup(
             layout.createParallelGroup(javax.swing.GroupLayout.Alignment.LEADING)

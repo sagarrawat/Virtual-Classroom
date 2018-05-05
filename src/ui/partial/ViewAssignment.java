@@ -5,7 +5,13 @@
  */
 package ui.partial;
 
+import dal.Database;
+import entity.CurrentUser;
+import entity.User;
 import java.io.File;
+import java.io.InputStream;
+import java.util.ArrayList;
+import java.util.Date;
 import javax.swing.JFileChooser;
 import ui.Assignment;
 import utility.FileSelector;
@@ -22,6 +28,8 @@ public class ViewAssignment extends javax.swing.JPanel {
     private Assignment parent;
     private JFileChooser fileChooser;
     
+    private Database db;
+    
     public ViewAssignment() {
         initComponents();
     }
@@ -30,6 +38,21 @@ public class ViewAssignment extends javax.swing.JPanel {
         this ();
         this.parent = parent;
         fileChooser = new JFileChooser();
+        
+        setSubjects();
+        
+    }
+    
+    private void setSubjects(){
+        
+        User user = CurrentUser.getCurrentUser().getUser();
+        
+        ArrayList <String> subjects = db.getAllSubjects(user.getUsername());
+        
+        
+        for (String s : subjects){
+            subjectComboBox.addItem(s);
+        }
     }
     
     
@@ -48,14 +71,14 @@ public class ViewAssignment extends javax.swing.JPanel {
         chooseFileButton1 = new javax.swing.JButton();
         viewAssignmentPanel = new javax.swing.JPanel();
         jLabel21 = new javax.swing.JLabel();
-        jComboBox1 = new javax.swing.JComboBox<>();
+        subjectComboBox = new javax.swing.JComboBox<>();
         jLabel22 = new javax.swing.JLabel();
         jButton5 = new javax.swing.JButton();
         jPanel1 = new javax.swing.JPanel();
         jLabel24 = new javax.swing.JLabel();
         jLabel25 = new javax.swing.JLabel();
         jLabel27 = new javax.swing.JLabel();
-        filePathField1 = new javax.swing.JTextField();
+        submitFilePath = new javax.swing.JTextField();
         jButton4 = new javax.swing.JButton();
         jLabel23 = new javax.swing.JLabel();
         chooseFileButton2 = new javax.swing.JButton();
@@ -89,7 +112,7 @@ public class ViewAssignment extends javax.swing.JPanel {
         jLabel21.setForeground(java.awt.Color.white);
         jLabel21.setText("Subject");
 
-        jComboBox1.setModel(new javax.swing.DefaultComboBoxModel<>(new String[] { "Select Any Subject" }));
+        subjectComboBox.setModel(new javax.swing.DefaultComboBoxModel<>(new String[] { "Select Any Subject" }));
 
         jLabel22.setFont(new java.awt.Font("Lucida Grande", 1, 14)); // NOI18N
         jLabel22.setForeground(new java.awt.Color(38, 34, 4));
@@ -99,6 +122,11 @@ public class ViewAssignment extends javax.swing.JPanel {
         jButton5.setForeground(new java.awt.Color(33, 137, 212));
         jButton5.setText("View Assignment");
         jButton5.setBorder(javax.swing.BorderFactory.createEmptyBorder(1, 1, 1, 1));
+        jButton5.addActionListener(new java.awt.event.ActionListener() {
+            public void actionPerformed(java.awt.event.ActionEvent evt) {
+                jButton5ActionPerformed(evt);
+            }
+        });
 
         javax.swing.GroupLayout viewAssignmentPanelLayout = new javax.swing.GroupLayout(viewAssignmentPanel);
         viewAssignmentPanel.setLayout(viewAssignmentPanelLayout);
@@ -110,7 +138,7 @@ public class ViewAssignment extends javax.swing.JPanel {
                 .addGap(18, 18, 18)
                 .addGroup(viewAssignmentPanelLayout.createParallelGroup(javax.swing.GroupLayout.Alignment.LEADING)
                     .addComponent(jButton5, javax.swing.GroupLayout.PREFERRED_SIZE, 125, javax.swing.GroupLayout.PREFERRED_SIZE)
-                    .addComponent(jComboBox1, javax.swing.GroupLayout.PREFERRED_SIZE, 243, javax.swing.GroupLayout.PREFERRED_SIZE))
+                    .addComponent(subjectComboBox, javax.swing.GroupLayout.PREFERRED_SIZE, 243, javax.swing.GroupLayout.PREFERRED_SIZE))
                 .addContainerGap(javax.swing.GroupLayout.DEFAULT_SIZE, Short.MAX_VALUE))
             .addGroup(javax.swing.GroupLayout.Alignment.TRAILING, viewAssignmentPanelLayout.createSequentialGroup()
                 .addGap(0, 12, Short.MAX_VALUE)
@@ -124,7 +152,7 @@ public class ViewAssignment extends javax.swing.JPanel {
                 .addGap(18, 18, 18)
                 .addGroup(viewAssignmentPanelLayout.createParallelGroup(javax.swing.GroupLayout.Alignment.BASELINE)
                     .addComponent(jLabel21, javax.swing.GroupLayout.PREFERRED_SIZE, 27, javax.swing.GroupLayout.PREFERRED_SIZE)
-                    .addComponent(jComboBox1, javax.swing.GroupLayout.PREFERRED_SIZE, 34, javax.swing.GroupLayout.PREFERRED_SIZE))
+                    .addComponent(subjectComboBox, javax.swing.GroupLayout.PREFERRED_SIZE, 34, javax.swing.GroupLayout.PREFERRED_SIZE))
                 .addGap(18, 18, 18)
                 .addComponent(jButton5, javax.swing.GroupLayout.PREFERRED_SIZE, 37, javax.swing.GroupLayout.PREFERRED_SIZE)
                 .addContainerGap(javax.swing.GroupLayout.DEFAULT_SIZE, Short.MAX_VALUE))
@@ -144,12 +172,17 @@ public class ViewAssignment extends javax.swing.JPanel {
         jLabel27.setForeground(java.awt.Color.white);
         jLabel27.setText("Upload Assignment    :");
 
-        filePathField1.setFont(new java.awt.Font("Lucida Grande", 1, 14)); // NOI18N
+        submitFilePath.setFont(new java.awt.Font("Lucida Grande", 1, 14)); // NOI18N
 
         jButton4.setFont(new java.awt.Font("Lucida Grande", 1, 12)); // NOI18N
         jButton4.setForeground(new java.awt.Color(33, 137, 212));
         jButton4.setText("Submit");
         jButton4.setBorder(javax.swing.BorderFactory.createEmptyBorder(1, 1, 1, 1));
+        jButton4.addActionListener(new java.awt.event.ActionListener() {
+            public void actionPerformed(java.awt.event.ActionEvent evt) {
+                jButton4ActionPerformed(evt);
+            }
+        });
 
         jLabel23.setFont(new java.awt.Font("Lucida Grande", 1, 14)); // NOI18N
         jLabel23.setForeground(new java.awt.Color(255, 0, 0));
@@ -173,7 +206,7 @@ public class ViewAssignment extends javax.swing.JPanel {
                 .addGap(31, 31, 31)
                 .addGroup(jPanel1Layout.createParallelGroup(javax.swing.GroupLayout.Alignment.LEADING)
                     .addGroup(jPanel1Layout.createSequentialGroup()
-                        .addComponent(filePathField1, javax.swing.GroupLayout.PREFERRED_SIZE, 276, javax.swing.GroupLayout.PREFERRED_SIZE)
+                        .addComponent(submitFilePath, javax.swing.GroupLayout.PREFERRED_SIZE, 276, javax.swing.GroupLayout.PREFERRED_SIZE)
                         .addPreferredGap(javax.swing.LayoutStyle.ComponentPlacement.UNRELATED)
                         .addComponent(chooseFileButton2, javax.swing.GroupLayout.PREFERRED_SIZE, 89, javax.swing.GroupLayout.PREFERRED_SIZE))
                     .addGroup(jPanel1Layout.createSequentialGroup()
@@ -199,7 +232,7 @@ public class ViewAssignment extends javax.swing.JPanel {
                 .addComponent(jLabel27, javax.swing.GroupLayout.PREFERRED_SIZE, 39, javax.swing.GroupLayout.PREFERRED_SIZE)
                 .addPreferredGap(javax.swing.LayoutStyle.ComponentPlacement.UNRELATED)
                 .addGroup(jPanel1Layout.createParallelGroup(javax.swing.GroupLayout.Alignment.BASELINE)
-                    .addComponent(filePathField1, javax.swing.GroupLayout.PREFERRED_SIZE, 35, javax.swing.GroupLayout.PREFERRED_SIZE)
+                    .addComponent(submitFilePath, javax.swing.GroupLayout.PREFERRED_SIZE, 35, javax.swing.GroupLayout.PREFERRED_SIZE)
                     .addComponent(chooseFileButton2, javax.swing.GroupLayout.PREFERRED_SIZE, 38, javax.swing.GroupLayout.PREFERRED_SIZE))
                 .addGap(18, 18, 18)
                 .addComponent(jButton4, javax.swing.GroupLayout.PREFERRED_SIZE, 37, javax.swing.GroupLayout.PREFERRED_SIZE)
@@ -254,16 +287,30 @@ public class ViewAssignment extends javax.swing.JPanel {
         }
     }//GEN-LAST:event_chooseFileButton2ActionPerformed
 
+    private void jButton5ActionPerformed(java.awt.event.ActionEvent evt) {//GEN-FIRST:event_jButton5ActionPerformed
+        Object[] data = db.getAssignment(subjectComboBox.getSelectedItem().toString());
+        
+        InputStream input = (InputStream) data[0];
+        Date submissionDate = (Date) data[1];
+    }//GEN-LAST:event_jButton5ActionPerformed
+
+    private void jButton4ActionPerformed(java.awt.event.ActionEvent evt) {//GEN-FIRST:event_jButton4ActionPerformed
+        String path = submitFilePath.getText();
+        
+        File file = new File (path);
+        
+        //db.submitAssingment (file , username);
+        
+    }//GEN-LAST:event_jButton4ActionPerformed
+
 
     // Variables declaration - do not modify//GEN-BEGIN:variables
     private javax.swing.JButton chooseFileButton1;
     private javax.swing.JButton chooseFileButton2;
     private javax.swing.JTextField filePathField;
-    private javax.swing.JTextField filePathField1;
     private javax.swing.JButton jButton3;
     private javax.swing.JButton jButton4;
     private javax.swing.JButton jButton5;
-    private javax.swing.JComboBox<String> jComboBox1;
     private javax.swing.JLabel jLabel21;
     private javax.swing.JLabel jLabel22;
     private javax.swing.JLabel jLabel23;
@@ -272,6 +319,8 @@ public class ViewAssignment extends javax.swing.JPanel {
     private javax.swing.JLabel jLabel26;
     private javax.swing.JLabel jLabel27;
     private javax.swing.JPanel jPanel1;
+    private javax.swing.JComboBox<String> subjectComboBox;
+    private javax.swing.JTextField submitFilePath;
     private javax.swing.JPanel viewAssignmentPanel;
     // End of variables declaration//GEN-END:variables
 }

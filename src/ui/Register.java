@@ -6,9 +6,12 @@
 package ui;
 
 import dal.Database;
+import dal.DerbyDatabase;
+import entity.UserType;
 import factory.View;
 import factory.ViewFactory;
-import java.util.Arrays;
+import java.util.ArrayList;
+import javax.swing.JOptionPane;
 import virtaulclassroom.IChangeView;
 
 /**
@@ -21,8 +24,10 @@ public class Register extends javax.swing.JPanel{
      * Creates new form Register
      */
     
-    IChangeView parent;
-    Database db;
+    private IChangeView parent;
+    private Database db;
+    
+    private boolean inputStatus;
     
     public Register() {
         initComponents();
@@ -31,6 +36,17 @@ public class Register extends javax.swing.JPanel{
     public Register (IChangeView frame){
         this();
         parent = frame;
+        inputStatus = false;
+        db = new DerbyDatabase();
+        setCourses();
+    }
+    
+    private void setCourses(){
+        ArrayList<String> allCourses = db.getAllCourses();
+        
+        for (String course : allCourses){
+            courseComboBox.addItem(course);
+        }
     }
     
     /**
@@ -50,13 +66,11 @@ public class Register extends javax.swing.JPanel{
         jLabel4 = new javax.swing.JLabel();
         jLabel5 = new javax.swing.JLabel();
         nameField = new javax.swing.JTextField();
-        cpasswordField = new javax.swing.JPasswordField();
         registerButton = new javax.swing.JButton();
         jLabel6 = new javax.swing.JLabel();
-        jLabel8 = new javax.swing.JLabel();
+        warningLabel = new javax.swing.JLabel();
         facultyRadioButton = new javax.swing.JRadioButton();
         studentRadioButton = new javax.swing.JRadioButton();
-        jLabel9 = new javax.swing.JLabel();
         passwordField = new javax.swing.JPasswordField();
         userIdLabel = new javax.swing.JLabel();
         phoneField = new javax.swing.JTextField();
@@ -64,6 +78,11 @@ public class Register extends javax.swing.JPanel{
         courseComboBox = new javax.swing.JComboBox<>();
         jLabel10 = new javax.swing.JLabel();
         idField = new javax.swing.JTextField();
+        jLabel7 = new javax.swing.JLabel();
+        usernameField = new javax.swing.JTextField();
+        courseLabel1 = new javax.swing.JLabel();
+        branchComboBox = new javax.swing.JComboBox<>();
+        jLabel12 = new javax.swing.JLabel();
 
         setBackground(new java.awt.Color(33, 137, 212));
 
@@ -86,19 +105,16 @@ public class Register extends javax.swing.JPanel{
         jLabel4.setFont(new java.awt.Font("Lucida Grande", 1, 14)); // NOI18N
         jLabel4.setForeground(java.awt.Color.white);
         jLabel4.setText("Full Name");
-        LoginBody.add(jLabel4, new org.netbeans.lib.awtextra.AbsoluteConstraints(78, 76, -1, -1));
+        LoginBody.add(jLabel4, new org.netbeans.lib.awtextra.AbsoluteConstraints(80, 170, -1, -1));
 
         jLabel5.setFont(new java.awt.Font("Lucida Grande", 1, 14)); // NOI18N
         jLabel5.setForeground(java.awt.Color.white);
         jLabel5.setText("Password");
-        LoginBody.add(jLabel5, new org.netbeans.lib.awtextra.AbsoluteConstraints(78, 173, -1, -1));
+        LoginBody.add(jLabel5, new org.netbeans.lib.awtextra.AbsoluteConstraints(80, 270, -1, -1));
 
         nameField.setFont(new java.awt.Font("Lucida Grande", 0, 14)); // NOI18N
         nameField.setInputVerifier(new validation.FullNameVerifier());
-        LoginBody.add(nameField, new org.netbeans.lib.awtextra.AbsoluteConstraints(334, 68, 320, 30));
-
-        cpasswordField.setFont(new java.awt.Font("Lucida Grande", 0, 14)); // NOI18N
-        LoginBody.add(cpasswordField, new org.netbeans.lib.awtextra.AbsoluteConstraints(334, 213, 320, 30));
+        LoginBody.add(nameField, new org.netbeans.lib.awtextra.AbsoluteConstraints(330, 160, 320, 30));
 
         registerButton.setFont(new java.awt.Font("Lucida Grande", 1, 14)); // NOI18N
         registerButton.setForeground(new java.awt.Color(33, 137, 212));
@@ -109,7 +125,7 @@ public class Register extends javax.swing.JPanel{
                 registerButtonActionPerformed(evt);
             }
         });
-        LoginBody.add(registerButton, new org.netbeans.lib.awtextra.AbsoluteConstraints(334, 380, 130, 40));
+        LoginBody.add(registerButton, new org.netbeans.lib.awtextra.AbsoluteConstraints(330, 470, 130, 40));
 
         jLabel6.setBackground(java.awt.Color.white);
         jLabel6.setFont(new java.awt.Font("Lucida Grande", 1, 14)); // NOI18N
@@ -120,12 +136,11 @@ public class Register extends javax.swing.JPanel{
                 jLabel6MouseClicked(evt);
             }
         });
-        LoginBody.add(jLabel6, new org.netbeans.lib.awtextra.AbsoluteConstraints(78, 461, 261, -1));
+        LoginBody.add(jLabel6, new org.netbeans.lib.awtextra.AbsoluteConstraints(80, 530, 261, -1));
 
-        jLabel8.setFont(new java.awt.Font("Lucida Grande", 1, 16)); // NOI18N
-        jLabel8.setForeground(java.awt.Color.white);
-        jLabel8.setText("I am a");
-        LoginBody.add(jLabel8, new org.netbeans.lib.awtextra.AbsoluteConstraints(78, 23, -1, -1));
+        warningLabel.setFont(new java.awt.Font("Lucida Grande", 1, 16)); // NOI18N
+        warningLabel.setForeground(new java.awt.Color(101, 1, 1));
+        LoginBody.add(warningLabel, new org.netbeans.lib.awtextra.AbsoluteConstraints(330, 20, 340, 30));
 
         userType.add(facultyRadioButton);
         facultyRadioButton.setFont(new java.awt.Font("Lucida Grande", 1, 16)); // NOI18N
@@ -136,7 +151,7 @@ public class Register extends javax.swing.JPanel{
                 facultyRadioButtonMouseClicked(evt);
             }
         });
-        LoginBody.add(facultyRadioButton, new org.netbeans.lib.awtextra.AbsoluteConstraints(488, 20, -1, -1));
+        LoginBody.add(facultyRadioButton, new org.netbeans.lib.awtextra.AbsoluteConstraints(500, 60, -1, -1));
 
         userType.add(studentRadioButton);
         studentRadioButton.setFont(new java.awt.Font("Lucida Grande", 1, 16)); // NOI18N
@@ -148,42 +163,59 @@ public class Register extends javax.swing.JPanel{
                 studentRadioButtonMouseClicked(evt);
             }
         });
-        LoginBody.add(studentRadioButton, new org.netbeans.lib.awtextra.AbsoluteConstraints(334, 20, -1, -1));
-
-        jLabel9.setFont(new java.awt.Font("Lucida Grande", 1, 14)); // NOI18N
-        jLabel9.setForeground(java.awt.Color.white);
-        jLabel9.setText("Confirm Password");
-        LoginBody.add(jLabel9, new org.netbeans.lib.awtextra.AbsoluteConstraints(78, 221, -1, -1));
+        LoginBody.add(studentRadioButton, new org.netbeans.lib.awtextra.AbsoluteConstraints(330, 60, -1, -1));
 
         passwordField.setFont(new java.awt.Font("Lucida Grande", 0, 14)); // NOI18N
-        LoginBody.add(passwordField, new org.netbeans.lib.awtextra.AbsoluteConstraints(334, 165, 320, 30));
+        LoginBody.add(passwordField, new org.netbeans.lib.awtextra.AbsoluteConstraints(330, 260, 320, 30));
 
         userIdLabel.setFont(new java.awt.Font("Lucida Grande", 1, 14)); // NOI18N
         userIdLabel.setForeground(java.awt.Color.white);
         userIdLabel.setText("University Roll no.");
-        LoginBody.add(userIdLabel, new org.netbeans.lib.awtextra.AbsoluteConstraints(78, 124, -1, -1));
+        LoginBody.add(userIdLabel, new org.netbeans.lib.awtextra.AbsoluteConstraints(80, 220, -1, -1));
 
         phoneField.setFont(new java.awt.Font("Lucida Grande", 0, 14)); // NOI18N
         phoneField.setInputVerifier(new validation.PhoneNumberVerifier());
-        LoginBody.add(phoneField, new org.netbeans.lib.awtextra.AbsoluteConstraints(334, 261, 320, 30));
+        LoginBody.add(phoneField, new org.netbeans.lib.awtextra.AbsoluteConstraints(330, 310, 320, 30));
 
         courseLabel.setFont(new java.awt.Font("Lucida Grande", 1, 14)); // NOI18N
         courseLabel.setForeground(java.awt.Color.white);
         courseLabel.setText("Course");
-        LoginBody.add(courseLabel, new org.netbeans.lib.awtextra.AbsoluteConstraints(78, 318, -1, -1));
+        LoginBody.add(courseLabel, new org.netbeans.lib.awtextra.AbsoluteConstraints(80, 370, -1, -1));
 
         courseComboBox.setBackground(java.awt.Color.white);
         courseComboBox.setForeground(java.awt.Color.white);
-        courseComboBox.setModel(new javax.swing.DefaultComboBoxModel<>(new String[] { "Select Any One", "Bachelor of Technology", "Polytechnic", "Bachelor of Computers" }));
-        LoginBody.add(courseComboBox, new org.netbeans.lib.awtextra.AbsoluteConstraints(334, 309, 246, 34));
+        LoginBody.add(courseComboBox, new org.netbeans.lib.awtextra.AbsoluteConstraints(330, 360, 246, 34));
 
         jLabel10.setFont(new java.awt.Font("Lucida Grande", 1, 14)); // NOI18N
         jLabel10.setForeground(java.awt.Color.white);
         jLabel10.setText("Phone Number");
-        LoginBody.add(jLabel10, new org.netbeans.lib.awtextra.AbsoluteConstraints(78, 269, -1, -1));
+        LoginBody.add(jLabel10, new org.netbeans.lib.awtextra.AbsoluteConstraints(80, 320, -1, -1));
 
         idField.setFont(new java.awt.Font("Lucida Grande", 0, 14)); // NOI18N
-        LoginBody.add(idField, new org.netbeans.lib.awtextra.AbsoluteConstraints(334, 116, 320, 30));
+        LoginBody.add(idField, new org.netbeans.lib.awtextra.AbsoluteConstraints(330, 210, 320, 30));
+
+        jLabel7.setFont(new java.awt.Font("Lucida Grande", 1, 14)); // NOI18N
+        jLabel7.setForeground(java.awt.Color.white);
+        jLabel7.setText("Username");
+        LoginBody.add(jLabel7, new org.netbeans.lib.awtextra.AbsoluteConstraints(80, 120, -1, -1));
+
+        usernameField.setFont(new java.awt.Font("Lucida Grande", 0, 14)); // NOI18N
+        usernameField.setInputVerifier(new validation.FullNameVerifier());
+        LoginBody.add(usernameField, new org.netbeans.lib.awtextra.AbsoluteConstraints(330, 110, 320, 30));
+
+        courseLabel1.setFont(new java.awt.Font("Lucida Grande", 1, 14)); // NOI18N
+        courseLabel1.setForeground(java.awt.Color.white);
+        courseLabel1.setText("Branch");
+        LoginBody.add(courseLabel1, new org.netbeans.lib.awtextra.AbsoluteConstraints(80, 420, -1, -1));
+
+        branchComboBox.setBackground(java.awt.Color.white);
+        branchComboBox.setForeground(java.awt.Color.white);
+        LoginBody.add(branchComboBox, new org.netbeans.lib.awtextra.AbsoluteConstraints(330, 410, 246, 34));
+
+        jLabel12.setFont(new java.awt.Font("Lucida Grande", 1, 16)); // NOI18N
+        jLabel12.setForeground(java.awt.Color.white);
+        jLabel12.setText("I am a");
+        LoginBody.add(jLabel12, new org.netbeans.lib.awtextra.AbsoluteConstraints(80, 70, -1, -1));
 
         javax.swing.GroupLayout layout = new javax.swing.GroupLayout(this);
         this.setLayout(layout);
@@ -197,7 +229,7 @@ public class Register extends javax.swing.JPanel{
             .addGroup(layout.createSequentialGroup()
                 .addComponent(LoginHeader, javax.swing.GroupLayout.PREFERRED_SIZE, 100, javax.swing.GroupLayout.PREFERRED_SIZE)
                 .addPreferredGap(javax.swing.LayoutStyle.ComponentPlacement.RELATED)
-                .addComponent(LoginBody, javax.swing.GroupLayout.DEFAULT_SIZE, 532, Short.MAX_VALUE))
+                .addComponent(LoginBody, javax.swing.GroupLayout.PREFERRED_SIZE, 613, javax.swing.GroupLayout.PREFERRED_SIZE))
         );
     }// </editor-fold>//GEN-END:initComponents
 
@@ -208,37 +240,41 @@ public class Register extends javax.swing.JPanel{
     private void facultyRadioButtonMouseClicked(java.awt.event.MouseEvent evt) {//GEN-FIRST:event_facultyRadioButtonMouseClicked
         courseLabel.hide();
         courseComboBox.hide();
+        branchComboBox.hide();
         userIdLabel.setText ("Faculty Id no.");
     }//GEN-LAST:event_facultyRadioButtonMouseClicked
 
     private void studentRadioButtonMouseClicked(java.awt.event.MouseEvent evt) {//GEN-FIRST:event_studentRadioButtonMouseClicked
         courseLabel.show();
         courseComboBox.show();
+        branchComboBox.show();
         userIdLabel.setText ("University Roll no.");
+        
     }//GEN-LAST:event_studentRadioButtonMouseClicked
 
     private void registerButtonActionPerformed(java.awt.event.ActionEvent evt) {//GEN-FIRST:event_registerButtonActionPerformed
         
-        if (facultyRadioButton.isSelected())
-            db.registerFaculty(new String[] {
-                
-                idField.getText(),                              // id no. of faculty
-                nameField.getText(),                            // name of faculty
-                Arrays.toString(passwordField.getPassword()),   // password of faculty
-                phoneField.getText(),                           // phone no. of faculty
-                
+        if (inputStatus == false)
+            return;
+        
+        UserType type = (facultyRadioButton.isSelected())? UserType.FACULTY : UserType.STUDENT;
+                                                                          // type of user
+        String username = usernameField.getText();                        // username of user
+        String password = String.valueOf (passwordField.getPassword());   // password of user
+        String fullName = nameField.getText();                            // full name of user
+        String phone = phoneField.getText();                              // phone no. of user
+        String id = idField.getText();                                    // id of user
+        
+        
+        boolean status = db.registerUser( type , new String[]{
+                        username, password, fullName, id, phone
             });
         
+        if (status == true)
+            parent.requestView(ViewFactory.getView(parent, View.Home));
+        
         else
-            db.registerStudent(new String[] {
-                
-                idField.getText(),                              // roll no. of student
-                nameField.getText(),                            // name of student
-                Arrays.toString(passwordField.getPassword()),   // password of student
-                phoneField.getText(),                           // phone no. of student
-                courseComboBox.getSelectedItem().toString()     // course selected by student
-                
-            });
+            JOptionPane.showMessageDialog(this, "Unsccessful");
         
     }//GEN-LAST:event_registerButtonActionPerformed
 
@@ -246,19 +282,20 @@ public class Register extends javax.swing.JPanel{
     // Variables declaration - do not modify//GEN-BEGIN:variables
     private javax.swing.JPanel LoginBody;
     private javax.swing.JPanel LoginHeader;
+    private javax.swing.JComboBox<String> branchComboBox;
     private javax.swing.JComboBox<String> courseComboBox;
     private javax.swing.JLabel courseLabel;
-    private javax.swing.JPasswordField cpasswordField;
+    private javax.swing.JLabel courseLabel1;
     private javax.swing.JRadioButton facultyRadioButton;
     private javax.swing.JTextField idField;
     private javax.swing.JLabel jLabel10;
     private javax.swing.JLabel jLabel11;
+    private javax.swing.JLabel jLabel12;
     private javax.swing.JLabel jLabel3;
     private javax.swing.JLabel jLabel4;
     private javax.swing.JLabel jLabel5;
     private javax.swing.JLabel jLabel6;
-    private javax.swing.JLabel jLabel8;
-    private javax.swing.JLabel jLabel9;
+    private javax.swing.JLabel jLabel7;
     private javax.swing.JTextField nameField;
     private javax.swing.JPasswordField passwordField;
     private javax.swing.JTextField phoneField;
@@ -266,6 +303,8 @@ public class Register extends javax.swing.JPanel{
     private javax.swing.JRadioButton studentRadioButton;
     private javax.swing.JLabel userIdLabel;
     private javax.swing.ButtonGroup userType;
+    private javax.swing.JTextField usernameField;
+    private javax.swing.JLabel warningLabel;
     // End of variables declaration//GEN-END:variables
 
     

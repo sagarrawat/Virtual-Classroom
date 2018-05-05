@@ -5,7 +5,10 @@
  */
 package ui.partial;
 
+import dal.Database;
+import dal.DerbyDatabase;
 import java.io.File;
+import java.util.Date;
 import javax.swing.JFileChooser;
 import ui.Assignment;
 import utility.FileSelector;
@@ -19,6 +22,7 @@ public class UploadAssignment extends javax.swing.JPanel {
     private JFileChooser fileChooser;
     private Assignment parent;
     
+    private Database db;
     /**
      * Creates new form UploadAssignment
      * @param parent
@@ -26,6 +30,7 @@ public class UploadAssignment extends javax.swing.JPanel {
     public UploadAssignment(Assignment parent) {
         initComponents();
         this.parent = parent;
+        db = new DerbyDatabase();
         fileChooser = new JFileChooser();
     }
 
@@ -45,9 +50,9 @@ public class UploadAssignment extends javax.swing.JPanel {
         jButton3 = new javax.swing.JButton();
         chooseFileButton1 = new javax.swing.JButton();
         jLabel22 = new javax.swing.JLabel();
-        jComboBox1 = new javax.swing.JComboBox<>();
-        jComboBox2 = new javax.swing.JComboBox<>();
-        jXDatePicker2 = new org.jdesktop.swingx.JXDatePicker();
+        subjectComboBox = new javax.swing.JComboBox<>();
+        courseComboBox = new javax.swing.JComboBox<>();
+        submissionDatePicker = new org.jdesktop.swingx.JXDatePicker();
 
         setBackground(new java.awt.Color(33, 137, 212));
 
@@ -69,6 +74,11 @@ public class UploadAssignment extends javax.swing.JPanel {
         jButton3.setForeground(new java.awt.Color(33, 137, 212));
         jButton3.setText("Upload");
         jButton3.setBorder(javax.swing.BorderFactory.createEmptyBorder(1, 1, 1, 1));
+        jButton3.addActionListener(new java.awt.event.ActionListener() {
+            public void actionPerformed(java.awt.event.ActionEvent evt) {
+                jButton3ActionPerformed(evt);
+            }
+        });
 
         chooseFileButton1.setFont(new java.awt.Font("Lucida Grande", 1, 12)); // NOI18N
         chooseFileButton1.setForeground(new java.awt.Color(33, 137, 212));
@@ -84,9 +94,9 @@ public class UploadAssignment extends javax.swing.JPanel {
         jLabel22.setForeground(java.awt.Color.white);
         jLabel22.setText("Upload Assignment");
 
-        jComboBox1.setModel(new javax.swing.DefaultComboBoxModel<>(new String[] { "Select Any Subject" }));
+        subjectComboBox.setModel(new javax.swing.DefaultComboBoxModel<>(new String[] { "Select Any Subject" }));
 
-        jComboBox2.setModel(new javax.swing.DefaultComboBoxModel<>(new String[] { "Select Any Course" }));
+        courseComboBox.setModel(new javax.swing.DefaultComboBoxModel<>(new String[] { "Select Any Course" }));
 
         javax.swing.GroupLayout layout = new javax.swing.GroupLayout(this);
         this.setLayout(layout);
@@ -110,15 +120,11 @@ public class UploadAssignment extends javax.swing.JPanel {
                                     .addComponent(jLabel19, javax.swing.GroupLayout.PREFERRED_SIZE, 75, javax.swing.GroupLayout.PREFERRED_SIZE)
                                     .addComponent(jLabel21, javax.swing.GroupLayout.PREFERRED_SIZE, 77, javax.swing.GroupLayout.PREFERRED_SIZE)
                                     .addComponent(jLabel20, javax.swing.GroupLayout.PREFERRED_SIZE, 157, javax.swing.GroupLayout.PREFERRED_SIZE))
+                                .addGap(8, 8, 8)
                                 .addGroup(layout.createParallelGroup(javax.swing.GroupLayout.Alignment.LEADING, false)
-                                    .addGroup(layout.createSequentialGroup()
-                                        .addGap(8, 8, 8)
-                                        .addGroup(layout.createParallelGroup(javax.swing.GroupLayout.Alignment.LEADING, false)
-                                            .addComponent(jComboBox1, 0, 269, Short.MAX_VALUE)
-                                            .addComponent(jComboBox2, 0, javax.swing.GroupLayout.DEFAULT_SIZE, Short.MAX_VALUE)))
-                                    .addGroup(layout.createSequentialGroup()
-                                        .addPreferredGap(javax.swing.LayoutStyle.ComponentPlacement.RELATED)
-                                        .addComponent(jXDatePicker2, javax.swing.GroupLayout.DEFAULT_SIZE, javax.swing.GroupLayout.DEFAULT_SIZE, Short.MAX_VALUE)))))
+                                    .addComponent(subjectComboBox, 0, 269, Short.MAX_VALUE)
+                                    .addComponent(courseComboBox, 0, javax.swing.GroupLayout.DEFAULT_SIZE, Short.MAX_VALUE)
+                                    .addComponent(submissionDatePicker, javax.swing.GroupLayout.DEFAULT_SIZE, javax.swing.GroupLayout.DEFAULT_SIZE, Short.MAX_VALUE))))
                         .addContainerGap(168, Short.MAX_VALUE))))
         );
         layout.setVerticalGroup(
@@ -129,18 +135,18 @@ public class UploadAssignment extends javax.swing.JPanel {
                     .addComponent(chooseFileButton1, javax.swing.GroupLayout.PREFERRED_SIZE, 38, javax.swing.GroupLayout.PREFERRED_SIZE)
                     .addComponent(filePathField, javax.swing.GroupLayout.PREFERRED_SIZE, 39, javax.swing.GroupLayout.PREFERRED_SIZE)
                     .addComponent(jLabel22, javax.swing.GroupLayout.PREFERRED_SIZE, 39, javax.swing.GroupLayout.PREFERRED_SIZE))
-                .addPreferredGap(javax.swing.LayoutStyle.ComponentPlacement.RELATED, 32, Short.MAX_VALUE)
-                .addGroup(layout.createParallelGroup(javax.swing.GroupLayout.Alignment.LEADING)
-                    .addComponent(jLabel19, javax.swing.GroupLayout.Alignment.TRAILING, javax.swing.GroupLayout.PREFERRED_SIZE, 30, javax.swing.GroupLayout.PREFERRED_SIZE)
-                    .addComponent(jComboBox2, javax.swing.GroupLayout.Alignment.TRAILING, javax.swing.GroupLayout.PREFERRED_SIZE, 35, javax.swing.GroupLayout.PREFERRED_SIZE))
-                .addGap(23, 23, 23)
+                .addPreferredGap(javax.swing.LayoutStyle.ComponentPlacement.RELATED, 24, Short.MAX_VALUE)
                 .addGroup(layout.createParallelGroup(javax.swing.GroupLayout.Alignment.BASELINE)
-                    .addComponent(jComboBox1, javax.swing.GroupLayout.DEFAULT_SIZE, 35, Short.MAX_VALUE)
+                    .addComponent(jLabel19, javax.swing.GroupLayout.PREFERRED_SIZE, 30, javax.swing.GroupLayout.PREFERRED_SIZE)
+                    .addComponent(courseComboBox, javax.swing.GroupLayout.PREFERRED_SIZE, 35, javax.swing.GroupLayout.PREFERRED_SIZE))
+                .addGap(19, 19, 19)
+                .addGroup(layout.createParallelGroup(javax.swing.GroupLayout.Alignment.BASELINE)
+                    .addComponent(subjectComboBox, javax.swing.GroupLayout.DEFAULT_SIZE, 35, Short.MAX_VALUE)
                     .addComponent(jLabel21, javax.swing.GroupLayout.PREFERRED_SIZE, 27, javax.swing.GroupLayout.PREFERRED_SIZE))
                 .addGap(18, 18, 18)
                 .addGroup(layout.createParallelGroup(javax.swing.GroupLayout.Alignment.BASELINE)
                     .addComponent(jLabel20, javax.swing.GroupLayout.PREFERRED_SIZE, 24, javax.swing.GroupLayout.PREFERRED_SIZE)
-                    .addComponent(jXDatePicker2, javax.swing.GroupLayout.PREFERRED_SIZE, javax.swing.GroupLayout.DEFAULT_SIZE, javax.swing.GroupLayout.PREFERRED_SIZE))
+                    .addComponent(submissionDatePicker, javax.swing.GroupLayout.PREFERRED_SIZE, 36, javax.swing.GroupLayout.PREFERRED_SIZE))
                 .addGap(18, 18, 18)
                 .addComponent(jButton3, javax.swing.GroupLayout.PREFERRED_SIZE, 37, javax.swing.GroupLayout.PREFERRED_SIZE)
                 .addGap(34, 34, 34))
@@ -163,17 +169,31 @@ public class UploadAssignment extends javax.swing.JPanel {
         }
     }//GEN-LAST:event_chooseFileButton1ActionPerformed
 
+    private void jButton3ActionPerformed(java.awt.event.ActionEvent evt) {//GEN-FIRST:event_jButton3ActionPerformed
+        
+        String course = courseComboBox.getSelectedItem().toString();
+        String subject = subjectComboBox.getSelectedItem().toString();
+        String path = filePathField.getText();
+        
+        Date date = submissionDatePicker.getDate();
+        
+        File file = new File (path);
+        
+        db.addAssignment ( file , date , course, subject);
+        
+    }//GEN-LAST:event_jButton3ActionPerformed
+
 
     // Variables declaration - do not modify//GEN-BEGIN:variables
     private javax.swing.JButton chooseFileButton1;
+    private javax.swing.JComboBox<String> courseComboBox;
     private javax.swing.JTextField filePathField;
     private javax.swing.JButton jButton3;
-    private javax.swing.JComboBox<String> jComboBox1;
-    private javax.swing.JComboBox<String> jComboBox2;
     private javax.swing.JLabel jLabel19;
     private javax.swing.JLabel jLabel20;
     private javax.swing.JLabel jLabel21;
     private javax.swing.JLabel jLabel22;
-    private org.jdesktop.swingx.JXDatePicker jXDatePicker2;
+    private javax.swing.JComboBox<String> subjectComboBox;
+    private org.jdesktop.swingx.JXDatePicker submissionDatePicker;
     // End of variables declaration//GEN-END:variables
 }

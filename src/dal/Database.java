@@ -8,6 +8,10 @@ package dal;
 import entity.CurrentUser;
 import entity.User;
 import entity.UserType;
+import java.io.File;
+import java.io.FileInputStream;
+import java.io.InputStream;
+import java.sql.Blob;
 import java.sql.Connection;
 import java.sql.DriverManager;
 import java.sql.PreparedStatement;
@@ -15,6 +19,7 @@ import java.sql.ResultSet;
 import java.sql.SQLException;
 import java.sql.Statement;
 import java.util.ArrayList;
+import java.util.Date;
 import javax.swing.JOptionPane;
 
 /**
@@ -28,6 +33,7 @@ public abstract class Database {
     public PreparedStatement ps;
     public Statement statement;
     public ResultSet rs;
+    
     
     public Database(String driver, String conString, String user, String password){
         try {
@@ -47,93 +53,66 @@ public abstract class Database {
     
     // authenticate weather a user is registered or not
     public boolean authenticUser (String username , String password){
-        if (1<2){
-            CurrentUser.setCurrentUser (new User (username, UserType.STUDENT));
-            return true;
-        } // temporary
-        
+        System.out.println (username + password);
         try{
-            String sql = "select user_type from users where username = ? ";//and password = ?";
+            String sql = "select type from user where username = ? AND password = ?";
             ps = connection.prepareStatement(sql);
             ps.setString (1, username);
-           // ps.setString (2, password);
-            rs = ps.executeQuery(sql);
+            ps.setString (2, password);
+            rs = ps.executeQuery();
+            
             if (rs.next()){
-                int type = rs.getInt("user_type");
-                UserType userType;
+                int type = rs.getInt("type");
+                UserType userType = UserType.getType (type);
+                CurrentUser.setCurrentUser (new User (username, userType));
                 
-                switch (type) {
-                    case 0:
-                        userType = UserType.ADMIN;
-                        break;
-                    case 1:
-                        userType = UserType.FACULTY;
-                        break;
-                    case 2:
-                        userType = UserType.STUDENT;
-                        break;
-                    default:
-                        userType = null;
-                        break;
-                }
-                
-              CurrentUser.setCurrentUser (new User (username, userType));
-              return true;
+                return true;
             }
-            
-            else 
-                return false;
         
-        }catch (Exception e){
+        }catch ( SQLException e){
             e.printStackTrace();
-            return false;
         }
+        
+        return false;
     }
     
-    // creates an account of faculty
-    public void registerFaculty (String[] facultyDetail){
+    
+    // creates a user account
+    public boolean registerUser (UserType userType, String[] userDetail){
+        
+        int type = UserType.valueOf(userType);
         
         try {
-            String sql = "insert into user values (? , ? , ? , ? , ?)";
+            String sql = "insert into user values (? , ?, ? , ? , ? , ?)"; 
+                    
             ps = connection.prepareStatement(sql);
-            ps.setInt (1, Integer.parseInt(facultyDetail[0]));              // id of faculty
-            ps.setString (2, facultyDetail[1]);                             // name of faculty
-            ps.setString (3, facultyDetail[2]);                             // password of faculty
-            ps.setString (4, facultyDetail[3]);                             // phone no. of faculty
+            
+            ps.setString(1, userDetail[0]);                              // username of user
+            ps.setString (2, userDetail[1]);                             // password of user
+            ps.setInt (3, type);                                         // type of user
+            ps.setString (4, userDetail[2]);                             // full name of user
+            ps.setString (5, userDetail[3]);                             // id no. of user
+            ps.setString (6, userDetail[4]);                             // phone no. of user
             ps.executeUpdate();
+            
+            if ( UserType.getType(type) == UserType.STUDENT)
+                System.out.println ("");
+            
             javax.swing.JOptionPane.showMessageDialog(null, "You have been Successfully Registered to VCR");
+            
+            return true;
             
         } catch (SQLException ex) {
             ex.printStackTrace();
         }
-        
-    }
-    
-    // creates an account of student
-    public void registerStudent (String[] studentDetail){
-        
-        try {
-            String sql = "insert into users values (? , ? , ? , ? , ?)";
-            ps = connection.prepareStatement(sql);
-            ps.setInt (1, Integer.parseInt(studentDetail[0]));              // roll no. of student
-            ps.setString (2, studentDetail[1]);                             // name of student
-            ps.setString (3, studentDetail[2]);                             // password of student
-            ps.setString (4, studentDetail[3]);                             // phone no. of student
-            ps.setString (5, studentDetail[4]);                             // course of student
-            ps.executeUpdate();
-            javax.swing.JOptionPane.showMessageDialog(null, "You have been Successfully Registered to VCR");
-            
-        } catch (SQLException ex) {
-            ex.printStackTrace();
-        }
-        
+        return false;
     }
     
     // check weather, if a user already exist or not
     public boolean userExist (String username){
     
         try{
-            String sql = "select (1) from users where username = ?";
+            String sql = "select (1) from user where username = ?";
             ps = connection.prepareStatement (sql);
             ps.setString (1, username);
             rs = ps.executeQuery();
@@ -154,12 +133,12 @@ public abstract class Database {
         ArrayList<String> courses = new ArrayList<>();
         
         try{
-            String sql = "select course_name from courses";
+            String sql = "select name from course";
             statement = connection.createStatement();
             rs = statement.executeQuery(sql);
             
             while (rs.next())
-                courses.add(rs.getString ("course_name"));
+                courses.add(rs.getString ("name"));
                 
         } catch (SQLException ex) {
             ex.printStackTrace();
@@ -175,7 +154,7 @@ public abstract class Database {
         ArrayList<String> branch = new ArrayList<>();
         
         try{
-            String sql = "select branch from courses where course_name = ?";
+            String sql = "select branch from course where name = ?";
             ps = connection.prepareStatement(sql);
             ps.setString(1, course);
             rs = ps.executeQuery();
@@ -190,7 +169,7 @@ public abstract class Database {
         return branch;
     }
     
-    // get the name of all subjecy in branch of any course presesnt
+    // get the name of all subject in branch of any course presesnt
     public ArrayList<String> getAllSubjects (String course, String branch){
         
         ArrayList<String> subject = new ArrayList<>();
@@ -211,6 +190,50 @@ public abstract class Database {
     
         return subject;
     }
+    
+    //get all subject in present
+     public ArrayList<String> getAllSubjects (){
+        
+        ArrayList<String> subject = new ArrayList<>();
+        
+        try{
+            String sql = "select name from subject";
+            statement = connection.createStatement();
+            
+            rs = ps.executeQuery(sql);
+            
+            while (rs.next())
+                subject.add(rs.getString ("name"));
+                
+        } catch (SQLException ex) {
+            ex.printStackTrace();
+        }
+    
+        return subject;
+    }
+     
+    // get all subject of a particular student
+     
+     public ArrayList<String> getAllSubjects (String username){
+        
+        ArrayList<String> subject = new ArrayList<>();
+        
+        try{
+            String sql = "select subject from courses where username = ?";  // something like that
+            ps = connection.prepareStatement(sql);
+            ps.setString(1, username);
+            rs = ps.executeQuery();
+            
+            while (rs.next())
+                subject.add(rs.getString ("subject"));
+                
+        } catch (SQLException ex) {
+            ex.printStackTrace();
+        }
+    
+        return subject;
+    }
+    
     
     
     // get the list of all student
@@ -258,7 +281,7 @@ public abstract class Database {
     }
     
     //inset a course into db
-    public void insertCourse (String courseName){
+    public void addCourse (String courseName){
         
         try{
             String sql = "insert into courses (course_name) values (?)";
@@ -275,7 +298,7 @@ public abstract class Database {
     }
     
     //insert a branch in db
-    public void insertBranch (String courseName, String branchName){
+    public void addBranch (String courseName, String branchName){
         
         try{
             String sql = "insert into branch (course_name , branch_name) values (?, ?)";
@@ -294,7 +317,7 @@ public abstract class Database {
     }
     
     //insert a subject in db
-    public void insertSubject (String courseName, String branchName, String subjectName){
+    public void addSubject (String courseName, String branchName, String subjectName){
         
         try{
             String sql = "insert into branch (course_name , branch_name, subject_name) values (?, ?, ?)";
@@ -313,4 +336,170 @@ public abstract class Database {
             se.printStackTrace();
         }
     }
+    
+    
+    // gives user's details
+    public String[] getUserDetails( String username ){
+        String userDetail[];
+        try{
+            String sql = "select username , full_name, id_no, phone from user where username = ? ";
+            ps = connection.prepareStatement(sql);
+            ps.setString(1, username);
+            rs = ps.executeQuery();
+            
+            if (rs.next()){
+                userDetail = new String[4];
+                
+                userDetail[0] = rs.getString("username");
+                userDetail[1] = rs.getString("full_name");
+                userDetail[2] = rs.getString("id_no");
+                userDetail[3] = rs.getString("phone");
+                
+            
+                return userDetail;
+            }
+            
+            
+        }catch (SQLException se){
+            se.printStackTrace();
+        }
+    
+        return null;
+    }
+    
+    
+    
+    public ArrayList<String> getSubjectByFacultyName (String username){
+        
+        ArrayList <String> subject = new ArrayList<>();
+        
+        try{
+            String sql = "select name from subject where id in ( select subject_id from faculty where faculty_name = ?)";
+            ps = connection.prepareStatement(sql);
+            ps.setString (1, username);
+            
+            rs = ps.executeQuery();
+            
+            while (rs.next())
+                subject.add (rs.getString ("name"));
+            
+            return subject;
+            
+        }catch (SQLException se){se.printStackTrace();}
+    
+        return null;
+    }
+    
+    
+    
+    public void removeFacultySubject (String username , String subject){
+        try{
+            String sql = "delete from faculty where faculty_name = ? and subject_id = (select id from subject where name = ? )";
+            ps = connection.prepareStatement(sql);
+            
+            ps.setString (1, username);
+            ps.setString (2, subject);
+            
+            ps.execute();
+            
+            JOptionPane.showMessageDialog(null, "successfully deleted");
+        
+        }catch (SQLException se){se.printStackTrace();}
+    }
+    
+    
+    
+    public void addFacultySubject (String username , String subject){
+        try{
+            String sql = "insert into faculty values( (select id from subject where name = ?) , ?)";
+            ps = connection.prepareStatement(sql);
+            
+            ps.setString (1, username);
+            ps.setString (2, subject);
+            
+            ps.executeUpdate();
+            
+            JOptionPane.showMessageDialog(null, "successfully inserted");
+        
+        }catch (SQLException se){
+            JOptionPane.showMessageDialog(null, "already selected");
+        }
+    }
+    
+    
+    public void addAssignment ( File file , Date date , String course, String subject){
+        
+        try{
+            String sql = "insert into assigment values (? , ? , ?, ?)";
+            
+            ps = connection.prepareStatement(sql);
+            
+            ps.setBlob(1, new FileInputStream (file) );
+            ps.setDate(2, new java.sql.Date (date.getDate()));
+            ps.setString (3, course);
+            ps.setString (4, subject);
+            
+            ps.executeUpdate();
+            
+            JOptionPane.showMessageDialog(null , "successfully added");
+        
+        }catch (SQLException se){
+            se.printStackTrace();
+        }catch (Exception e){
+            e.printStackTrace();
+        }
+        
+        
+    }
+    
+    public Object[] getAssignment (String subject){
+        
+        try{
+            String sql = "select * from assigment where subject = ? and submission_date < current_date"; // something like that
+            ps = connection.prepareStatement(sql);
+            ps.setString(1, subject);
+            rs = ps.executeQuery();
+        
+            if (rs.next()){
+             
+                return new Object[] {
+                    rs.getBlob("assignemtn_pdf").getBinaryStream(),
+                    rs.getDate("submission date"),
+                };
+            
+            }
+            
+        }catch (Exception e){
+            e.printStackTrace();
+        }
+        
+    
+        return null;
+    }
+    
+    
+    public void changePassword (String username, String password , String newPassword){
+        try{
+            String sql = "";
+            
+            ps = connection.prepareStatement(sql);
+            
+            ps.setString (1, newPassword);
+            ps.setString (2, username);
+            ps.setString (3, password);
+            
+            int status = ps.executeUpdate();
+            
+            if (status != 0)
+                JOptionPane.showMessageDialog(null, "successfully update");
+            else
+                JOptionPane.showMessageDialog(null, "invalid password");
+        
+        }catch (Exception e){
+            e.printStackTrace();
+        }
+    
+    }
+    
+    
 }

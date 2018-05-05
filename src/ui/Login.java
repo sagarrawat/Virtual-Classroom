@@ -50,7 +50,7 @@ public class Login extends javax.swing.JPanel {
         loginButton = new javax.swing.JButton();
         jCheckBox1 = new javax.swing.JCheckBox();
         signupLabel = new javax.swing.JLabel();
-        invalidUserLabel = new javax.swing.JLabel();
+        warningLabel = new javax.swing.JLabel();
         jLabel7 = new javax.swing.JLabel();
         jLabel1 = new javax.swing.JLabel();
 
@@ -106,9 +106,8 @@ public class Login extends javax.swing.JPanel {
             }
         });
 
-        invalidUserLabel.setFont(new java.awt.Font("Lucida Grande", 1, 14)); // NOI18N
-        invalidUserLabel.setForeground(new java.awt.Color(164, 45, 40));
-        invalidUserLabel.setText("warning label, warnings will appear here");
+        warningLabel.setFont(new java.awt.Font("Lucida Grande", 1, 14)); // NOI18N
+        warningLabel.setForeground(new java.awt.Color(214, 53, 47));
 
         javax.swing.GroupLayout LoginBodyLayout = new javax.swing.GroupLayout(LoginBody);
         LoginBody.setLayout(LoginBodyLayout);
@@ -116,7 +115,7 @@ public class Login extends javax.swing.JPanel {
             LoginBodyLayout.createParallelGroup(javax.swing.GroupLayout.Alignment.LEADING)
             .addGroup(LoginBodyLayout.createSequentialGroup()
                 .addGroup(LoginBodyLayout.createParallelGroup(javax.swing.GroupLayout.Alignment.TRAILING)
-                    .addComponent(invalidUserLabel, javax.swing.GroupLayout.PREFERRED_SIZE, 388, javax.swing.GroupLayout.PREFERRED_SIZE)
+                    .addComponent(warningLabel, javax.swing.GroupLayout.PREFERRED_SIZE, 388, javax.swing.GroupLayout.PREFERRED_SIZE)
                     .addGroup(LoginBodyLayout.createParallelGroup(javax.swing.GroupLayout.Alignment.LEADING)
                         .addGroup(LoginBodyLayout.createSequentialGroup()
                             .addGap(78, 78, 78)
@@ -143,7 +142,7 @@ public class Login extends javax.swing.JPanel {
             LoginBodyLayout.createParallelGroup(javax.swing.GroupLayout.Alignment.LEADING)
             .addGroup(LoginBodyLayout.createSequentialGroup()
                 .addContainerGap()
-                .addComponent(invalidUserLabel, javax.swing.GroupLayout.PREFERRED_SIZE, 24, javax.swing.GroupLayout.PREFERRED_SIZE)
+                .addComponent(warningLabel, javax.swing.GroupLayout.PREFERRED_SIZE, 24, javax.swing.GroupLayout.PREFERRED_SIZE)
                 .addGap(29, 29, 29)
                 .addGroup(LoginBodyLayout.createParallelGroup(javax.swing.GroupLayout.Alignment.BASELINE)
                     .addComponent(usernameField, javax.swing.GroupLayout.PREFERRED_SIZE, 34, javax.swing.GroupLayout.PREFERRED_SIZE)
@@ -182,13 +181,15 @@ public class Login extends javax.swing.JPanel {
         
         String username = usernameField.getText();
         String password = String.valueOf(passwordField.getPassword());
-        boolean exist = db.userExist(username);
-        System.out.println(exist?"worked":"nevermind");
+        
         if (db.authenticUser(username , password))
             parent.requestView(ViewFactory.getView(parent, View.Home));
         
-        else
-            invalidUserLabel.setText ("Please Enter correct Details");
+        else {
+            warningLabel.setText ("Please Enter correct Details");
+            usernameField.setText("");
+            passwordField.setText("");
+        }
         
     }//GEN-LAST:event_loginButtonActionPerformed
 
@@ -196,7 +197,6 @@ public class Login extends javax.swing.JPanel {
     // Variables declaration - do not modify//GEN-BEGIN:variables
     private javax.swing.JPanel LoginBody;
     private javax.swing.JPanel LoginHeader;
-    private javax.swing.JLabel invalidUserLabel;
     private javax.swing.JCheckBox jCheckBox1;
     private javax.swing.JLabel jLabel1;
     private javax.swing.JLabel jLabel2;
@@ -207,5 +207,6 @@ public class Login extends javax.swing.JPanel {
     private javax.swing.JPasswordField passwordField;
     private javax.swing.JLabel signupLabel;
     private javax.swing.JTextField usernameField;
+    private javax.swing.JLabel warningLabel;
     // End of variables declaration//GEN-END:variables
 }

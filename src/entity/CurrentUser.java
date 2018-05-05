@@ -20,15 +20,18 @@ public class CurrentUser {
     
     
     public static void setCurrentUser (User user){
-        if (user != null)
-            CurrentUser.user = user;
+        CurrentUser.user = user;
     }
     
     public static CurrentUser getCurrentUser (){
-        if (currentUser == null && user != null)
+        
+        if (user == null)
+            return null;
+        else if (currentUser == null)
             return new CurrentUser();
         else 
             return currentUser;
+        
     }
     
     public User getUser (){

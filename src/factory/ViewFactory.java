@@ -5,7 +5,6 @@
  */
 package factory;
 
-import javax.swing.JFrame;
 import javax.swing.JPanel;
 import virtaulclassroom.IChangeView;
 
@@ -32,11 +31,13 @@ public class ViewFactory {
             case Assignment :
                 return new ui.Assignment(parent);
             case Resources:
-                return new ui.RExplorer();
+                return new ui.RExplorer(parent);
             case LiveSessionRoom:
                 return new ui.LiveSessionRoom(parent);
             case Master :
                 return new ui.Master(parent);
+            case Profile :
+                return new ui.Profile(parent);
         }
         return null;
     }

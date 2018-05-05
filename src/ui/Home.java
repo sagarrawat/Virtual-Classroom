@@ -40,15 +40,20 @@ public class Home extends javax.swing.JPanel {
         if (null != user.getType())switch (user.getType()) {
             
             case ADMIN:
-                
+                jPanel3.add (new HomeMenuItem (parent, View.Master));
+                jPanel3.add (new HomeMenuItem( parent, View.Setting));
                 break;
                 
             case FACULTY:
-
+                jPanel3.add (new HomeMenuItem( parent, View.Profile));
+                jPanel3.add (new HomeMenuItem( parent, View.LiveSessionRoom));
+                jPanel3.add (new HomeMenuItem( parent, View.Assignment));
+                jPanel3.add (new HomeMenuItem( parent, View.Resources));
+                jPanel3.add (new HomeMenuItem( parent, View.Setting));
                 break;
                 
             case STUDENT:
-                jPanel3.add (new HomeMenuItem( parent, View.Home));
+                jPanel3.add (new HomeMenuItem( parent, View.Profile));
                 jPanel3.add (new HomeMenuItem( parent, View.LiveSessionRoom));
                 jPanel3.add (new HomeMenuItem( parent, View.Assignment));
                 jPanel3.add (new HomeMenuItem( parent, View.Resources));

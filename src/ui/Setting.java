@@ -6,6 +6,7 @@
 package ui;
 
 import dal.Database;
+import entity.CurrentUser;
 import factory.View;
 import factory.ViewFactory;
 import java.awt.HeadlessException;
@@ -51,9 +52,9 @@ public class Setting extends javax.swing.JPanel {
         jLabel4 = new javax.swing.JLabel();
         cpasswordField = new javax.swing.JPasswordField();
         submitButton = new javax.swing.JButton();
-        passwordField = new javax.swing.JPasswordField();
+        npasswordField = new javax.swing.JPasswordField();
         jLabel8 = new javax.swing.JLabel();
-        jPasswordField3 = new javax.swing.JPasswordField();
+        currentPasswordField = new javax.swing.JPasswordField();
         jLabel9 = new javax.swing.JLabel();
         jPanel2 = new javax.swing.JPanel();
         jLabel1 = new javax.swing.JLabel();
@@ -81,13 +82,13 @@ public class Setting extends javax.swing.JPanel {
             }
         });
 
-        passwordField.setFont(new java.awt.Font("Lucida Grande", 0, 14)); // NOI18N
+        npasswordField.setFont(new java.awt.Font("Lucida Grande", 0, 14)); // NOI18N
 
         jLabel8.setFont(new java.awt.Font("Lucida Grande", 1, 18)); // NOI18N
         jLabel8.setForeground(java.awt.Color.white);
         jLabel8.setText("New Password");
 
-        jPasswordField3.setFont(new java.awt.Font("Lucida Grande", 0, 14)); // NOI18N
+        currentPasswordField.setFont(new java.awt.Font("Lucida Grande", 0, 14)); // NOI18N
 
         jLabel9.setFont(new java.awt.Font("Lucida Grande", 1, 18)); // NOI18N
         jLabel9.setForeground(java.awt.Color.white);
@@ -106,8 +107,8 @@ public class Setting extends javax.swing.JPanel {
                 .addGap(35, 35, 35)
                 .addGroup(LoginBodyLayout.createParallelGroup(javax.swing.GroupLayout.Alignment.LEADING)
                     .addComponent(cpasswordField, javax.swing.GroupLayout.PREFERRED_SIZE, 346, javax.swing.GroupLayout.PREFERRED_SIZE)
-                    .addComponent(passwordField, javax.swing.GroupLayout.PREFERRED_SIZE, 346, javax.swing.GroupLayout.PREFERRED_SIZE)
-                    .addComponent(jPasswordField3, javax.swing.GroupLayout.PREFERRED_SIZE, 346, javax.swing.GroupLayout.PREFERRED_SIZE)
+                    .addComponent(npasswordField, javax.swing.GroupLayout.PREFERRED_SIZE, 346, javax.swing.GroupLayout.PREFERRED_SIZE)
+                    .addComponent(currentPasswordField, javax.swing.GroupLayout.PREFERRED_SIZE, 346, javax.swing.GroupLayout.PREFERRED_SIZE)
                     .addGroup(LoginBodyLayout.createSequentialGroup()
                         .addGap(91, 91, 91)
                         .addComponent(submitButton, javax.swing.GroupLayout.PREFERRED_SIZE, 78, javax.swing.GroupLayout.PREFERRED_SIZE)))
@@ -119,11 +120,11 @@ public class Setting extends javax.swing.JPanel {
                 .addGap(26, 26, 26)
                 .addGroup(LoginBodyLayout.createParallelGroup(javax.swing.GroupLayout.Alignment.BASELINE)
                     .addComponent(jLabel9)
-                    .addComponent(jPasswordField3, javax.swing.GroupLayout.PREFERRED_SIZE, 30, javax.swing.GroupLayout.PREFERRED_SIZE))
+                    .addComponent(currentPasswordField, javax.swing.GroupLayout.PREFERRED_SIZE, 30, javax.swing.GroupLayout.PREFERRED_SIZE))
                 .addGap(18, 18, 18)
                 .addGroup(LoginBodyLayout.createParallelGroup(javax.swing.GroupLayout.Alignment.BASELINE)
                     .addComponent(jLabel8)
-                    .addComponent(passwordField, javax.swing.GroupLayout.PREFERRED_SIZE, 30, javax.swing.GroupLayout.PREFERRED_SIZE))
+                    .addComponent(npasswordField, javax.swing.GroupLayout.PREFERRED_SIZE, 30, javax.swing.GroupLayout.PREFERRED_SIZE))
                 .addGap(18, 18, 18)
                 .addGroup(LoginBodyLayout.createParallelGroup(javax.swing.GroupLayout.Alignment.BASELINE)
                     .addComponent(jLabel4)
@@ -133,7 +134,7 @@ public class Setting extends javax.swing.JPanel {
                 .addContainerGap(121, Short.MAX_VALUE))
         );
 
-        jPanel2.setBackground(java.awt.Color.lightGray);
+        jPanel2.setBackground(java.awt.SystemColor.controlHighlight);
         jPanel2.setForeground(new java.awt.Color(33, 137, 212));
 
         jLabel1.setFont(new java.awt.Font("Lucida Grande", 1, 18)); // NOI18N
@@ -217,18 +218,13 @@ public class Setting extends javax.swing.JPanel {
     }// </editor-fold>//GEN-END:initComponents
 
     private void submitButtonActionPerformed(java.awt.event.ActionEvent evt) {//GEN-FIRST:event_submitButtonActionPerformed
-        String password = Arrays.toString(passwordField.getPassword());
         
-        try{
-            String sql = "";
-            PreparedStatement ps = db.connection.prepareStatement(sql);
-           /* ps.setString (1, password);
-              ps.executeUpdate();
-            */
-            
-            JOptionPane.showMessageDialog(this, "successfull");
+        String username = CurrentUser.getCurrentUser().getUser().getUsername();
+        String password = String.valueOf (currentPasswordField.getPassword());
+        String newPassword = String.valueOf(npasswordField.getPassword());
         
-        }catch (SQLException | HeadlessException e){}
+        db.changePassword (username, password, newPassword);
+        
     }//GEN-LAST:event_submitButtonActionPerformed
 
     private void jLabel1MouseClicked(java.awt.event.MouseEvent evt) {//GEN-FIRST:event_jLabel1MouseClicked
@@ -236,13 +232,20 @@ public class Setting extends javax.swing.JPanel {
     }//GEN-LAST:event_jLabel1MouseClicked
 
     private void logoutButtonActionPerformed(java.awt.event.ActionEvent evt) {//GEN-FIRST:event_logoutButtonActionPerformed
-        // TODO add your handling code here:
+        
+        int choice = JOptionPane.showConfirmDialog(this, "Are you sure you want to logout");
+        
+        if (choice == 0){
+            CurrentUser.setCurrentUser(null);
+            parent.requestView(ViewFactory.getView(parent, View.Login));
+        }
     }//GEN-LAST:event_logoutButtonActionPerformed
 
 
     // Variables declaration - do not modify//GEN-BEGIN:variables
     private javax.swing.JPanel LoginBody;
     private javax.swing.JPasswordField cpasswordField;
+    private javax.swing.JPasswordField currentPasswordField;
     private javax.swing.JLabel jLabel1;
     private javax.swing.JLabel jLabel10;
     private javax.swing.JLabel jLabel11;
@@ -250,9 +253,8 @@ public class Setting extends javax.swing.JPanel {
     private javax.swing.JLabel jLabel8;
     private javax.swing.JLabel jLabel9;
     private javax.swing.JPanel jPanel2;
-    private javax.swing.JPasswordField jPasswordField3;
     private javax.swing.JButton logoutButton;
-    private javax.swing.JPasswordField passwordField;
+    private javax.swing.JPasswordField npasswordField;
     private javax.swing.JButton submitButton;
     // End of variables declaration//GEN-END:variables
 }

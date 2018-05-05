@@ -74,7 +74,7 @@
           <Group type="103" groupAlignment="0" attributes="0">
               <Group type="102" alignment="0" attributes="0">
                   <Group type="103" groupAlignment="1" attributes="0">
-                      <Component id="invalidUserLabel" alignment="1" min="-2" pref="388" max="-2" attributes="0"/>
+                      <Component id="warningLabel" alignment="1" min="-2" pref="388" max="-2" attributes="0"/>
                       <Group type="103" groupAlignment="0" attributes="0">
                           <Group type="102" alignment="0" attributes="0">
                               <EmptySpace min="-2" pref="78" max="-2" attributes="0"/>
@@ -113,7 +113,7 @@
           <Group type="103" groupAlignment="0" attributes="0">
               <Group type="102" attributes="0">
                   <EmptySpace max="-2" attributes="0"/>
-                  <Component id="invalidUserLabel" min="-2" pref="24" max="-2" attributes="0"/>
+                  <Component id="warningLabel" min="-2" pref="24" max="-2" attributes="0"/>
                   <EmptySpace min="-2" pref="29" max="-2" attributes="0"/>
                   <Group type="103" groupAlignment="3" attributes="0">
                       <Component id="usernameField" alignment="3" min="-2" pref="34" max="-2" attributes="0"/>
@@ -222,15 +222,14 @@
             <EventHandler event="mouseClicked" listener="java.awt.event.MouseListener" parameters="java.awt.event.MouseEvent" handler="signupLabelMouseClicked"/>
           </Events>
         </Component>
-        <Component class="javax.swing.JLabel" name="invalidUserLabel">
+        <Component class="javax.swing.JLabel" name="warningLabel">
           <Properties>
             <Property name="font" type="java.awt.Font" editor="org.netbeans.beaninfo.editors.FontEditor">
               <Font name="Lucida Grande" size="14" style="1"/>
             </Property>
             <Property name="foreground" type="java.awt.Color" editor="org.netbeans.beaninfo.editors.ColorEditor">
-              <Color blue="28" green="2d" red="a4" type="rgb"/>
+              <Color blue="2f" green="35" red="d6" type="rgb"/>
             </Property>
-            <Property name="text" type="java.lang.String" value="warning label, warnings will appear here"/>
           </Properties>
         </Component>
       </SubComponents>

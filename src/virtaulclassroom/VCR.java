@@ -8,9 +8,6 @@ package virtaulclassroom;
 import factory.View;
 import factory.ViewFactory;
 import javax.swing.JPanel;
-import ui.Blank;
-import ui.RExplorer;
-import ui.partial.VPlayer;
 
 /**
  *
@@ -61,6 +58,7 @@ public class VCR extends javax.swing.JFrame implements IChangeView{
         jLabel1 = new javax.swing.JLabel();
         jMenuBar1 = new javax.swing.JMenuBar();
         jMenu1 = new javax.swing.JMenu();
+        jMenuItem1 = new javax.swing.JMenuItem();
         jMenu2 = new javax.swing.JMenu();
         jMenu3 = new javax.swing.JMenu();
         jMenu4 = new javax.swing.JMenu();
@@ -77,6 +75,16 @@ public class VCR extends javax.swing.JFrame implements IChangeView{
         getContentPane().add(jPanel1, java.awt.BorderLayout.CENTER);
 
         jMenu1.setText("File");
+
+        jMenuItem1.setAccelerator(javax.swing.KeyStroke.getKeyStroke(java.awt.event.KeyEvent.VK_F4, java.awt.event.InputEvent.CTRL_MASK));
+        jMenuItem1.setText("exit");
+        jMenuItem1.addMouseListener(new java.awt.event.MouseAdapter() {
+            public void mouseClicked(java.awt.event.MouseEvent evt) {
+                jMenuItem1MouseClicked(evt);
+            }
+        });
+        jMenu1.add(jMenuItem1);
+
         jMenuBar1.add(jMenu1);
 
         jMenu2.setText("View");
@@ -92,6 +100,10 @@ public class VCR extends javax.swing.JFrame implements IChangeView{
 
         pack();
     }// </editor-fold>//GEN-END:initComponents
+
+    private void jMenuItem1MouseClicked(java.awt.event.MouseEvent evt) {//GEN-FIRST:event_jMenuItem1MouseClicked
+        System.exit(0);
+    }//GEN-LAST:event_jMenuItem1MouseClicked
 
     /**
      * @param args the command line arguments
@@ -135,6 +147,7 @@ public class VCR extends javax.swing.JFrame implements IChangeView{
     private javax.swing.JMenu jMenu3;
     private javax.swing.JMenu jMenu4;
     private javax.swing.JMenuBar jMenuBar1;
+    private javax.swing.JMenuItem jMenuItem1;
     private javax.swing.JPanel jPanel1;
     private virtaulclassroom.StatusBar statusBar1;
     // End of variables declaration//GEN-END:variables

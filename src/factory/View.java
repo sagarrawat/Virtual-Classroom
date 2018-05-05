@@ -17,5 +17,6 @@ public enum View {
     Assignment,
     Resources,
     LiveSessionRoom,
-    Master
+    Master,
+    Profile
 }

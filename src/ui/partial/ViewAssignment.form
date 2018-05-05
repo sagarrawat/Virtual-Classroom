@@ -107,7 +107,7 @@
                   <EmptySpace type="separate" max="-2" attributes="0"/>
                   <Group type="103" groupAlignment="0" attributes="0">
                       <Component id="jButton5" min="-2" pref="125" max="-2" attributes="0"/>
-                      <Component id="jComboBox1" min="-2" pref="243" max="-2" attributes="0"/>
+                      <Component id="subjectComboBox" min="-2" pref="243" max="-2" attributes="0"/>
                   </Group>
                   <EmptySpace max="32767" attributes="0"/>
               </Group>
@@ -125,7 +125,7 @@
                   <EmptySpace type="separate" max="-2" attributes="0"/>
                   <Group type="103" groupAlignment="3" attributes="0">
                       <Component id="jLabel21" alignment="3" min="-2" pref="27" max="-2" attributes="0"/>
-                      <Component id="jComboBox1" alignment="3" min="-2" pref="34" max="-2" attributes="0"/>
+                      <Component id="subjectComboBox" alignment="3" min="-2" pref="34" max="-2" attributes="0"/>
                   </Group>
                   <EmptySpace type="separate" max="-2" attributes="0"/>
                   <Component id="jButton5" min="-2" pref="37" max="-2" attributes="0"/>
@@ -146,7 +146,7 @@
             <Property name="text" type="java.lang.String" value="Subject"/>
           </Properties>
         </Component>
-        <Component class="javax.swing.JComboBox" name="jComboBox1">
+        <Component class="javax.swing.JComboBox" name="subjectComboBox">
           <Properties>
             <Property name="model" type="javax.swing.ComboBoxModel" editor="org.netbeans.modules.form.editors2.ComboBoxModelEditor">
               <StringArray count="1">
@@ -184,6 +184,9 @@
               </Border>
             </Property>
           </Properties>
+          <Events>
+            <EventHandler event="actionPerformed" listener="java.awt.event.ActionListener" parameters="java.awt.event.ActionEvent" handler="jButton5ActionPerformed"/>
+          </Events>
         </Component>
       </SubComponents>
     </Container>
@@ -201,7 +204,7 @@
                   <EmptySpace min="-2" pref="31" max="-2" attributes="0"/>
                   <Group type="103" groupAlignment="0" attributes="0">
                       <Group type="102" alignment="0" attributes="0">
-                          <Component id="filePathField1" min="-2" pref="276" max="-2" attributes="0"/>
+                          <Component id="submitFilePath" min="-2" pref="276" max="-2" attributes="0"/>
                           <EmptySpace type="unrelated" max="-2" attributes="0"/>
                           <Component id="chooseFileButton2" min="-2" pref="89" max="-2" attributes="0"/>
                       </Group>
@@ -234,7 +237,7 @@
                   <Component id="jLabel27" min="-2" pref="39" max="-2" attributes="0"/>
                   <EmptySpace type="unrelated" max="-2" attributes="0"/>
                   <Group type="103" groupAlignment="3" attributes="0">
-                      <Component id="filePathField1" alignment="3" min="-2" pref="35" max="-2" attributes="0"/>
+                      <Component id="submitFilePath" alignment="3" min="-2" pref="35" max="-2" attributes="0"/>
                       <Component id="chooseFileButton2" alignment="3" min="-2" pref="38" max="-2" attributes="0"/>
                   </Group>
                   <EmptySpace type="separate" max="-2" attributes="0"/>
@@ -278,7 +281,7 @@
             <Property name="text" type="java.lang.String" value="Upload Assignment    :"/>
           </Properties>
         </Component>
-        <Component class="javax.swing.JTextField" name="filePathField1">
+        <Component class="javax.swing.JTextField" name="submitFilePath">
           <Properties>
             <Property name="font" type="java.awt.Font" editor="org.netbeans.beaninfo.editors.FontEditor">
               <Font name="Lucida Grande" size="14" style="1"/>
@@ -300,6 +303,9 @@
               </Border>
             </Property>
           </Properties>
+          <Events>
+            <EventHandler event="actionPerformed" listener="java.awt.event.ActionListener" parameters="java.awt.event.ActionEvent" handler="jButton4ActionPerformed"/>
+          </Events>
         </Component>
         <Component class="javax.swing.JLabel" name="jLabel23">
           <Properties>
