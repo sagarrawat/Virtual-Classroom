@@ -52,7 +52,15 @@ public class VPlayer extends JPanel {
     }
     
     public void playMedia(String uri){
-        mediaPlayer.playMedia(uri);
+        mediaPlayer.playMedia(uri, ":network-caching=300");
+    }
+    
+    public void Stop(){
+        mediaPlayer.stop();
+    }
+    
+    public void playMedia(String uri, String[] options){
+        mediaPlayer.playMedia(uri, options);
     }
     /**
      * This method is called from within the constructor to initialize the form.

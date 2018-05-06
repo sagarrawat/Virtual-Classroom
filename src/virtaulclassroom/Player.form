@@ -40,6 +40,9 @@
   </Layout>
   <SubComponents>
     <Component class="ui.partial.VPlayer" name="vPlayer1">
+      <Properties>
+        <Property name="doubleBuffered" type="boolean" value="false"/>
+      </Properties>
     </Component>
   </SubComponents>
 </Form>

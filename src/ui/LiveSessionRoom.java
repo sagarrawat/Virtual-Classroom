@@ -177,7 +177,11 @@ public class LiveSessionRoom extends javax.swing.JPanel {
     private void jButton2ActionPerformed(java.awt.event.ActionEvent evt) {//GEN-FIRST:event_jButton2ActionPerformed
         try{
             String media = utility.Stream.startStream();
-            vp.playMedia(media);
+            String[] options = {
+                ":file-caching=0",
+                ":network-caching=300",
+                ":sout = #transcode{vcodec=x264,vb=800,scale=0.25,acodec=none,fps=23}:display :no-sout-rtp-sap :no-sout-standard-sap :ttl=1 :sout-keep"};
+            vp.playMedia(media, options);
             
         }catch (Exception e){}
     }//GEN-LAST:event_jButton2ActionPerformed

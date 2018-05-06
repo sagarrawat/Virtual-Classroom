@@ -17,9 +17,13 @@ public class MediaFileFilter implements FileFilter {
     public boolean accept(File file) {
         if(file.isDirectory())
             return false;
-        // implement the logic to select files here..
-        String name = file.getName().toLowerCase();
-        //return name.endsWith(".java") || name.endsWith(".class");
-        return name.length()<20;
+        String name = file.getName();
+        return name.endsWith(".mp4") || 
+                name.endsWith(".mov") || 
+                name.endsWith(".mkv") || 
+                name.endsWith(".3gp") || 
+                name.endsWith(".avi") || 
+                name.endsWith(".mp3");
+
     }
 }

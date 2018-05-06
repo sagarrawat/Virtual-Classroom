@@ -6,6 +6,7 @@
 package ui;
 
 import dal.Database;
+import dal.SQLDatabase;
 import entity.CurrentUser;
 import factory.View;
 import factory.ViewFactory;
@@ -32,6 +33,7 @@ public class Setting extends javax.swing.JPanel {
     
     public Setting() {
         initComponents();
+        db = new SQLDatabase();
     }
 
     public Setting (IChangeView frame){

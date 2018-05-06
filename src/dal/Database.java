@@ -53,9 +53,9 @@ public abstract class Database {
     
     // authenticate weather a user is registered or not
     public boolean authenticUser (String username , String password){
-        System.out.println (username + password);
+        //System.out.println (username + password);
         try{
-            String sql = "select type from user where username = ? AND password = ?";
+            String sql = "select type from user where username = ? AND password = ?;";
             ps = connection.prepareStatement(sql);
             ps.setString (1, username);
             ps.setString (2, password);
@@ -480,7 +480,7 @@ public abstract class Database {
     
     public void changePassword (String username, String password , String newPassword){
         try{
-            String sql = "";
+            String sql = "update user set password = ? where username=? and password = ?;";
             
             ps = connection.prepareStatement(sql);
             

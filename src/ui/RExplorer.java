@@ -44,6 +44,7 @@ public class RExplorer extends javax.swing.JPanel {
         initComponents();
         String user = System.getProperty("user.name");
         String resourseFolder = "/home/"+user+"/vcr";
+        //resourseFolder = "/media/mukesh/D064958664956FC8/Videos";
         jTree1.setModel(new FileBrowser(resourseFolder).getModel());
     }
     

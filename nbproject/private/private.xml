@@ -3,15 +3,18 @@
     <editor-bookmarks xmlns="http://www.netbeans.org/ns/editor-bookmarks/2" lastBookmarkId="0"/>
     <open-files xmlns="http://www.netbeans.org/ns/projectui-open-files/2">
         <group>
-            <file>file:/home/sagar/NetBeansProjects/Virtual-Classroom/src/ui/partial/UploadAssignment.java</file>
-            <file>file:/home/sagar/NetBeansProjects/Virtual-Classroom/src/entity/UserType.java</file>
-            <file>file:/home/sagar/NetBeansProjects/Virtual-Classroom/src/ui/Assignment.java</file>
-            <file>file:/home/sagar/NetBeansProjects/Virtual-Classroom/src/ui/partial/StudentProfile.java</file>
-            <file>file:/home/sagar/NetBeansProjects/Virtual-Classroom/src/dal/Database.java</file>
-            <file>file:/home/sagar/NetBeansProjects/Virtual-Classroom/src/ui/partial/FacultyProfile.java</file>
-            <file>file:/home/sagar/NetBeansProjects/Virtual-Classroom/src/ui/partial/ViewAssignment.java</file>
-            <file>file:/home/sagar/NetBeansProjects/Virtual-Classroom/src/ui/Setting.java</file>
-            <file>file:/home/sagar/NetBeansProjects/Virtual-Classroom/src/ui/Profile.java</file>
+            <file>file:/home/mukesh/NetBeansProjects/Virtual-Classroom/src/virtaulclassroom/VCR.java</file>
+            <file>file:/home/mukesh/NetBeansProjects/Virtual-Classroom/src/utility/MediaFileFilter.java</file>
+            <file>file:/home/mukesh/NetBeansProjects/Virtual-Classroom/src/ui/Login.java</file>
+            <file>file:/home/mukesh/NetBeansProjects/Virtual-Classroom/src/utility/Stream.java</file>
+            <file>file:/home/mukesh/NetBeansProjects/Virtual-Classroom/src/dal/Database.java</file>
+            <file>file:/home/mukesh/NetBeansProjects/Virtual-Classroom/src/utility/FileBrowser.java</file>
+            <file>file:/home/mukesh/NetBeansProjects/Virtual-Classroom/src/ui/Setting.java</file>
+            <file>file:/home/mukesh/NetBeansProjects/Virtual-Classroom/src/ui/partial/VPlayer.java</file>
+            <file>file:/home/mukesh/NetBeansProjects/Virtual-Classroom/src/ui/LiveSessionRoom.java</file>
+            <file>file:/home/mukesh/NetBeansProjects/Virtual-Classroom/src/ui/Profile.java</file>
+            <file>file:/home/mukesh/NetBeansProjects/Virtual-Classroom/src/ui/RExplorer.java</file>
+            <file>file:/home/mukesh/NetBeansProjects/Virtual-Classroom/src/virtaulclassroom/Player.java</file>
         </group>
     </open-files>
 </project-private>
