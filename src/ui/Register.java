@@ -7,6 +7,8 @@ package ui;
 
 import dal.Database;
 import dal.DerbyDatabase;
+import entity.CurrentUser;
+import entity.User;
 import entity.UserType;
 import factory.View;
 import factory.ViewFactory;
@@ -42,12 +44,22 @@ public class Register extends javax.swing.JPanel{
     }
     
     private void setCourses(){
-        ArrayList<String> allCourses = db.getAllCourses();
+        ArrayList<String> course = db.getAllCourses();
         
-        for (String course : allCourses){
-            courseComboBox.addItem(course);
+        for (String c : course){
+            courseComboBox.addItem(c);
         }
     }
+    
+    private void setBranch( String course ){
+        
+        ArrayList<String> branch = db.getAllBranch(course);
+        
+        for (String b : branch){
+            branchComboBox.addItem(b);
+        }
+    }
+    
     
     /**
      * This method is called from within the constructor to initialize the form.
@@ -80,7 +92,7 @@ public class Register extends javax.swing.JPanel{
         idField = new javax.swing.JTextField();
         jLabel7 = new javax.swing.JLabel();
         usernameField = new javax.swing.JTextField();
-        courseLabel1 = new javax.swing.JLabel();
+        branchLabel = new javax.swing.JLabel();
         branchComboBox = new javax.swing.JComboBox<>();
         jLabel12 = new javax.swing.JLabel();
 
@@ -184,6 +196,13 @@ public class Register extends javax.swing.JPanel{
 
         courseComboBox.setBackground(java.awt.Color.white);
         courseComboBox.setForeground(java.awt.Color.white);
+        courseComboBox.setModel(new javax.swing.DefaultComboBoxModel<>(new String[] { "Select Any One" }));
+        courseComboBox.setToolTipText("");
+        courseComboBox.addItemListener(new java.awt.event.ItemListener() {
+            public void itemStateChanged(java.awt.event.ItemEvent evt) {
+                courseComboBoxItemStateChanged(evt);
+            }
+        });
         LoginBody.add(courseComboBox, new org.netbeans.lib.awtextra.AbsoluteConstraints(330, 360, 246, 34));
 
         jLabel10.setFont(new java.awt.Font("Lucida Grande", 1, 14)); // NOI18N
@@ -203,13 +222,14 @@ public class Register extends javax.swing.JPanel{
         usernameField.setInputVerifier(new validation.FullNameVerifier());
         LoginBody.add(usernameField, new org.netbeans.lib.awtextra.AbsoluteConstraints(330, 110, 320, 30));
 
-        courseLabel1.setFont(new java.awt.Font("Lucida Grande", 1, 14)); // NOI18N
-        courseLabel1.setForeground(java.awt.Color.white);
-        courseLabel1.setText("Branch");
-        LoginBody.add(courseLabel1, new org.netbeans.lib.awtextra.AbsoluteConstraints(80, 420, -1, -1));
+        branchLabel.setFont(new java.awt.Font("Lucida Grande", 1, 14)); // NOI18N
+        branchLabel.setForeground(java.awt.Color.white);
+        branchLabel.setText("Branch");
+        LoginBody.add(branchLabel, new org.netbeans.lib.awtextra.AbsoluteConstraints(80, 420, -1, -1));
 
         branchComboBox.setBackground(java.awt.Color.white);
         branchComboBox.setForeground(java.awt.Color.white);
+        branchComboBox.setModel(new javax.swing.DefaultComboBoxModel<>(new String[] { "Select Any One" }));
         LoginBody.add(branchComboBox, new org.netbeans.lib.awtextra.AbsoluteConstraints(330, 410, 246, 34));
 
         jLabel12.setFont(new java.awt.Font("Lucida Grande", 1, 16)); // NOI18N
@@ -238,24 +258,23 @@ public class Register extends javax.swing.JPanel{
     }//GEN-LAST:event_jLabel6MouseClicked
 
     private void facultyRadioButtonMouseClicked(java.awt.event.MouseEvent evt) {//GEN-FIRST:event_facultyRadioButtonMouseClicked
-        courseLabel.hide();
-        courseComboBox.hide();
-        branchComboBox.hide();
+        courseLabel.setEnabled (false);
+        branchLabel.setEnabled (false);
+        courseComboBox.setEnabled (false);
+        branchComboBox.setEnabled (false);
         userIdLabel.setText ("Faculty Id no.");
     }//GEN-LAST:event_facultyRadioButtonMouseClicked
 
     private void studentRadioButtonMouseClicked(java.awt.event.MouseEvent evt) {//GEN-FIRST:event_studentRadioButtonMouseClicked
-        courseLabel.show();
-        courseComboBox.show();
-        branchComboBox.show();
+        courseLabel.setEnabled (true);
+        branchLabel.setEnabled(true);
+        courseComboBox.setEnabled (true);
+        branchComboBox.setEnabled (true);
         userIdLabel.setText ("University Roll no.");
         
     }//GEN-LAST:event_studentRadioButtonMouseClicked
 
     private void registerButtonActionPerformed(java.awt.event.ActionEvent evt) {//GEN-FIRST:event_registerButtonActionPerformed
-        
-        if (inputStatus == false)
-            return;
         
         UserType type = (facultyRadioButton.isSelected())? UserType.FACULTY : UserType.STUDENT;
                                                                           // type of user
@@ -270,22 +289,36 @@ public class Register extends javax.swing.JPanel{
                         username, password, fullName, id, phone
             });
         
-        if (status == true)
+        if (status == true){
+            CurrentUser.setCurrentUser(new User(username , type));
             parent.requestView(ViewFactory.getView(parent, View.Home));
+        
+        }
         
         else
             JOptionPane.showMessageDialog(this, "Unsccessful");
         
     }//GEN-LAST:event_registerButtonActionPerformed
 
+    private void courseComboBoxItemStateChanged(java.awt.event.ItemEvent evt) {//GEN-FIRST:event_courseComboBoxItemStateChanged
+        
+        if (courseComboBox.getSelectedIndex() == 0)
+            return;
+        
+        String course = courseComboBox.getSelectedItem().toString();
+        
+        setBranch (course);
+        
+    }//GEN-LAST:event_courseComboBoxItemStateChanged
+
 
     // Variables declaration - do not modify//GEN-BEGIN:variables
     private javax.swing.JPanel LoginBody;
     private javax.swing.JPanel LoginHeader;
     private javax.swing.JComboBox<String> branchComboBox;
+    private javax.swing.JLabel branchLabel;
     private javax.swing.JComboBox<String> courseComboBox;
     private javax.swing.JLabel courseLabel;
-    private javax.swing.JLabel courseLabel1;
     private javax.swing.JRadioButton facultyRadioButton;
     private javax.swing.JTextField idField;
     private javax.swing.JLabel jLabel10;

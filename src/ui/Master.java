@@ -6,12 +6,19 @@
 package ui;
 
 import dal.Database;
+import dal.DerbyDatabase;
 import factory.View;
 import factory.ViewFactory;
+import java.awt.Color;
+import java.awt.Font;
 import java.sql.PreparedStatement;
 import java.util.ArrayList;
+import java.util.Arrays;
+import java.util.Iterator;
 import javax.swing.JLabel;
 import javax.swing.JOptionPane;
+import javax.swing.JTable;
+import javax.swing.table.DefaultTableModel;
 
 import virtaulclassroom.IChangeView;
 
@@ -31,67 +38,88 @@ public class Master extends javax.swing.JPanel {
     private String selectedCourse;
     private String selectedBranch;
     
-    
     public Master() {
         initComponents();
-
+        db = new DerbyDatabase();
     }
     
     public Master (IChangeView parent){
         this();
         this.parent = parent;
-        setCourses();
+    
+        setList ("Course");
+                
     }
     
-    private void setCourses(){
-        //ArrayList <String> courses = db.getAllCourses();
-       // jPanel6.add (new JLabel ("sagar"));
-        newLabel ("some name");
-        newLabel ("some name");
-        newLabel ("some name");
+    private void setList( String s){
+        
+        ArrayList <String> list;
+        JTable table;
+        
+        switch (s) {
+            case "Course":
+                table = courseTable;       
+                list = db.getAllCourses();
+                break;
+            case "Branch":
+                table = branchTable;
+                list = db.getAllBranch( selectedCourse );
+                break;
+            case "Subject":
+                table = subjectTable;
+                list = db.getAllSubjects ( selectedBranch );
+                break;
+            default:
+                table = null;
+                list = null;
+                break;
+        }
+        
+        DefaultTableModel dm = new DefaultTableModel(0, 0);
+        
+        dm.setColumnIdentifiers(new Object[]{
+            "Sno.", s
+        });
+        
+        table.setModel(dm);
+        
+        int sno=0;
+        
+        for (String str : list) {
+            dm.addRow(new Object[] {
+                ++sno,
+                str,
+            });
+        }
+        
+        switch (s) {
+            case "Course":
+                courseScrollPane.getViewport().setView(table);
+                setList ("Branch");
+                break;
+            case "Branch":
+                branchScrollPane.getViewport().setView(table);
+                setList ("Subject");
+                break;
+            case "Subject":
+                subjectScrollPane.getViewport().setView(table);
+                break;
+            default:
+                break;
+        }
         
     }
     
-    ArrayList <JLabel> label = new ArrayList<>();
     
-    private void newLabel(String name){
-        
-        JLabel jLabel1 = new JLabel(name);
-
-        jLabel1.setBackground(new java.awt.Color(6, 65, 159));
-        jLabel1.setFont(new java.awt.Font("Lucida Grande", 1, 18)); // NOI18N
-        jLabel1.setForeground(new java.awt.Color(254, 254, 254));
-        jLabel1.setHorizontalAlignment(javax.swing.SwingConstants.CENTER);
-        jLabel1.setText(name);
-        jLabel1.setBorder(javax.swing.BorderFactory.createEtchedBorder());
-        jLabel1.setHorizontalTextPosition(javax.swing.SwingConstants.CENTER);
-        jLabel1.setOpaque(true);
-
-        
-        javax.swing.GroupLayout jPanel6Layout = new javax.swing.GroupLayout(jPanel6);
-        jPanel6.setLayout(jPanel6Layout);
-        jPanel6Layout.setHorizontalGroup(
-            jPanel6Layout.createParallelGroup(javax.swing.GroupLayout.Alignment.LEADING)
-            .addGroup(jPanel6Layout.createSequentialGroup()
-                .addGroup(jPanel6Layout.createParallelGroup(javax.swing.GroupLayout.Alignment.LEADING, false)
-                    .addComponent(jLabel1, javax.swing.GroupLayout.DEFAULT_SIZE, javax.swing.GroupLayout.DEFAULT_SIZE, Short.MAX_VALUE)
-        )));
-        jPanel6Layout.setVerticalGroup(
-            jPanel6Layout.createParallelGroup(javax.swing.GroupLayout.Alignment.LEADING)
-            .addGroup(jPanel6Layout.createSequentialGroup()
-                .addComponent(jLabel1, javax.swing.GroupLayout.PREFERRED_SIZE, 47, javax.swing.GroupLayout.PREFERRED_SIZE))
-        );
-        
-    }
+    private String getSelectedItem (JTable table){
     
-    private void setSubject(){
-        ArrayList <String> subject = db.getAllSubjects(selectedCourse , selectedBranch);
+        int row = table.getSelectedRow();
+        int col = 1;
         
-    }
-    
-    private void setBranch(){
-        ArrayList <String> subject = db.getAllBranch(selectedCourse );
-        
+        if (table.getSelectedRow() != -1)
+            return table.getValueAt(row , col).toString();
+        else
+            return null;
     }
     
     
@@ -107,21 +135,30 @@ public class Master extends javax.swing.JPanel {
         coursePanel = new javax.swing.JPanel();
         jLabel3 = new javax.swing.JLabel();
         courseField = new javax.swing.JTextField();
-        jButton4 = new javax.swing.JButton();
-        jScrollPane1 = new javax.swing.JScrollPane();
+        removeCourseButton = new javax.swing.JButton();
+        courseScrollPane = new javax.swing.JScrollPane();
         jPanel6 = new javax.swing.JPanel();
-        branchPanel = new javax.swing.JPanel();
+        jScrollPane7 = new javax.swing.JScrollPane();
+        courseTable = new javax.swing.JTable();
+        addCourseButton = new javax.swing.JButton();
+        subjectPanel = new javax.swing.JPanel();
         jLabel4 = new javax.swing.JLabel();
         subjectField = new javax.swing.JTextField();
-        jButton5 = new javax.swing.JButton();
-        jScrollPane3 = new javax.swing.JScrollPane();
+        addSubjectButton = new javax.swing.JButton();
+        subjectScrollPane = new javax.swing.JScrollPane();
         jPanel8 = new javax.swing.JPanel();
-        subjectPanel = new javax.swing.JPanel();
+        jScrollPane9 = new javax.swing.JScrollPane();
+        subjectTable = new javax.swing.JTable();
+        removeSubjectButton = new javax.swing.JButton();
+        branchPanel = new javax.swing.JPanel();
         jLabel7 = new javax.swing.JLabel();
         branchField = new javax.swing.JTextField();
-        jButton8 = new javax.swing.JButton();
-        jScrollPane5 = new javax.swing.JScrollPane();
+        addBranchButton = new javax.swing.JButton();
+        branchScrollPane = new javax.swing.JScrollPane();
         jPanel10 = new javax.swing.JPanel();
+        jScrollPane8 = new javax.swing.JScrollPane();
+        branchTable = new javax.swing.JTable();
+        removeBranchButton = new javax.swing.JButton();
         jPanel2 = new javax.swing.JPanel();
         jLabel5 = new javax.swing.JLabel();
 
@@ -135,45 +172,87 @@ public class Master extends javax.swing.JPanel {
         jLabel3.setText("COURSES");
         jLabel3.setHorizontalTextPosition(javax.swing.SwingConstants.CENTER);
 
-        jButton4.setText("Add New Course");
-        jButton4.addActionListener(new java.awt.event.ActionListener() {
+        removeCourseButton.setBackground(new java.awt.Color(205, 30, 30));
+        removeCourseButton.setFont(new java.awt.Font("Lucida Grande", 1, 13)); // NOI18N
+        removeCourseButton.setForeground(new java.awt.Color(254, 254, 254));
+        removeCourseButton.setText("Remove Selected");
+        removeCourseButton.addActionListener(new java.awt.event.ActionListener() {
             public void actionPerformed(java.awt.event.ActionEvent evt) {
-                jButton4ActionPerformed(evt);
+                removeCourseButtonActionPerformed(evt);
             }
         });
 
-        jScrollPane1.setHorizontalScrollBarPolicy(javax.swing.ScrollPaneConstants.HORIZONTAL_SCROLLBAR_NEVER);
+        courseScrollPane.setHorizontalScrollBarPolicy(javax.swing.ScrollPaneConstants.HORIZONTAL_SCROLLBAR_NEVER);
 
         jPanel6.setBackground(new java.awt.Color(33, 137, 212));
         jPanel6.setBorder(javax.swing.BorderFactory.createEtchedBorder());
+        jPanel6.setLayout(new javax.swing.BoxLayout(jPanel6, javax.swing.BoxLayout.LINE_AXIS));
 
-        javax.swing.GroupLayout jPanel6Layout = new javax.swing.GroupLayout(jPanel6);
-        jPanel6.setLayout(jPanel6Layout);
-        jPanel6Layout.setHorizontalGroup(
-            jPanel6Layout.createParallelGroup(javax.swing.GroupLayout.Alignment.LEADING)
-            .addGap(0, 376, Short.MAX_VALUE)
-        );
-        jPanel6Layout.setVerticalGroup(
-            jPanel6Layout.createParallelGroup(javax.swing.GroupLayout.Alignment.LEADING)
-            .addGap(0, 387, Short.MAX_VALUE)
-        );
+        jScrollPane7.setHorizontalScrollBarPolicy(javax.swing.ScrollPaneConstants.HORIZONTAL_SCROLLBAR_NEVER);
+        jScrollPane7.setVerticalScrollBarPolicy(javax.swing.ScrollPaneConstants.VERTICAL_SCROLLBAR_NEVER);
 
-        jScrollPane1.setViewportView(jPanel6);
+        courseTable.setBackground(new java.awt.Color(33, 137, 212));
+        courseTable.setFont(new java.awt.Font("Lucida Grande", 1, 18)); // NOI18N
+        courseTable.setForeground(new java.awt.Color(239, 232, 232));
+        courseTable.setModel(new javax.swing.table.DefaultTableModel(
+            new Object [][] {
+
+            },
+            new String [] {
+                "Course"
+            }
+        ) {
+            boolean[] canEdit = new boolean [] {
+                false
+            };
+
+            public boolean isCellEditable(int rowIndex, int columnIndex) {
+                return canEdit [columnIndex];
+            }
+        });
+        courseTable.setColumnSelectionAllowed(true);
+        courseTable.setOpaque(false);
+        courseTable.setPreferredSize(new java.awt.Dimension(405, 440));
+        courseTable.addMouseListener(new java.awt.event.MouseAdapter() {
+            public void mouseClicked(java.awt.event.MouseEvent evt) {
+                courseTableMouseClicked(evt);
+            }
+        });
+        jScrollPane7.setViewportView(courseTable);
+        courseTable.getColumnModel().getSelectionModel().setSelectionMode(javax.swing.ListSelectionModel.SINGLE_SELECTION);
+        if (courseTable.getColumnModel().getColumnCount() > 0) {
+            courseTable.getColumnModel().getColumn(0).setResizable(false);
+        }
+
+        jPanel6.add(jScrollPane7);
+
+        courseScrollPane.setViewportView(jPanel6);
+
+        addCourseButton.setFont(new java.awt.Font("Lucida Grande", 1, 13)); // NOI18N
+        addCourseButton.setText("Add New Course");
+        addCourseButton.addActionListener(new java.awt.event.ActionListener() {
+            public void actionPerformed(java.awt.event.ActionEvent evt) {
+                addCourseButtonActionPerformed(evt);
+            }
+        });
 
         javax.swing.GroupLayout coursePanelLayout = new javax.swing.GroupLayout(coursePanel);
         coursePanel.setLayout(coursePanelLayout);
         coursePanelLayout.setHorizontalGroup(
             coursePanelLayout.createParallelGroup(javax.swing.GroupLayout.Alignment.LEADING)
-            .addGroup(coursePanelLayout.createSequentialGroup()
+            .addComponent(courseScrollPane, javax.swing.GroupLayout.PREFERRED_SIZE, 0, Short.MAX_VALUE)
+            .addGroup(javax.swing.GroupLayout.Alignment.TRAILING, coursePanelLayout.createSequentialGroup()
                 .addContainerGap()
-                .addGroup(coursePanelLayout.createParallelGroup(javax.swing.GroupLayout.Alignment.LEADING)
-                    .addComponent(jLabel3, javax.swing.GroupLayout.DEFAULT_SIZE, javax.swing.GroupLayout.DEFAULT_SIZE, Short.MAX_VALUE)
-                    .addComponent(courseField)
-                    .addGroup(coursePanelLayout.createSequentialGroup()
-                        .addComponent(jButton4, javax.swing.GroupLayout.PREFERRED_SIZE, 139, javax.swing.GroupLayout.PREFERRED_SIZE)
-                        .addGap(0, 0, Short.MAX_VALUE)))
+                .addGroup(coursePanelLayout.createParallelGroup(javax.swing.GroupLayout.Alignment.TRAILING)
+                    .addComponent(courseField, javax.swing.GroupLayout.Alignment.LEADING)
+                    .addGroup(javax.swing.GroupLayout.Alignment.LEADING, coursePanelLayout.createSequentialGroup()
+                        .addComponent(jLabel3, javax.swing.GroupLayout.PREFERRED_SIZE, 126, javax.swing.GroupLayout.PREFERRED_SIZE)
+                        .addGap(0, 0, Short.MAX_VALUE))
+                    .addGroup(javax.swing.GroupLayout.Alignment.LEADING, coursePanelLayout.createSequentialGroup()
+                        .addComponent(addCourseButton, javax.swing.GroupLayout.DEFAULT_SIZE, javax.swing.GroupLayout.DEFAULT_SIZE, Short.MAX_VALUE)
+                        .addPreferredGap(javax.swing.LayoutStyle.ComponentPlacement.RELATED)
+                        .addComponent(removeCourseButton, javax.swing.GroupLayout.PREFERRED_SIZE, 188, javax.swing.GroupLayout.PREFERRED_SIZE)))
                 .addContainerGap())
-            .addComponent(jScrollPane1, javax.swing.GroupLayout.PREFERRED_SIZE, 0, Short.MAX_VALUE)
         );
         coursePanelLayout.setVerticalGroup(
             coursePanelLayout.createParallelGroup(javax.swing.GroupLayout.Alignment.LEADING)
@@ -183,124 +262,97 @@ public class Master extends javax.swing.JPanel {
                 .addGap(18, 18, 18)
                 .addComponent(courseField, javax.swing.GroupLayout.PREFERRED_SIZE, 33, javax.swing.GroupLayout.PREFERRED_SIZE)
                 .addGap(18, 18, 18)
-                .addComponent(jButton4, javax.swing.GroupLayout.PREFERRED_SIZE, 35, javax.swing.GroupLayout.PREFERRED_SIZE)
+                .addGroup(coursePanelLayout.createParallelGroup(javax.swing.GroupLayout.Alignment.BASELINE)
+                    .addComponent(addCourseButton, javax.swing.GroupLayout.PREFERRED_SIZE, 35, javax.swing.GroupLayout.PREFERRED_SIZE)
+                    .addComponent(removeCourseButton, javax.swing.GroupLayout.PREFERRED_SIZE, 35, javax.swing.GroupLayout.PREFERRED_SIZE))
                 .addGap(18, 18, 18)
-                .addComponent(jScrollPane1))
+                .addComponent(courseScrollPane, javax.swing.GroupLayout.DEFAULT_SIZE, 393, Short.MAX_VALUE))
         );
 
-        branchPanel.setBackground(new java.awt.Color(33, 137, 212));
-        branchPanel.setBorder(javax.swing.BorderFactory.createEtchedBorder());
+        subjectPanel.setBackground(new java.awt.Color(33, 137, 212));
+        subjectPanel.setBorder(javax.swing.BorderFactory.createEtchedBorder());
 
         jLabel4.setFont(new java.awt.Font("Lucida Grande", 1, 24)); // NOI18N
         jLabel4.setForeground(new java.awt.Color(254, 254, 254));
         jLabel4.setText("SUBJECTS");
         jLabel4.setHorizontalTextPosition(javax.swing.SwingConstants.CENTER);
 
-        subjectField.setEnabled(false);
+        subjectField.setEditable(false);
 
-        jButton5.setText("Add New Subjects");
-        jButton5.setEnabled(false);
-        jButton5.addActionListener(new java.awt.event.ActionListener() {
+        addSubjectButton.setFont(new java.awt.Font("Lucida Grande", 1, 13)); // NOI18N
+        addSubjectButton.setText("Add New Subjects");
+        addSubjectButton.setEnabled(false);
+        addSubjectButton.addActionListener(new java.awt.event.ActionListener() {
             public void actionPerformed(java.awt.event.ActionEvent evt) {
-                jButton5ActionPerformed(evt);
+                addSubjectButtonActionPerformed(evt);
             }
         });
 
-        jScrollPane3.setHorizontalScrollBarPolicy(javax.swing.ScrollPaneConstants.HORIZONTAL_SCROLLBAR_NEVER);
+        subjectScrollPane.setHorizontalScrollBarPolicy(javax.swing.ScrollPaneConstants.HORIZONTAL_SCROLLBAR_NEVER);
 
         jPanel8.setBackground(new java.awt.Color(33, 137, 212));
         jPanel8.setBorder(javax.swing.BorderFactory.createEtchedBorder());
+        jPanel8.setLayout(new javax.swing.BoxLayout(jPanel8, javax.swing.BoxLayout.LINE_AXIS));
 
-        javax.swing.GroupLayout jPanel8Layout = new javax.swing.GroupLayout(jPanel8);
-        jPanel8.setLayout(jPanel8Layout);
-        jPanel8Layout.setHorizontalGroup(
-            jPanel8Layout.createParallelGroup(javax.swing.GroupLayout.Alignment.LEADING)
-            .addGap(0, 399, Short.MAX_VALUE)
-        );
-        jPanel8Layout.setVerticalGroup(
-            jPanel8Layout.createParallelGroup(javax.swing.GroupLayout.Alignment.LEADING)
-            .addGap(0, 434, Short.MAX_VALUE)
-        );
+        subjectTable.setBackground(new java.awt.Color(33, 137, 212));
+        subjectTable.setFont(new java.awt.Font("Lucida Grande", 1, 16)); // NOI18N
+        subjectTable.setForeground(new java.awt.Color(239, 232, 232));
+        subjectTable.setModel(new javax.swing.table.DefaultTableModel(
+            new Object [][] {
 
-        jScrollPane3.setViewportView(jPanel8);
+            },
+            new String [] {
+                "S. no.", "Course"
+            }
+        ) {
+            boolean[] canEdit = new boolean [] {
+                false, false
+            };
 
-        javax.swing.GroupLayout branchPanelLayout = new javax.swing.GroupLayout(branchPanel);
-        branchPanel.setLayout(branchPanelLayout);
-        branchPanelLayout.setHorizontalGroup(
-            branchPanelLayout.createParallelGroup(javax.swing.GroupLayout.Alignment.LEADING)
-            .addComponent(jScrollPane3, javax.swing.GroupLayout.PREFERRED_SIZE, 0, Short.MAX_VALUE)
-            .addGroup(branchPanelLayout.createSequentialGroup()
-                .addContainerGap()
-                .addGroup(branchPanelLayout.createParallelGroup(javax.swing.GroupLayout.Alignment.LEADING)
-                    .addGroup(branchPanelLayout.createSequentialGroup()
-                        .addComponent(jButton5, javax.swing.GroupLayout.PREFERRED_SIZE, 137, javax.swing.GroupLayout.PREFERRED_SIZE)
-                        .addGap(0, 0, Short.MAX_VALUE))
-                    .addComponent(subjectField)
-                    .addComponent(jLabel4, javax.swing.GroupLayout.Alignment.TRAILING, javax.swing.GroupLayout.DEFAULT_SIZE, javax.swing.GroupLayout.DEFAULT_SIZE, Short.MAX_VALUE))
-                .addContainerGap())
-        );
-        branchPanelLayout.setVerticalGroup(
-            branchPanelLayout.createParallelGroup(javax.swing.GroupLayout.Alignment.LEADING)
-            .addGroup(branchPanelLayout.createSequentialGroup()
-                .addContainerGap()
-                .addComponent(jLabel4, javax.swing.GroupLayout.PREFERRED_SIZE, 42, javax.swing.GroupLayout.PREFERRED_SIZE)
-                .addPreferredGap(javax.swing.LayoutStyle.ComponentPlacement.UNRELATED)
-                .addComponent(subjectField, javax.swing.GroupLayout.PREFERRED_SIZE, 33, javax.swing.GroupLayout.PREFERRED_SIZE)
-                .addGap(18, 18, 18)
-                .addComponent(jButton5, javax.swing.GroupLayout.PREFERRED_SIZE, 35, javax.swing.GroupLayout.PREFERRED_SIZE)
-                .addGap(18, 18, 18)
-                .addComponent(jScrollPane3, javax.swing.GroupLayout.PREFERRED_SIZE, 0, Short.MAX_VALUE))
-        );
-
-        subjectPanel.setBackground(new java.awt.Color(33, 137, 212));
-        subjectPanel.setBorder(javax.swing.BorderFactory.createEtchedBorder());
-
-        jLabel7.setFont(new java.awt.Font("Lucida Grande", 1, 24)); // NOI18N
-        jLabel7.setForeground(new java.awt.Color(254, 254, 254));
-        jLabel7.setText("BRANCHES");
-        jLabel7.setHorizontalTextPosition(javax.swing.SwingConstants.CENTER);
-
-        branchField.setEnabled(false);
-
-        jButton8.setText("Add New Branch");
-        jButton8.setEnabled(false);
-        jButton8.addActionListener(new java.awt.event.ActionListener() {
-            public void actionPerformed(java.awt.event.ActionEvent evt) {
-                jButton8ActionPerformed(evt);
+            public boolean isCellEditable(int rowIndex, int columnIndex) {
+                return canEdit [columnIndex];
             }
         });
+        subjectTable.setOpaque(false);
+        subjectTable.setPreferredSize(new java.awt.Dimension(405, 440));
+        subjectTable.addMouseListener(new java.awt.event.MouseAdapter() {
+            public void mouseClicked(java.awt.event.MouseEvent evt) {
+                subjectTableMouseClicked(evt);
+            }
+        });
+        jScrollPane9.setViewportView(subjectTable);
 
-        jScrollPane5.setHorizontalScrollBarPolicy(javax.swing.ScrollPaneConstants.HORIZONTAL_SCROLLBAR_NEVER);
+        jPanel8.add(jScrollPane9);
 
-        jPanel10.setBackground(new java.awt.Color(33, 137, 212));
-        jPanel10.setBorder(javax.swing.BorderFactory.createEtchedBorder());
+        subjectScrollPane.setViewportView(jPanel8);
 
-        javax.swing.GroupLayout jPanel10Layout = new javax.swing.GroupLayout(jPanel10);
-        jPanel10.setLayout(jPanel10Layout);
-        jPanel10Layout.setHorizontalGroup(
-            jPanel10Layout.createParallelGroup(javax.swing.GroupLayout.Alignment.LEADING)
-            .addGap(0, 399, Short.MAX_VALUE)
-        );
-        jPanel10Layout.setVerticalGroup(
-            jPanel10Layout.createParallelGroup(javax.swing.GroupLayout.Alignment.LEADING)
-            .addGap(0, 434, Short.MAX_VALUE)
-        );
-
-        jScrollPane5.setViewportView(jPanel10);
+        removeSubjectButton.setBackground(new java.awt.Color(205, 30, 30));
+        removeSubjectButton.setFont(new java.awt.Font("Lucida Grande", 1, 13)); // NOI18N
+        removeSubjectButton.setForeground(new java.awt.Color(254, 254, 254));
+        removeSubjectButton.setText("Remove Selected");
+        removeSubjectButton.setToolTipText("");
+        removeSubjectButton.setEnabled(false);
+        removeSubjectButton.addActionListener(new java.awt.event.ActionListener() {
+            public void actionPerformed(java.awt.event.ActionEvent evt) {
+                removeSubjectButtonActionPerformed(evt);
+            }
+        });
 
         javax.swing.GroupLayout subjectPanelLayout = new javax.swing.GroupLayout(subjectPanel);
         subjectPanel.setLayout(subjectPanelLayout);
         subjectPanelLayout.setHorizontalGroup(
             subjectPanelLayout.createParallelGroup(javax.swing.GroupLayout.Alignment.LEADING)
-            .addComponent(jScrollPane5, javax.swing.GroupLayout.PREFERRED_SIZE, 0, Short.MAX_VALUE)
+            .addComponent(subjectScrollPane, javax.swing.GroupLayout.PREFERRED_SIZE, 0, Short.MAX_VALUE)
             .addGroup(subjectPanelLayout.createSequentialGroup()
                 .addContainerGap()
                 .addGroup(subjectPanelLayout.createParallelGroup(javax.swing.GroupLayout.Alignment.LEADING)
-                    .addComponent(branchField)
                     .addGroup(subjectPanelLayout.createSequentialGroup()
-                        .addGroup(subjectPanelLayout.createParallelGroup(javax.swing.GroupLayout.Alignment.LEADING)
-                            .addComponent(jLabel7, javax.swing.GroupLayout.PREFERRED_SIZE, 166, javax.swing.GroupLayout.PREFERRED_SIZE)
-                            .addComponent(jButton8, javax.swing.GroupLayout.PREFERRED_SIZE, 137, javax.swing.GroupLayout.PREFERRED_SIZE))
+                        .addComponent(addSubjectButton, javax.swing.GroupLayout.DEFAULT_SIZE, javax.swing.GroupLayout.DEFAULT_SIZE, Short.MAX_VALUE)
+                        .addPreferredGap(javax.swing.LayoutStyle.ComponentPlacement.RELATED)
+                        .addComponent(removeSubjectButton, javax.swing.GroupLayout.PREFERRED_SIZE, 149, javax.swing.GroupLayout.PREFERRED_SIZE))
+                    .addComponent(subjectField)
+                    .addGroup(subjectPanelLayout.createSequentialGroup()
+                        .addComponent(jLabel4, javax.swing.GroupLayout.PREFERRED_SIZE, 139, javax.swing.GroupLayout.PREFERRED_SIZE)
                         .addGap(0, 0, Short.MAX_VALUE)))
                 .addContainerGap())
         );
@@ -308,13 +360,117 @@ public class Master extends javax.swing.JPanel {
             subjectPanelLayout.createParallelGroup(javax.swing.GroupLayout.Alignment.LEADING)
             .addGroup(subjectPanelLayout.createSequentialGroup()
                 .addContainerGap()
+                .addComponent(jLabel4, javax.swing.GroupLayout.PREFERRED_SIZE, 42, javax.swing.GroupLayout.PREFERRED_SIZE)
+                .addPreferredGap(javax.swing.LayoutStyle.ComponentPlacement.UNRELATED)
+                .addComponent(subjectField, javax.swing.GroupLayout.PREFERRED_SIZE, 33, javax.swing.GroupLayout.PREFERRED_SIZE)
+                .addGap(18, 18, 18)
+                .addGroup(subjectPanelLayout.createParallelGroup(javax.swing.GroupLayout.Alignment.BASELINE)
+                    .addComponent(addSubjectButton, javax.swing.GroupLayout.PREFERRED_SIZE, 35, javax.swing.GroupLayout.PREFERRED_SIZE)
+                    .addComponent(removeSubjectButton, javax.swing.GroupLayout.PREFERRED_SIZE, 35, javax.swing.GroupLayout.PREFERRED_SIZE))
+                .addGap(18, 18, 18)
+                .addComponent(subjectScrollPane, javax.swing.GroupLayout.PREFERRED_SIZE, 0, Short.MAX_VALUE))
+        );
+
+        branchPanel.setBackground(new java.awt.Color(33, 137, 212));
+        branchPanel.setBorder(javax.swing.BorderFactory.createEtchedBorder());
+
+        jLabel7.setFont(new java.awt.Font("Lucida Grande", 1, 24)); // NOI18N
+        jLabel7.setForeground(new java.awt.Color(254, 254, 254));
+        jLabel7.setText("BRANCHES");
+        jLabel7.setHorizontalTextPosition(javax.swing.SwingConstants.CENTER);
+
+        branchField.setEditable(false);
+
+        addBranchButton.setFont(new java.awt.Font("Lucida Grande", 1, 13)); // NOI18N
+        addBranchButton.setText("Add New Branch");
+        addBranchButton.setEnabled(false);
+        addBranchButton.addActionListener(new java.awt.event.ActionListener() {
+            public void actionPerformed(java.awt.event.ActionEvent evt) {
+                addBranchButtonActionPerformed(evt);
+            }
+        });
+
+        branchScrollPane.setHorizontalScrollBarPolicy(javax.swing.ScrollPaneConstants.HORIZONTAL_SCROLLBAR_NEVER);
+
+        jPanel10.setBackground(new java.awt.Color(33, 137, 212));
+        jPanel10.setBorder(javax.swing.BorderFactory.createEtchedBorder());
+        jPanel10.setLayout(new javax.swing.BoxLayout(jPanel10, javax.swing.BoxLayout.LINE_AXIS));
+
+        branchTable.setBackground(new java.awt.Color(33, 137, 212));
+        branchTable.setFont(new java.awt.Font("Lucida Grande", 1, 16)); // NOI18N
+        branchTable.setForeground(new java.awt.Color(239, 232, 232));
+        branchTable.setModel(new javax.swing.table.DefaultTableModel(
+            new Object [][] {
+
+            },
+            new String [] {
+                "S. no.", "Course"
+            }
+        ) {
+            boolean[] canEdit = new boolean [] {
+                false, false
+            };
+
+            public boolean isCellEditable(int rowIndex, int columnIndex) {
+                return canEdit [columnIndex];
+            }
+        });
+        branchTable.setOpaque(false);
+        branchTable.setPreferredSize(new java.awt.Dimension(405, 440));
+        branchTable.addMouseListener(new java.awt.event.MouseAdapter() {
+            public void mouseClicked(java.awt.event.MouseEvent evt) {
+                branchTableMouseClicked(evt);
+            }
+        });
+        jScrollPane8.setViewportView(branchTable);
+
+        jPanel10.add(jScrollPane8);
+
+        branchScrollPane.setViewportView(jPanel10);
+
+        removeBranchButton.setBackground(new java.awt.Color(205, 30, 30));
+        removeBranchButton.setFont(new java.awt.Font("Lucida Grande", 1, 13)); // NOI18N
+        removeBranchButton.setForeground(new java.awt.Color(254, 254, 254));
+        removeBranchButton.setText("Remove Selected");
+        removeBranchButton.setToolTipText("");
+        removeBranchButton.setEnabled(false);
+        removeBranchButton.addActionListener(new java.awt.event.ActionListener() {
+            public void actionPerformed(java.awt.event.ActionEvent evt) {
+                removeBranchButtonActionPerformed(evt);
+            }
+        });
+
+        javax.swing.GroupLayout branchPanelLayout = new javax.swing.GroupLayout(branchPanel);
+        branchPanel.setLayout(branchPanelLayout);
+        branchPanelLayout.setHorizontalGroup(
+            branchPanelLayout.createParallelGroup(javax.swing.GroupLayout.Alignment.LEADING)
+            .addGroup(branchPanelLayout.createSequentialGroup()
+                .addContainerGap()
+                .addGroup(branchPanelLayout.createParallelGroup(javax.swing.GroupLayout.Alignment.LEADING)
+                    .addComponent(branchField)
+                    .addGroup(branchPanelLayout.createSequentialGroup()
+                        .addComponent(jLabel7, javax.swing.GroupLayout.PREFERRED_SIZE, 166, javax.swing.GroupLayout.PREFERRED_SIZE)
+                        .addGap(0, 0, Short.MAX_VALUE))
+                    .addGroup(branchPanelLayout.createSequentialGroup()
+                        .addComponent(addBranchButton, javax.swing.GroupLayout.PREFERRED_SIZE, 164, javax.swing.GroupLayout.PREFERRED_SIZE)
+                        .addPreferredGap(javax.swing.LayoutStyle.ComponentPlacement.RELATED, javax.swing.GroupLayout.DEFAULT_SIZE, Short.MAX_VALUE)
+                        .addComponent(removeBranchButton, javax.swing.GroupLayout.PREFERRED_SIZE, 173, javax.swing.GroupLayout.PREFERRED_SIZE)))
+                .addContainerGap())
+            .addComponent(branchScrollPane, javax.swing.GroupLayout.Alignment.TRAILING, javax.swing.GroupLayout.PREFERRED_SIZE, 0, Short.MAX_VALUE)
+        );
+        branchPanelLayout.setVerticalGroup(
+            branchPanelLayout.createParallelGroup(javax.swing.GroupLayout.Alignment.LEADING)
+            .addGroup(branchPanelLayout.createSequentialGroup()
+                .addContainerGap()
                 .addComponent(jLabel7, javax.swing.GroupLayout.PREFERRED_SIZE, 38, javax.swing.GroupLayout.PREFERRED_SIZE)
                 .addGap(18, 18, 18)
                 .addComponent(branchField, javax.swing.GroupLayout.PREFERRED_SIZE, 33, javax.swing.GroupLayout.PREFERRED_SIZE)
                 .addGap(18, 18, 18)
-                .addComponent(jButton8, javax.swing.GroupLayout.PREFERRED_SIZE, 35, javax.swing.GroupLayout.PREFERRED_SIZE)
+                .addGroup(branchPanelLayout.createParallelGroup(javax.swing.GroupLayout.Alignment.BASELINE)
+                    .addComponent(addBranchButton, javax.swing.GroupLayout.PREFERRED_SIZE, 35, javax.swing.GroupLayout.PREFERRED_SIZE)
+                    .addComponent(removeBranchButton, javax.swing.GroupLayout.PREFERRED_SIZE, 35, javax.swing.GroupLayout.PREFERRED_SIZE))
                 .addGap(18, 18, 18)
-                .addComponent(jScrollPane5, javax.swing.GroupLayout.PREFERRED_SIZE, 0, Short.MAX_VALUE))
+                .addComponent(branchScrollPane, javax.swing.GroupLayout.PREFERRED_SIZE, 0, Short.MAX_VALUE))
         );
 
         jPanel2.setBackground(java.awt.SystemColor.controlHighlight);
@@ -334,7 +490,7 @@ public class Master extends javax.swing.JPanel {
             .addGroup(jPanel2Layout.createSequentialGroup()
                 .addGap(33, 33, 33)
                 .addComponent(jLabel5)
-                .addContainerGap(1052, Short.MAX_VALUE))
+                .addContainerGap(1108, Short.MAX_VALUE))
         );
         jPanel2Layout.setVerticalGroup(
             jPanel2Layout.createParallelGroup(javax.swing.GroupLayout.Alignment.LEADING)
@@ -352,9 +508,9 @@ public class Master extends javax.swing.JPanel {
                 .addContainerGap()
                 .addComponent(coursePanel, javax.swing.GroupLayout.DEFAULT_SIZE, javax.swing.GroupLayout.DEFAULT_SIZE, Short.MAX_VALUE)
                 .addPreferredGap(javax.swing.LayoutStyle.ComponentPlacement.UNRELATED)
-                .addComponent(subjectPanel, javax.swing.GroupLayout.DEFAULT_SIZE, javax.swing.GroupLayout.DEFAULT_SIZE, Short.MAX_VALUE)
-                .addPreferredGap(javax.swing.LayoutStyle.ComponentPlacement.UNRELATED)
                 .addComponent(branchPanel, javax.swing.GroupLayout.DEFAULT_SIZE, javax.swing.GroupLayout.DEFAULT_SIZE, Short.MAX_VALUE)
+                .addPreferredGap(javax.swing.LayoutStyle.ComponentPlacement.UNRELATED)
+                .addComponent(subjectPanel, javax.swing.GroupLayout.DEFAULT_SIZE, javax.swing.GroupLayout.DEFAULT_SIZE, Short.MAX_VALUE)
                 .addContainerGap())
             .addComponent(jPanel2, javax.swing.GroupLayout.DEFAULT_SIZE, javax.swing.GroupLayout.DEFAULT_SIZE, Short.MAX_VALUE)
         );
@@ -366,106 +522,189 @@ public class Master extends javax.swing.JPanel {
                 .addGap(18, 18, 18)
                 .addGroup(layout.createParallelGroup(javax.swing.GroupLayout.Alignment.LEADING)
                     .addComponent(coursePanel, javax.swing.GroupLayout.DEFAULT_SIZE, javax.swing.GroupLayout.DEFAULT_SIZE, Short.MAX_VALUE)
-                    .addComponent(subjectPanel, javax.swing.GroupLayout.DEFAULT_SIZE, javax.swing.GroupLayout.DEFAULT_SIZE, Short.MAX_VALUE)
-                    .addComponent(branchPanel, javax.swing.GroupLayout.Alignment.TRAILING, javax.swing.GroupLayout.DEFAULT_SIZE, javax.swing.GroupLayout.DEFAULT_SIZE, Short.MAX_VALUE))
+                    .addComponent(branchPanel, javax.swing.GroupLayout.DEFAULT_SIZE, javax.swing.GroupLayout.DEFAULT_SIZE, Short.MAX_VALUE)
+                    .addComponent(subjectPanel, javax.swing.GroupLayout.Alignment.TRAILING, javax.swing.GroupLayout.DEFAULT_SIZE, javax.swing.GroupLayout.DEFAULT_SIZE, Short.MAX_VALUE))
                 .addContainerGap())
         );
     }// </editor-fold>//GEN-END:initComponents
 
-    private void jButton4ActionPerformed(java.awt.event.ActionEvent evt) {//GEN-FIRST:event_jButton4ActionPerformed
-        String course = courseField.getText();
+    private void removeCourseButtonActionPerformed(java.awt.event.ActionEvent evt) {//GEN-FIRST:event_removeCourseButtonActionPerformed
         
-        if (course.equals("")){
-            JOptionPane.showMessageDialog(this, "can't leave this feild empty");
+        int stat = JOptionPane.showConfirmDialog(this, "Are you sure?");
+        
+        if (stat != JOptionPane.YES_OPTION)
             return;
+        
+        String course = getSelectedItem (courseTable); 
+            
+        if (course != null){
+            boolean status = db.removeCourse (course);
+            
+            if (status == true) {
+                JOptionPane.showMessageDialog(this, "Successfully Removed");            
+                setList ("Course");
+            }
+            else
+                JOptionPane.showMessageDialog(this, "Unsccessfull");
         }
         
-        int stat = JOptionPane.showConfirmDialog(this, "Are you sure you want to add this Subject");
-        if (stat == 0)
-            add (course , "course");
-    }//GEN-LAST:event_jButton4ActionPerformed
+    }//GEN-LAST:event_removeCourseButtonActionPerformed
 
-    private void jButton8ActionPerformed(java.awt.event.ActionEvent evt) {//GEN-FIRST:event_jButton8ActionPerformed
+    private void addBranchButtonActionPerformed(java.awt.event.ActionEvent evt) {//GEN-FIRST:event_addBranchButtonActionPerformed
+
         String branch = branchField.getText();
+        String course = getSelectedItem (courseTable);
         
-        if (branch.equals("")){
-            JOptionPane.showMessageDialog(this, "can't leave this feild empty");
-            return;
-        }
-        
-        int stat = JOptionPane.showConfirmDialog(this, "Are you sure you want to add this Branch");
-        if (stat == 0)
-            add (branch , "branch");
-    }//GEN-LAST:event_jButton8ActionPerformed
+        if (!branch.equals("")){
 
-    private void jButton5ActionPerformed(java.awt.event.ActionEvent evt) {//GEN-FIRST:event_jButton5ActionPerformed
-        String subject = subjectField.getText();
+            db.addBranch (branch , course);
+            setList ("Branch");        
         
-        if (subject.equals("")){
-            JOptionPane.showMessageDialog(this, "can't leave this feild empty");
-            return;
+        } 
+        
+        else
+            JOptionPane.showMessageDialog(this, "Cannot leave branch name field Empty");
+        
+    }//GEN-LAST:event_addBranchButtonActionPerformed
+
+    private void addSubjectButtonActionPerformed(java.awt.event.ActionEvent evt) {//GEN-FIRST:event_addSubjectButtonActionPerformed
+        String subject = subjectField.getText();
+        String branch = getSelectedItem (branchTable);
+        
+        if (!subject.equals("")){
+            
+            db.addSubject(subject , branch );
+            setList ("Subject");
         }
         
-        int stat = JOptionPane.showConfirmDialog(this, "Are you sure you want to add this Subject");
-        if (stat == 0)
-            add (subject , "subject");
-    }//GEN-LAST:event_jButton5ActionPerformed
+        else
+            JOptionPane.showMessageDialog(this, "Cannot leave subject name field Empty");
+        
+    }//GEN-LAST:event_addSubjectButtonActionPerformed
 
     private void jLabel5MouseClicked(java.awt.event.MouseEvent evt) {//GEN-FIRST:event_jLabel5MouseClicked
         parent.requestView(ViewFactory.getView(parent, View.Home));
     }//GEN-LAST:event_jLabel5MouseClicked
 
-    
-    private void add (String s, String type ){
-        String sql = "";
+    private void addCourseButtonActionPerformed(java.awt.event.ActionEvent evt) {//GEN-FIRST:event_addCourseButtonActionPerformed
         
-        switch (type) {
-            case "course":
-                sql = "insert into course values ( ? )";
-                break;
-            case "branch":
-                sql = "insert into course values ( ? )";
-                break;
-            case "subject":
-                sql = "insert into course values ( ? )";
-                break;
+        String course = courseField.getText();
+        
+        if (!course.equals("")){
+            db.addCourse(course);        
+            setList ("Course");
+        
         }
         
-        try{
+        else
+            JOptionPane.showMessageDialog(this, "Cannot leave course name field Empty");
 
-                PreparedStatement ps = db.connection.prepareStatement(sql);
-                ps.setString (1, s);
-                ps.executeUpdate();
+    }//GEN-LAST:event_addCourseButtonActionPerformed
 
-            }catch (Exception se){}
-    
-    }
-    
+    private void removeBranchButtonActionPerformed(java.awt.event.ActionEvent evt) {//GEN-FIRST:event_removeBranchButtonActionPerformed
+        String branch = getSelectedItem (branchTable);
+        
+        int stat = JOptionPane.showConfirmDialog(this, "Are you sure ?");
+        
+        if (stat != JOptionPane.YES_OPTION)
+            return;
+        
+        if (branch != null){
+            boolean status = db.removeBranch (branch );
+            
+            if (status == true)
+                JOptionPane.showMessageDialog(this, "Successfull");
+            else
+                JOptionPane.showMessageDialog(this, "Unsuccessfull");
+        }else 
+            JOptionPane.showMessageDialog (this, "Please select a branch");
+        
+    }//GEN-LAST:event_removeBranchButtonActionPerformed
+
+    private void removeSubjectButtonActionPerformed(java.awt.event.ActionEvent evt) {//GEN-FIRST:event_removeSubjectButtonActionPerformed
+        String subject = getSelectedItem (subjectTable);
+        
+        int stat = JOptionPane.showConfirmDialog(this, "Are you sure ?");
+        
+        if (stat != JOptionPane.YES_OPTION)
+            return;
+        
+        if (subject != null){
+            boolean status = db.removeSubject (subject );
+            
+            if (status == true)
+                JOptionPane.showMessageDialog(this, "Successfull");
+            else
+                JOptionPane.showMessageDialog(this, "Unsuccessfull");
+        }else 
+            JOptionPane.showMessageDialog (this, "Please select a subject");
+        
+    }//GEN-LAST:event_removeSubjectButtonActionPerformed
+
+    private void courseTableMouseClicked(java.awt.event.MouseEvent evt) {//GEN-FIRST:event_courseTableMouseClicked
+     
+        selectedCourse = getSelectedItem (courseTable);
+
+            if (selectedCourse != null){
+                addBranchButton.setEnabled(true);
+                removeBranchButton.setEnabled(true);
+                branchField.setEditable(true);
+                setList ("Branch");        
+                
+            }
+        
+     
+    }//GEN-LAST:event_courseTableMouseClicked
+
+    private void branchTableMouseClicked(java.awt.event.MouseEvent evt) {//GEN-FIRST:event_branchTableMouseClicked
+        
+        selectedBranch = getSelectedItem (branchTable);
+            
+            if (selectedBranch != null){
+                
+                subjectField.setEditable(true);
+                addSubjectButton.setEnabled(true);
+                removeSubjectButton.setEnabled(true);
+                
+                setList ("Subject");            
+            
+            }
+    }//GEN-LAST:event_branchTableMouseClicked
+
+    private void subjectTableMouseClicked(java.awt.event.MouseEvent evt) {//GEN-FIRST:event_subjectTableMouseClicked
+        // TODO add your handling code here:
+    }//GEN-LAST:event_subjectTableMouseClicked
+
 
     // Variables declaration - do not modify//GEN-BEGIN:variables
+    private javax.swing.JButton addBranchButton;
+    private javax.swing.JButton addCourseButton;
+    private javax.swing.JButton addSubjectButton;
     private javax.swing.JTextField branchField;
     private javax.swing.JPanel branchPanel;
+    private javax.swing.JScrollPane branchScrollPane;
+    private javax.swing.JTable branchTable;
     private javax.swing.JTextField courseField;
     private javax.swing.JPanel coursePanel;
-    private javax.swing.JButton jButton4;
-    private javax.swing.JButton jButton5;
-    private javax.swing.JButton jButton8;
+    private javax.swing.JScrollPane courseScrollPane;
+    private javax.swing.JTable courseTable;
     private javax.swing.JLabel jLabel3;
     private javax.swing.JLabel jLabel4;
     private javax.swing.JLabel jLabel5;
     private javax.swing.JLabel jLabel7;
-    private javax.swing.JLabel jLabel8;
-    private javax.swing.JLabel jLabel9;
     private javax.swing.JPanel jPanel10;
     private javax.swing.JPanel jPanel2;
-    private javax.swing.JPanel jPanel4;
-    private javax.swing.JPanel jPanel5;
     private javax.swing.JPanel jPanel6;
     private javax.swing.JPanel jPanel8;
-    private javax.swing.JScrollPane jScrollPane1;
-    private javax.swing.JScrollPane jScrollPane3;
-    private javax.swing.JScrollPane jScrollPane5;
+    private javax.swing.JScrollPane jScrollPane7;
+    private javax.swing.JScrollPane jScrollPane8;
+    private javax.swing.JScrollPane jScrollPane9;
+    private javax.swing.JButton removeBranchButton;
+    private javax.swing.JButton removeCourseButton;
+    private javax.swing.JButton removeSubjectButton;
     private javax.swing.JTextField subjectField;
     private javax.swing.JPanel subjectPanel;
+    private javax.swing.JScrollPane subjectScrollPane;
+    private javax.swing.JTable subjectTable;
     // End of variables declaration//GEN-END:variables
 }

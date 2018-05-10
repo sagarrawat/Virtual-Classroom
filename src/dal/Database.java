@@ -10,8 +10,6 @@ import entity.User;
 import entity.UserType;
 import java.io.File;
 import java.io.FileInputStream;
-import java.io.InputStream;
-import java.sql.Blob;
 import java.sql.Connection;
 import java.sql.DriverManager;
 import java.sql.PreparedStatement;
@@ -139,6 +137,7 @@ public abstract class Database {
             
             while (rs.next())
                 courses.add(rs.getString ("name"));
+            
                 
         } catch (SQLException ex) {
             ex.printStackTrace();
@@ -154,13 +153,13 @@ public abstract class Database {
         ArrayList<String> branch = new ArrayList<>();
         
         try{
-            String sql = "select branch from course where name = ?";
+            String sql = "select name from branch where course_id = (select id from course where name = ?)";
             ps = connection.prepareStatement(sql);
             ps.setString(1, course);
             rs = ps.executeQuery();
             
             while (rs.next())
-                branch.add(rs.getString ("branch"));
+                branch.add(rs.getString ("name"));
                 
         } catch (SQLException ex) {
             ex.printStackTrace();
@@ -170,19 +169,18 @@ public abstract class Database {
     }
     
     // get the name of all subject in branch of any course presesnt
-    public ArrayList<String> getAllSubjects (String course, String branch){
+    public ArrayList<String> getAllSubjects (String branch){
         
         ArrayList<String> subject = new ArrayList<>();
         
         try{
-            String sql = "select subject from courses where course_name = ? and branch = ?";
+            String sql = "select name from subject where branch_id = (select id from branch where name = ?)";
             ps = connection.prepareStatement(sql);
-            ps.setString(1, course);
-            ps.setString(2, branch);
+            ps.setString(1, branch);
             rs = ps.executeQuery();
             
             while (rs.next())
-                subject.add(rs.getString ("subject"));
+                subject.add(rs.getString ("name"));
                 
         } catch (SQLException ex) {
             ex.printStackTrace();
@@ -214,7 +212,7 @@ public abstract class Database {
      
     // get all subject of a particular student
      
-     public ArrayList<String> getAllSubjects (String username){
+     public ArrayList<String> getAllSubjects (int type, String username){
         
         ArrayList<String> subject = new ArrayList<>();
         
@@ -284,7 +282,7 @@ public abstract class Database {
     public void addCourse (String courseName){
         
         try{
-            String sql = "insert into courses (course_name) values (?)";
+            String sql = "insert into course (name) values (?)";
             ps = connection.prepareStatement(sql);
             ps.setString(1, courseName);
             
@@ -298,14 +296,14 @@ public abstract class Database {
     }
     
     //insert a branch in db
-    public void addBranch (String courseName, String branchName){
+    public void addBranch (String branch, String course){
         
         try{
-            String sql = "insert into branch (course_name , branch_name) values (?, ?)";
+            String sql = "insert into branch (name , course_id) values (?, (select id from course where name = ?))";
             
             ps = connection.prepareStatement(sql);
-            ps.setString (1, courseName);
-            ps.setString (2, branchName);
+            ps.setString (1, branch);
+            ps.setString (2, course);
             
             ps.executeUpdate();
             
@@ -317,15 +315,14 @@ public abstract class Database {
     }
     
     //insert a subject in db
-    public void addSubject (String courseName, String branchName, String subjectName){
+    public void addSubject (String subject , String branch){
         
         try{
-            String sql = "insert into branch (course_name , branch_name, subject_name) values (?, ?, ?)";
+            String sql = "insert into subject (name, branch_id) values ( ?, (select id from branch where name = ?) )";
             
             ps = connection.prepareStatement(sql);
-            ps.setString (1, courseName);
-            ps.setString (2, branchName);
-            ps.setString (3, subjectName);
+            ps.setString (1, subject);
+            ps.setString (2, branch);
             
             
             ps.executeUpdate();
@@ -400,9 +397,10 @@ public abstract class Database {
             ps.setString (1, username);
             ps.setString (2, subject);
             
-            ps.execute();
+            int stat = ps.executeUpdate();
             
-            JOptionPane.showMessageDialog(null, "successfully deleted");
+            if (stat == 1)  
+                JOptionPane.showMessageDialog(null, "successfully removed");
         
         }catch (SQLException se){se.printStackTrace();}
     }
@@ -414,15 +412,14 @@ public abstract class Database {
             String sql = "insert into faculty values( (select id from subject where name = ?) , ?)";
             ps = connection.prepareStatement(sql);
             
-            ps.setString (1, username);
-            ps.setString (2, subject);
+            ps.setString (1, subject);
+            ps.setString (2, username);
             
             ps.executeUpdate();
             
-            JOptionPane.showMessageDialog(null, "successfully inserted");
         
         }catch (SQLException se){
-            JOptionPane.showMessageDialog(null, "already selected");
+            se.printStackTrace();
         }
     }
     
@@ -501,5 +498,88 @@ public abstract class Database {
     
     }
     
+    public boolean removeCourse (String course){
+        
+        try{
+            String sql = "delete from course where name = ?";
+            ps = connection.prepareStatement(sql);
+            
+            ps.setString(1, course);
+            
+            int status = ps.executeUpdate();
+            
+            if (status != 1)
+                return true;
+        
+        }catch (SQLException e){
+            e.printStackTrace();
+        }
+        
+        return false;
+    }
+    
+    public boolean removeBranch (String branch){
+        
+        try{
+            String sql = "delete from branch where name = ?";
+            ps = connection.prepareStatement(sql);
+            
+            ps.setString(1, branch);
+            
+            int status = ps.executeUpdate();
+            
+            if (status == 1)
+                return true;
+        
+        }catch (SQLException se){
+            se.printStackTrace();
+        }
+        
+        return false;
+    }
+    
+    public boolean removeSubject (String subject){
+        
+        try{
+            String sql = "delete from subject where name = ?";
+            ps = connection.prepareStatement(sql);
+            
+            ps.setString(1, subject);
+            
+            int status = ps.executeUpdate();
+            
+            if (status == 1)
+                return true;
+        
+        }catch (SQLException se){
+            se.printStackTrace();
+        }
+        
+        return false;
+    }
+
+    public boolean updateUserDetail (String username , String full_name, String id, String phone){
+    
+        try{
+            String sql = "update user set full_name = ? , id_no = ?, phone = ? where username = ?";
+            ps = connection.prepareStatement(sql);
+            
+            ps.setString(1, full_name);
+            ps.setString(2, id);
+            ps.setString(3, phone);
+            ps.setString(4, username);
+            
+            int stat = ps.executeUpdate();
+            
+            if (stat == 1)
+                return true;
+            
+        
+        }catch (SQLException se){
+            se.printStackTrace();
+        }
+    
+        return false;
+    }
     
 }

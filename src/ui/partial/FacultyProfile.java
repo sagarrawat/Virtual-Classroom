@@ -45,7 +45,7 @@ public class FacultyProfile extends javax.swing.JPanel {
         helloLabel.setText("Hello, " + username + " ("+ user.getType()+")");
         
         setAllSubject();
-        setFacultySubject (username);
+        setSelectedSubject ();
         
     }
     
@@ -60,7 +60,7 @@ public class FacultyProfile extends javax.swing.JPanel {
         }
     }
     
-    private void setFacultySubject(String username){
+    private void setSelectedSubject(){
     
         ArrayList <String> subject = db.getSubjectByFacultyName (username);
         subjectComboBox.removeAll();
@@ -89,9 +89,9 @@ public class FacultyProfile extends javax.swing.JPanel {
         jLabel9 = new javax.swing.JLabel();
         updateButton = new javax.swing.JButton();
         helloLabel = new javax.swing.JLabel();
-        jButton1 = new javax.swing.JButton();
+        removeSubjectButton = new javax.swing.JButton();
         subjectComboBox = new javax.swing.JComboBox<>();
-        jButton2 = new javax.swing.JButton();
+        addSubjectButton = new javax.swing.JButton();
         jLabel10 = new javax.swing.JLabel();
         allSubjectComboBox = new javax.swing.JComboBox<>();
         jLabel11 = new javax.swing.JLabel();
@@ -137,29 +137,29 @@ public class FacultyProfile extends javax.swing.JPanel {
         helloLabel.setText("Hello");
         add(helloLabel, new org.netbeans.lib.awtextra.AbsoluteConstraints(12, 12, 280, 32));
 
-        jButton1.setFont(new java.awt.Font("Lucida Grande", 1, 14)); // NOI18N
-        jButton1.setForeground(new java.awt.Color(212, 64, 33));
-        jButton1.setText("remove subject");
-        jButton1.addActionListener(new java.awt.event.ActionListener() {
+        removeSubjectButton.setFont(new java.awt.Font("Lucida Grande", 1, 14)); // NOI18N
+        removeSubjectButton.setForeground(new java.awt.Color(212, 64, 33));
+        removeSubjectButton.setText("remove subject");
+        removeSubjectButton.addActionListener(new java.awt.event.ActionListener() {
             public void actionPerformed(java.awt.event.ActionEvent evt) {
-                jButton1ActionPerformed(evt);
+                removeSubjectButtonActionPerformed(evt);
             }
         });
-        add(jButton1, new org.netbeans.lib.awtextra.AbsoluteConstraints(530, 330, 150, 40));
+        add(removeSubjectButton, new org.netbeans.lib.awtextra.AbsoluteConstraints(530, 330, 150, 40));
 
         subjectComboBox.setBackground(java.awt.Color.white);
         subjectComboBox.setForeground(java.awt.Color.white);
         add(subjectComboBox, new org.netbeans.lib.awtextra.AbsoluteConstraints(250, 330, 270, 40));
 
-        jButton2.setFont(new java.awt.Font("Lucida Grande", 1, 14)); // NOI18N
-        jButton2.setForeground(new java.awt.Color(33, 137, 212));
-        jButton2.setText("+add subject");
-        jButton2.addActionListener(new java.awt.event.ActionListener() {
+        addSubjectButton.setFont(new java.awt.Font("Lucida Grande", 1, 14)); // NOI18N
+        addSubjectButton.setForeground(new java.awt.Color(33, 137, 212));
+        addSubjectButton.setText("+add subject");
+        addSubjectButton.addActionListener(new java.awt.event.ActionListener() {
             public void actionPerformed(java.awt.event.ActionEvent evt) {
-                jButton2ActionPerformed(evt);
+                addSubjectButtonActionPerformed(evt);
             }
         });
-        add(jButton2, new org.netbeans.lib.awtextra.AbsoluteConstraints(530, 260, 150, 40));
+        add(addSubjectButton, new org.netbeans.lib.awtextra.AbsoluteConstraints(530, 260, 150, 40));
 
         jLabel10.setFont(new java.awt.Font("Lucida Grande", 1, 16)); // NOI18N
         jLabel10.setForeground(new java.awt.Color(254, 254, 254));
@@ -183,36 +183,41 @@ public class FacultyProfile extends javax.swing.JPanel {
             String id = idField.getText();
             String phone = phoneField.getText();
 
-            //db.updateUserDetail ();
-
+            boolean status;
+            
+            status = db.updateUserDetail (username , name , id, phone);
+            
+            if (status == true)
+                JOptionPane.showMessageDialog(this, "Updated");
+            else
+                JOptionPane.showMessageDialog (this, "Sorry");
         }
     }//GEN-LAST:event_updateButtonActionPerformed
 
-    private void jButton2ActionPerformed(java.awt.event.ActionEvent evt) {//GEN-FIRST:event_jButton2ActionPerformed
+    private void addSubjectButtonActionPerformed(java.awt.event.ActionEvent evt) {//GEN-FIRST:event_addSubjectButtonActionPerformed
         
         String subject = allSubjectComboBox.getSelectedItem().toString();
         
         db.addFacultySubject (username, subject);
         
-        setAllSubject();
-    }//GEN-LAST:event_jButton2ActionPerformed
+        setSelectedSubject();
+    }//GEN-LAST:event_addSubjectButtonActionPerformed
 
-    private void jButton1ActionPerformed(java.awt.event.ActionEvent evt) {//GEN-FIRST:event_jButton1ActionPerformed
+    private void removeSubjectButtonActionPerformed(java.awt.event.ActionEvent evt) {//GEN-FIRST:event_removeSubjectButtonActionPerformed
         
         String subject = subjectComboBox.getSelectedItem().toString();
         
         db.removeFacultySubject (username, subject);
         
-        setFacultySubject(username);
-    }//GEN-LAST:event_jButton1ActionPerformed
+        setSelectedSubject();
+    }//GEN-LAST:event_removeSubjectButtonActionPerformed
 
 
     // Variables declaration - do not modify//GEN-BEGIN:variables
+    private javax.swing.JButton addSubjectButton;
     private javax.swing.JComboBox<String> allSubjectComboBox;
     private javax.swing.JLabel helloLabel;
     private javax.swing.JTextField idField;
-    private javax.swing.JButton jButton1;
-    private javax.swing.JButton jButton2;
     private javax.swing.JLabel jLabel10;
     private javax.swing.JLabel jLabel11;
     private javax.swing.JLabel jLabel4;
@@ -221,6 +226,7 @@ public class FacultyProfile extends javax.swing.JPanel {
     private javax.swing.JLabel jLabel9;
     private javax.swing.JTextField nameField;
     private javax.swing.JTextField phoneField;
+    private javax.swing.JButton removeSubjectButton;
     private javax.swing.JComboBox<String> subjectComboBox;
     private javax.swing.JButton updateButton;
     // End of variables declaration//GEN-END:variables
