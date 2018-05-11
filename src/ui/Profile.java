@@ -82,7 +82,8 @@ public class Profile extends javax.swing.JPanel {
         jPanel2.setForeground(new java.awt.Color(33, 137, 212));
 
         jLabel1.setFont(new java.awt.Font("Lucida Grande", 1, 18)); // NOI18N
-        jLabel1.setText("back");
+        jLabel1.setIcon(new javax.swing.ImageIcon(getClass().getResource("/Resources/icons/home16.png"))); // NOI18N
+        jLabel1.setText("Home");
         jLabel1.addMouseListener(new java.awt.event.MouseAdapter() {
             public void mouseClicked(java.awt.event.MouseEvent evt) {
                 jLabel1MouseClicked(evt);
@@ -105,7 +106,7 @@ public class Profile extends javax.swing.JPanel {
                 .addGap(32, 32, 32)
                 .addComponent(jLabel1)
                 .addGap(433, 433, 433)
-                .addComponent(jLabel11, javax.swing.GroupLayout.DEFAULT_SIZE, 139, Short.MAX_VALUE)
+                .addComponent(jLabel11, javax.swing.GroupLayout.DEFAULT_SIZE, javax.swing.GroupLayout.DEFAULT_SIZE, Short.MAX_VALUE)
                 .addGap(331, 331, 331)
                 .addComponent(jLabel12)
                 .addGap(23, 23, 23))

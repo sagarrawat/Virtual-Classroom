@@ -3,8 +3,13 @@
     <editor-bookmarks xmlns="http://www.netbeans.org/ns/editor-bookmarks/2" lastBookmarkId="0"/>
     <open-files xmlns="http://www.netbeans.org/ns/projectui-open-files/2">
         <group>
-            <file>file:/home/sagar/NetBeansProjects/Virtual-Classroom/src/dal/Database.java</file>
-            <file>file:/home/sagar/NetBeansProjects/Virtual-Classroom/src/ui/Master.java</file>
+            <file>file:/home/mukesh/NetBeansProjects/Virtual-Classroom/src/virtaulclassroom/VCR.java</file>
+            <file>file:/home/mukesh/NetBeansProjects/Virtual-Classroom/src/dal/Database.java</file>
+            <file>file:/home/mukesh/NetBeansProjects/Virtual-Classroom/src/entity/Session.java</file>
+            <file>file:/home/mukesh/NetBeansProjects/Virtual-Classroom/src/ui/LiveSessionRoom.java</file>
+            <file>file:/home/mukesh/NetBeansProjects/Virtual-Classroom/src/ui/SessionView.java</file>
+            <file>file:/home/mukesh/NetBeansProjects/Virtual-Classroom/src/ui/Master.java</file>
+            <file>file:/home/mukesh/NetBeansProjects/Virtual-Classroom/src/ui/partial/RExplorer.java</file>
         </group>
     </open-files>
 </project-private>

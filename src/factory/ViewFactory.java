@@ -31,9 +31,11 @@ public class ViewFactory {
             case Assignment :
                 return new ui.Assignment(parent);
             case Resources:
-                return new ui.RExplorer(parent);
-            case LiveSessionRoom:
+                return new ui.ResourceViewer(parent);
+            case Session :
                 return new ui.LiveSessionRoom(parent);
+            case LiveSessionRoom:
+                return new ui.SessionView(parent);
             case Master :
                 return new ui.Master(parent);
             case Profile :

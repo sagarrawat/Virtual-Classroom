@@ -5,8 +5,11 @@
  */
 package dal;
 
+import entity.Session;
 import entity.User;
 import entity.UserType;
+import java.sql.SQLException;
+import javax.swing.JOptionPane;
 
 /**
  *
@@ -24,5 +27,6 @@ public class SQLDatabase extends Database {
         //TODO : getuser from db
         return user;
     }  
+    
     
 }

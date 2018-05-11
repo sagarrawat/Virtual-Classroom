@@ -133,14 +133,15 @@ public class Setting extends javax.swing.JPanel {
                     .addComponent(cpasswordField, javax.swing.GroupLayout.PREFERRED_SIZE, 30, javax.swing.GroupLayout.PREFERRED_SIZE))
                 .addGap(42, 42, 42)
                 .addComponent(submitButton, javax.swing.GroupLayout.PREFERRED_SIZE, 35, javax.swing.GroupLayout.PREFERRED_SIZE)
-                .addContainerGap(121, Short.MAX_VALUE))
+                .addContainerGap(129, Short.MAX_VALUE))
         );
 
         jPanel2.setBackground(java.awt.SystemColor.controlHighlight);
         jPanel2.setForeground(new java.awt.Color(33, 137, 212));
 
         jLabel1.setFont(new java.awt.Font("Lucida Grande", 1, 18)); // NOI18N
-        jLabel1.setText("back");
+        jLabel1.setIcon(new javax.swing.ImageIcon(getClass().getResource("/Resources/icons/home16.png"))); // NOI18N
+        jLabel1.setText("Home");
         jLabel1.addMouseListener(new java.awt.event.MouseAdapter() {
             public void mouseClicked(java.awt.event.MouseEvent evt) {
                 jLabel1MouseClicked(evt);
@@ -159,7 +160,7 @@ public class Setting extends javax.swing.JPanel {
                 .addGap(41, 41, 41)
                 .addComponent(jLabel1)
                 .addGap(382, 382, 382)
-                .addComponent(jLabel11, javax.swing.GroupLayout.PREFERRED_SIZE, 1, Short.MAX_VALUE)
+                .addComponent(jLabel11, javax.swing.GroupLayout.DEFAULT_SIZE, javax.swing.GroupLayout.DEFAULT_SIZE, Short.MAX_VALUE)
                 .addGap(317, 317, 317))
         );
         jPanel2Layout.setVerticalGroup(
@@ -169,7 +170,7 @@ public class Setting extends javax.swing.JPanel {
                 .addGroup(jPanel2Layout.createParallelGroup(javax.swing.GroupLayout.Alignment.BASELINE)
                     .addComponent(jLabel1)
                     .addComponent(jLabel11))
-                .addContainerGap(21, Short.MAX_VALUE))
+                .addContainerGap(javax.swing.GroupLayout.DEFAULT_SIZE, Short.MAX_VALUE))
         );
 
         jLabel10.setFont(new java.awt.Font("Lucida Grande", 1, 24)); // NOI18N

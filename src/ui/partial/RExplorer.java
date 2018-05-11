@@ -3,21 +3,15 @@
  * To change this template file, choose Tools | Templates
  * and open the template in the editor.
  */
-package ui;
+package ui.partial;
 
-import com.sun.xml.internal.ws.api.streaming.XMLStreamReaderFactory;
 import dal.Database;
 import dal.DerbyDatabase;
-import java.awt.BorderLayout;
 import java.awt.Component;
 import java.awt.event.MouseAdapter;
 import java.awt.event.MouseEvent;
 import java.io.File;
 import javax.swing.JList;
-import javax.swing.JScrollPane;
-import javax.swing.ListCellRenderer;
-import javax.swing.event.ListSelectionEvent;
-import javax.swing.event.ListSelectionListener;
 import javax.swing.tree.DefaultMutableTreeNode;
 import utility.FileBrowser;
 import utility.FileBrowser.FileNode;
@@ -44,7 +38,7 @@ public class RExplorer extends javax.swing.JPanel {
         initComponents();
         String user = System.getProperty("user.name");
         String resourseFolder = "/home/"+user+"/vcr";
-        //resourseFolder = "/media/mukesh/D064958664956FC8/Videos";
+       // resourseFolder = "/media/mukesh/D064958664956FC8/Videos";
         jTree1.setModel(new FileBrowser(resourseFolder).getModel());
     }
     

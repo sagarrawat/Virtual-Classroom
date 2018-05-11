@@ -6,10 +6,13 @@
 package dal;
 
 import entity.CurrentUser;
+import entity.Session;
 import entity.User;
 import entity.UserType;
+import java.awt.HeadlessException;
 import java.io.File;
 import java.io.FileInputStream;
+import java.io.InputStream;
 import java.sql.Connection;
 import java.sql.DriverManager;
 import java.sql.PreparedStatement;
@@ -582,4 +585,126 @@ public abstract class Database {
         return false;
     }
     
+    public boolean addSession(Session session){
+          
+        try{
+            String sql = "insert into Session (subject , topic, date, type, hostid, hostaddress) values (?, ?, ?, ?, ?, ?)";
+            
+            ps = connection.prepareStatement(sql);
+            ps.setString (1, session.getsubject());
+            ps.setString (2, session.getTopic());        
+            ps.setDate(3, new java.sql.Date(2018, 5, 21));
+            //ps.setDate(3, new java.sql.Date(session.getTime().getTime()));
+            ps.setInt(4, session.getType());
+            ps.setString(5, session.getHostId());
+            ps.setString(6, session.gethostAdd()); 
+            ps.executeUpdate();
+            
+            JOptionPane.showMessageDialog(null, "Successfull");
+            return true;   
+            
+        }catch (SQLException se){
+            se.printStackTrace();
+            return false;
+        }
+    }
+    
+    public ArrayList<Session> getSessions(User usr){
+        try{
+            ArrayList<Session> sessions = new ArrayList<Session>();
+            String sql = "select id, subject, topic, date, type, hostid, hostaddress,ext from Session where hostid=?;";
+            ps = connection.prepareStatement(sql);
+            ps.setString(1, usr.getUsername());
+            
+            if(usr.getType() == UserType.STUDENT){
+                sql = "select id, subject, topic, date, type, hostid, hostaddress,ext from Session;";
+                ps = connection.prepareStatement(sql);
+            }
+            
+            rs = ps.executeQuery();
+        
+            while (rs.next()){  
+                Session ses = new Session();
+                ses.setId(rs.getInt("id"));
+                ses.setSubject(rs.getString("subject"));
+                ses.setTopic(rs.getString("topic"));
+                ses.setTime(rs.getDate("date"));
+                ses.setType(rs.getInt("type"));
+                ses.setHostId(rs.getString("hostid"));
+                ses.sethostAdd(rs.getString("hostaddress"));
+                ses.setExt(rs.getString("ext"));
+                sessions.add(ses);
+            }
+            return sessions;
+        }catch (Exception e){
+            e.printStackTrace();
+        }
+        
+        return null;
+    }
+    
+    public Session getSession(int sesid){
+        try{
+            String sql = "select id, subject, topic, date, type, hostid, hostaddress, ext from Session where id=?;";
+            ps = connection.prepareStatement(sql);
+            ps.setInt(1, sesid);
+            rs = ps.executeQuery();
+        
+            if (rs.next()){  
+                Session ses = new Session();
+                ses.setId(rs.getInt("id"));
+                ses.setSubject(rs.getString("subject"));
+                ses.setTopic(rs.getString("topic"));
+                ses.setTime(rs.getDate("date"));
+                ses.setType(rs.getInt("type"));
+                ses.setHostId(rs.getString("hostid"));
+                ses.sethostAdd(rs.getString("hostaddress"));
+                ses.setExt(rs.getString("ext"));
+                return ses;
+            }
+            
+        }catch (Exception e){
+            e.printStackTrace();
+        }
+        
+        return null;
+    }
+    
+    private String getExt(String name){
+        String nms[] = name.split("\\.(?=[^\\.]+$)");
+        return nms[nms.length-1];
+    }
+    
+    public void uploadSession(File file, int sesId){
+          try{
+            String sql = "update Session set media = ?, ext=? where id = ?;";        
+            ps = connection.prepareStatement(sql);         
+            ps.setBlob(1, new FileInputStream (file) );
+        
+            ps.setString(2, getExt(file.getName()));
+            ps.setInt (3, sesId);            
+            ps.executeUpdate();      
+            JOptionPane.showMessageDialog(null , "successfully added");
+        }catch (Exception e){
+            e.printStackTrace();
+            JOptionPane.showMessageDialog(null , "Error!");
+        }  
+    }
+    
+      public InputStream getMediaStream(int sesId){
+          try{
+            String sql = "select media from Session where id = ?;";        
+            ps = connection.prepareStatement(sql);         
+            ps.setInt(1, sesId);
+            rs = ps.executeQuery();  
+            if(rs.next()){
+                return rs.getBlob("media").getBinaryStream();
+            }
+            JOptionPane.showMessageDialog(null , "successfully added");
+        }catch (HeadlessException | SQLException e){
+            JOptionPane.showMessageDialog(null , "Error!");
+        }
+          
+        return null;
+    }
 }

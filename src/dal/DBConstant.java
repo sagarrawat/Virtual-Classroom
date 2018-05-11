@@ -11,7 +11,7 @@ package dal;
  */
 public class DBConstant {
     public static final String SQL_DRIVER = "com.mysql.jdbc.Driver";
-    public static final String SQL_CON = "jdbc:mysql://localhost:3306/vcrdb";
+    public static final String SQL_CON = "jdbc:mysql://localhost:3306/vcrdb?useSSL=false";
     public static final String USER = "root";
     public static final String PASSWORD = "root@123";
 }

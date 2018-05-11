@@ -52,7 +52,7 @@ public class Register extends javax.swing.JPanel{
     }
     
     private void setBranch( String course ){
-        
+        branchComboBox.removeAllItems();
         ArrayList<String> branch = db.getAllBranch(course);
         
         for (String b : branch){

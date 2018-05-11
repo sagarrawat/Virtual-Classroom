@@ -61,7 +61,7 @@ public class FacultyProfile extends javax.swing.JPanel {
     }
     
     private void setSelectedSubject(){
-    
+        subjectComboBox.removeAllItems();
         ArrayList <String> subject = db.getSubjectByFacultyName (username);
         subjectComboBox.removeAll();
         

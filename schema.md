@@ -90,4 +90,20 @@ BEGIN
 END$$
 DELIMITER ;
 
+#Session table
+CREATE TABLE `Session` (
+  `id` int(11) NOT NULL AUTO_INCREMENT,
+  `subject` varchar(100) DEFAULT NULL,
+  `topic` varchar(100) DEFAULT NULL,
+  `date` datetime DEFAULT NULL,
+  `media` longblob,
+  `type` int(11) DEFAULT NULL,
+  `hostid` varchar(45) DEFAULT NULL,
+  `hostaddress` varchar(45) DEFAULT NULL,
+  `ext` varchar(45) DEFAULT NULL,
+  PRIMARY KEY (`id`),
+  KEY `fk_Session_1_idx` (`subject`)
+) ENGINE=InnoDB AUTO_INCREMENT=4 DEFAULT CHARSET=latin1;
+
+
 
